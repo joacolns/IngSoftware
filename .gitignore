@@ -1,0 +1,84 @@
+## Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+## Visual Studio files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Rider / ReSharper
+_ReSharper*/
+*.DotSettings.user
+
+## Visual Studio Code
+.vscode/
+
+## OS files
+.DS_Store
+Thumbs.db
+
+## NuGet
+*.nupkg
+**/packages/*
+!**/packages/build/
+!**/packages/repositories.config
+
+## .NET Core / .NET Framework
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## Logs
+*.log
+
+## Test results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+## Azure
+PublishScripts/
+*.azurePubxml
+*.pubxml
+*.publishproj
+
+## IIS Express
+.vs/config/applicationhost.config
+
+## SQL Server
+*.mdf
+*.ldf
+
+## Entity Framework
+*.edmx.diagram
+
+## Windows image file caches
+ehthumbs.db
+ehthumbs_vista.db
+
+## Backup & temp files
+*.bak
+*.tmp
+*.temp
+*.swp
+*.cache
+
+## JetBrains Rider
+.idea/
+
+## Coverage
+*.coverage
+*.coveragexml
+
+## Resharper caches
+*.ncrunch*
+*.local.xml
+
+## Generated files
+Generated_Code/
+
+## StyleCop
+StyleCopReport.xml
