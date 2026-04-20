@@ -7,16 +7,12 @@ namespace BLL
 {
         public sealed class GestorDeSesiones
         {
-            // 2. La variable estática privada
+            //variable estática privada
             private static GestorDeSesiones _instancia = null;
-
-            // 3. El candado (recomendable ponerle 'readonly')
-            private static readonly object _padlock = new object();
-
-            // 4. El constructor privado (nadie puede hacer 'new' desde afuera)
+            private static  object _padlock = new object();
             private GestorDeSesiones() { }
 
-            // 5. La puerta de acceso global
+            //puerta de acceso global
             public static GestorDeSesiones Instancia
             {
                 get
@@ -31,8 +27,7 @@ namespace BLL
                     }
                 }
             }
-
-            // --- Atributos de la Sesión ---
+            //Atributos de la Sesión
 
             public BE.Usuario UsuarioActual { get; private set; }
 

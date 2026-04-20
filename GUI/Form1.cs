@@ -24,32 +24,28 @@ namespace GUI
 
         private void btn_Login_Click(object sender, EventArgs e)
         {
+          
             string user = txtBox_usuario.Text;
             string pass = txtBox_password.Text;
 
-            // 3. Le pasamos el trabajo a la BLL y esperamos la respuesta booleana
             bool ingresoExitoso = BLLusuario.Login(user, pass);
 
-            // 4. Evaluamos el resultado
             if (ingresoExitoso)
             {
-                // ¡LA MAGIA DEL SINGLETON!
-                // Como el login fue exitoso, la BLL ya guardó al usuario en el Singleton.
-                // Aquí lo llamamos desde la UI para comprobar que funciona en toda la app:
-                string nombreLogeado = BLL.GestorDeSesiones.Instancia.UsuarioActual.Nombre;
+                // 1. Instanciamos el nuevo formulario
+                Menu_Principal menu = new Menu_Principal();
 
-                MessageBox.Show($"¡Login exitoso! Bienvenido al sistema, {nombreLogeado}.");
+                // 2. Lo mostramos en pantalla
+                menu.Show();
 
-                // --- Aquí iría la navegación real ---
-                // FormMenuPrincipal menu = new FormMenuPrincipal();
-                // menu.Show();
-                // this.Hide(); // Ocultamos el login
+                // 3. Ocultamos la ventana de Login
+                this.Hide();
             }
             else
             {
-                // Si la BLL devolvió false, es porque la base de datos no encontró al usuario
                 MessageBox.Show("Usuario o contraseña incorrectos.", "Error de Acceso", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
-}
+    }
+
