@@ -14,8 +14,8 @@ namespace DAL
         
         public void Abrir()
         {
-            SqlConnection conexion = new SqlConnection();
-            conexion.ConnectionString = "Integrated Security=SSI;Initial Catalog=Nombre;Data Source=.";
+            conexion = new SqlConnection();
+            conexion.ConnectionString = "Integrated Security=SSPI;Initial Catalog=IngDeSoftDB;Data Source=RAMA\\SQLEXPRESS";
             conexion.Open();
         }
 
@@ -31,6 +31,7 @@ namespace DAL
             SqlCommand cmd = new SqlCommand();
             cmd.CommandText = nombre;
             cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = conexion;
 
             if(parametros != null)
             {

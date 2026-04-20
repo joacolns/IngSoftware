@@ -11,6 +11,6 @@ namespace DAL
         internal Acceso acceso;
 
         public abstract int Insertar(T objeto);
-        public abstract int Login(T objeto);
+       
     }
 }

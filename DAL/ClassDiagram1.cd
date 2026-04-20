@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="DIAGRAMA DE DAL&#xD;&#xA;">
+    <Position X="0.5" Y="0.5" Height="0.75" Width="1.7" />
+  </Comment>
   <Class Name="DAL.Acceso">
-    <Position X="5" Y="0.75" Width="1.5" />
+    <Position X="6.25" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EABAAAAAQAAAAAAAAAAAAAAAAACAAABAIAAAAAAAAAE=</HashCode>
       <FileName>Acceso.cs</FileName>
