@@ -24,5 +24,10 @@ namespace BLL
             return filas > 0;  
         }
 
+        public System.Data.DataTable ObtenerBitacora()
+        {
+            DAL.MP_Bitacora mpBitacora = new DAL.MP_Bitacora();
+            return mpBitacora.ListarBitacora();
+        }
     }
 }

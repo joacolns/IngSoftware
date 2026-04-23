@@ -41,5 +41,22 @@ namespace DAL
 
             return filasAfectadas;
         }
+
+        public System.Data.DataTable ListarBitacora()
+        {
+            try
+            {
+                acceso.Abrir();
+                return acceso.Leer("SP_ListarBitacora");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al consultar bitácora: " + ex.Message);
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+        }
     }
 }

@@ -17,9 +17,6 @@ namespace GUI
             InitializeComponent();
         }
 
-       
-
-
         private void label1_Click(object sender, EventArgs e)
         {
 
@@ -37,9 +34,9 @@ namespace GUI
             {
 
                 labelUSER.Text = BLL.BLL_GestorDeSesiones.Instancia.UsuarioActual.Nombre;
-
-
             }
+
+            EnlazarBitacora();
         }
 
         private void label1_Click_1(object sender, EventArgs e)
@@ -81,6 +78,25 @@ namespace GUI
             BLL.BLL_Usuario gestorUsuario = new BLL.BLL_Usuario();
             gestorUsuario.Logout();
             Application.Restart();
+        }
+
+        private void btnBitacora_Click(object sender, EventArgs e)
+        {
+            EnlazarBitacora();
+        }
+
+        private void EnlazarBitacora()
+        {
+            try
+            {
+                BLL.BLL_Bitacora gestorBitacora = new BLL.BLL_Bitacora();
+                dataGridViewBitacora.DataSource = "";
+                dataGridViewBitacora.DataSource = gestorBitacora.ObtenerBitacora();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
