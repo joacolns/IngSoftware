@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 
 namespace BLL
 {
-    public class Seguridad
+    public class BLL_Seguridad
     {
         public static string HashearPassword(string password)
         {

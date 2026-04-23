@@ -33,10 +33,10 @@ namespace GUI
         private void Menu_Principal_Load_1(object sender, EventArgs e)
         {
 
-            if (BLL.GestorDeSesiones.Instancia.EstaLogeado)
+            if (BLL.BLL_GestorDeSesiones.Instancia.EstaLogeado)
             {
 
-                labelUSER.Text = BLL.GestorDeSesiones.Instancia.UsuarioActual.Nombre;
+                labelUSER.Text = BLL.BLL_GestorDeSesiones.Instancia.UsuarioActual.Nombre;
 
 
             }
@@ -66,7 +66,7 @@ namespace GUI
         {
             string nuevoNombre = txtNuevoUsuario.Text;
             string nuevaClave = txtNuevaPassword.Text; 
-            BLL.UsuarioBLL gestorUsuario = new BLL.UsuarioBLL();
+            BLL.BLL_Usuario gestorUsuario = new BLL.BLL_Usuario();
 
             bool registrado = gestorUsuario.RegistrarUsuario(nuevoNombre,nuevaClave);
 
@@ -78,7 +78,7 @@ namespace GUI
 
         private void button2_Click(object sender, EventArgs e)
         {
-            BLL.UsuarioBLL gestorUsuario = new BLL.UsuarioBLL();
+            BLL.BLL_Usuario gestorUsuario = new BLL.BLL_Usuario();
             gestorUsuario.Logout();
             Application.Restart();
         }

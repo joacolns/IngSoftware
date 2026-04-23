@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Acceso.cs" />
     <Compile Include="Mapper.cs" />
+    <Compile Include="MP_Bitacora.cs" />
     <Compile Include="MP_Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

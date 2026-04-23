@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public class UsuarioBLL
+    public class BLL_Usuario
     {
         public bool Login(string nombreUsuario, string passwordIngresada)
         {
@@ -17,12 +17,12 @@ namespace BLL
             if (usuarioBD != null)
             {
                
-                bool passwordCorrecta = Seguridad.VerificarPassword(passwordIngresada, usuarioBD.Password);
+                bool passwordCorrecta = BLL_Seguridad.VerificarPassword(passwordIngresada, usuarioBD.Password);
 
                 if (passwordCorrecta)
                 {
                    
-                    GestorDeSesiones.Instancia.IniciarSesion(usuarioBD);
+                    BLL_GestorDeSesiones.Instancia.IniciarSesion(usuarioBD);
                     return true;
                 }
             }
@@ -34,7 +34,7 @@ namespace BLL
         public bool RegistrarUsuario(string nombre, string passwordPlana)
         {
           
-            string passwordHasheada = Seguridad.HashearPassword(passwordPlana);
+            string passwordHasheada = BLL_Seguridad.HashearPassword(passwordPlana);
 
             BE.Usuario nuevoUsuario = new BE.Usuario();
             nuevoUsuario.Nombre = nombre;
@@ -48,7 +48,7 @@ namespace BLL
 
         public void Logout()
         {
-            GestorDeSesiones.Instancia.CerrarSesion();
+            BLL_GestorDeSesiones.Instancia.CerrarSesion();
         }
     }
 }

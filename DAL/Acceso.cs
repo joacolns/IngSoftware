@@ -15,7 +15,7 @@ namespace DAL
         public void Abrir()
         {
             conexion = new SqlConnection();
-            conexion.ConnectionString = "Integrated Security=SSPI;Initial Catalog=IngDeSoftDB;Data Source=RAMA\\SQLEXPRESS";
+            conexion.ConnectionString = "Integrated Security=SSPI;Initial Catalog=IngDeSoftDB;Data Source=ADMINF258\\SQLEXPRESS";
             conexion.Open();
         }
 

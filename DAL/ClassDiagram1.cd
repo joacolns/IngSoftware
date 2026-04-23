@@ -4,7 +4,7 @@
     <Position X="0.5" Y="0.5" Height="0.75" Width="1.7" />
   </Comment>
   <Class Name="DAL.Acceso">
-    <Position X="6.25" Y="1" Width="1.5" />
+    <Position X="6.25" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EABAAAAAQAAAAAAAAAAAAAAAAACAAABAIAAAAAAAAAE=</HashCode>
       <FileName>Acceso.cs</FileName>
@@ -13,15 +13,22 @@
   <Class Name="DAL.Mapper&lt;T&gt;">
     <Position X="3" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAIAAAAAAAAAQAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Mapper.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DAL.MP_Usuario">
-    <Position X="3" Y="3" Width="1.5" />
+    <Position X="1.5" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAQAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAIA=</HashCode>
       <FileName>MP_Usuario.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.MP_Bitacora">
+    <Position X="4.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MP_Bitacora.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
