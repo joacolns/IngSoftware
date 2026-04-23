@@ -13,7 +13,7 @@ namespace GUI
     public partial class Form1 : Form
     {
 
-        public BLL.Usuario BLLusuario = new BLL.Usuario();
+        public BLL.UsuarioBLL BLLusuario = new BLL.UsuarioBLL();
         public BE.Usuario BEUsuario;
 
 
@@ -32,19 +32,22 @@ namespace GUI
 
             if (ingresoExitoso)
             {
-                // 1. Instanciamos el nuevo formulario
+               
                 Menu_Principal menu = new Menu_Principal();
-
-                // 2. Lo mostramos en pantalla
                 menu.Show();
-
-                // 3. Ocultamos la ventana de Login
                 this.Hide();
             }
             else
             {
-                MessageBox.Show("Usuario o contraseña incorrectos.", "Error de Acceso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("UsuarioBLL o contraseña incorrectos.", "Error de Acceso", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+        /*    BLL.UsuarioBLL gestorUsuario = new BLL.UsuarioBLL();
+
+             gestorUsuario.RegistrarUsuario("admin", "1234567");*/
         }
     }
     }

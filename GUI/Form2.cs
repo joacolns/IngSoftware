@@ -46,5 +46,41 @@ namespace GUI
         {
 
         }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string nuevoNombre = txtNuevoUsuario.Text;
+            string nuevaClave = txtNuevaPassword.Text; 
+            BLL.UsuarioBLL gestorUsuario = new BLL.UsuarioBLL();
+
+            bool registrado = gestorUsuario.RegistrarUsuario(nuevoNombre,nuevaClave);
+
+            if (registrado)
+                MessageBox.Show("UsuarioBLL creado y encriptado con éxito");
+            else
+                MessageBox.Show("Error al registrar");
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            BLL.UsuarioBLL gestorUsuario = new BLL.UsuarioBLL();
+            gestorUsuario.Logout();
+            Application.Restart();
+        }
     }
 }

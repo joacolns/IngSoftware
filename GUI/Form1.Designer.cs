@@ -54,9 +54,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(67, 79);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(43, 13);
+            this.label1.Size = new System.Drawing.Size(62, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Usuario";
+            this.label1.Text = "UsuarioBLL";
             // 
             // label2
             // 
@@ -89,6 +89,7 @@
             this.Controls.Add(this.txtBox_usuario);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -52,7 +52,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                filas = -1;
+                throw new Exception("Error en la BD: " + ex.Message);
             }
 
             cmd.Parameters.Clear();
