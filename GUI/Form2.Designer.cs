@@ -175,6 +175,8 @@
             this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "Menu_Principal";
             this.Text = "Form2";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Menu_Principal_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Menu_Principal_FormClosed);
             this.Load += new System.EventHandler(this.Menu_Principal_Load_1);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBitacora)).EndInit();
             this.ResumeLayout(false);

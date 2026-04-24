@@ -22,6 +22,8 @@ namespace GUI
 
         }
 
+        
+
         private void labelUSER_Click(object sender, EventArgs e)
         {
 
@@ -73,10 +75,15 @@ namespace GUI
                 MessageBox.Show("Error al registrar");
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void CerrarSesion()
         {
             BLL.BLL_Usuario gestorUsuario = new BLL.BLL_Usuario();
             gestorUsuario.Logout();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            CerrarSesion();
             Application.Restart();
         }
 
@@ -97,6 +104,16 @@ namespace GUI
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void Menu_Principal_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
+        }
+
+        private void Menu_Principal_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            CerrarSesion();
         }
     }
 }
