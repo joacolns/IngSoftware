@@ -11,14 +11,14 @@ using System.Windows.Forms;
 
 namespace GUI
 {
-    public partial class Form1 : Form
+    public partial class Login : Form
     {
 
         public BLL.BLL_Usuario BLLusuario = new BLL.BLL_Usuario();
         public BE.Usuario BEUsuario;
         public BLL.BLL_Bitacora BLLBitacora = new BLL.BLL_Bitacora();
 
-        public Form1()
+        public Login()
         {
             InitializeComponent();
         }
@@ -37,10 +37,7 @@ namespace GUI
 
                 BLLBitacora.RegistrarBitacora(BEUsuario.ID_Usuario, BEUsuario.Nombre, "Login", "El usuario ha inicado sesion", DateTime.Now);
 
-                Menu_Principal menu = new Menu_Principal();
-                menu.Show();
-                this.Hide();
-               
+                VerificarRol();
             }
             else
             {
@@ -51,11 +48,29 @@ namespace GUI
             }
         }
 
+        private void VerificarRol()
+        {
+            if(BEUsuario.Role == "admin")
+            {
+                PanelAdmin panel_admin = new PanelAdmin();
+                panel_admin.Show();
+                this.Hide();
+            }
+            else if(BEUsuario.Role == "usuario")
+            {
+                PanelUsuario panel_usuario = new PanelUsuario();
+                panel_usuario.Show();
+                this.Hide();
+            }
+            
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
-            /*BLL.BLL_Usuario gestorUsuario = new BLL.BLL_Usuario();
+            /*
+            BLL.BLL_Usuario gestorUsuario = new BLL.BLL_Usuario();
 
-             gestorUsuario.RegistrarUsuario("admin", "1234567");
+            gestorUsuario.RegistrarUsuario("admin", "1234567", "admin");
             */
         }
     }

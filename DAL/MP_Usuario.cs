@@ -35,9 +35,8 @@ namespace DAL
 
                     usuarioEncontrado.ID_Usuario = Convert.ToInt32(fila["id_Usuario"]);
                     usuarioEncontrado.Nombre = fila["nombre"].ToString();
-
-                  
                     usuarioEncontrado.Password = fila["password"].ToString();
+                    usuarioEncontrado.Role = fila["role"].ToString();
                     usuarioEncontrado.Logeado = 1;
                 }
             }
@@ -64,8 +63,8 @@ namespace DAL
                 List<SqlParameter> parametros = new List<SqlParameter>
                 {
                     acceso.CrearParametro("@Nombre", entidad.Nombre),
-                  
-                    acceso.CrearParametro("@Password", entidad.Password)
+                    acceso.CrearParametro("@Password", entidad.Password),
+                    acceso.CrearParametro("@Role", entidad.Role)
                 };
 
             

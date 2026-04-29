@@ -31,6 +31,15 @@ namespace BE
 			set { password = value; }
 		}
 
+		private string role;
+
+		public string Role
+		{
+			get { return role; }
+			set { role = value; }
+		}
+
+
 		private int logeado;
 
 		public int Logeado

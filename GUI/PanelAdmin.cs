@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace GUI
 {
-    public partial class Menu_Principal : Form
+    public partial class PanelAdmin : Form
     {
-        public Menu_Principal()
+        public PanelAdmin()
         {
             InitializeComponent();
         }
@@ -67,7 +67,7 @@ namespace GUI
             string nuevaClave = txtNuevaPassword.Text; 
             BLL.BLL_Usuario gestorUsuario = new BLL.BLL_Usuario();
 
-            bool registrado = gestorUsuario.RegistrarUsuario(nuevoNombre,nuevaClave);
+            bool registrado = gestorUsuario.RegistrarUsuario(nuevoNombre, nuevaClave, comboBox1.SelectedItem.ToString()); 
 
             if (registrado)
                 MessageBox.Show("UsuarioBLL creado y encriptado con éxito");

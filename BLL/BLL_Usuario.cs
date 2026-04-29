@@ -31,7 +31,7 @@ namespace BLL
         }
 
       
-        public bool RegistrarUsuario(string nombre, string passwordPlana)
+        public bool RegistrarUsuario(string nombre, string passwordPlana, string role)
         {
           
             string passwordHasheada = BLL_Seguridad.HashearPassword(passwordPlana);
@@ -39,6 +39,7 @@ namespace BLL
             BE.Usuario nuevoUsuario = new BE.Usuario();
             nuevoUsuario.Nombre = nombre;
             nuevoUsuario.Password = passwordHasheada;
+            nuevoUsuario.Role = role;
             nuevoUsuario.Logeado = 0;
             DAL.MP_Usuario mp_usuario = new DAL.MP_Usuario();
             int filas = mp_usuario.Insertar(nuevoUsuario);
