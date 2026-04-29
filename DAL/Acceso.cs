@@ -92,5 +92,15 @@ namespace DAL
 
             return parametro;
         }
+
+        public SqlParameter CrearParametro(string nombre, DateTime valor)
+        {
+            SqlParameter parametro = new SqlParameter();
+            parametro.ParameterName = nombre;
+            parametro.Value = valor;
+            parametro.DbType = DbType.DateTime;
+
+            return parametro;
+        }
     }
 }

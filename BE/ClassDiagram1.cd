@@ -1,20 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Comment CommentText="DIAGRAMA DE BE&#xD;&#xA;&#xD;&#xA;">
-    <Position X="9.687" Y="0.5" Height="0.75" Width="1.7" />
-  </Comment>
-  <Class Name="BE.Usuario">
-    <Position X="1.25" Y="0.5" Width="1.5" />
+  <Class Name="BE.BE_Usuario">
+    <Position X="0.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAABAAICAQAAAgAAAAAAAAAACAAAAAgACAAA=</HashCode>
-      <FileName>Usuario.cs</FileName>
+      <HashCode>AAAAAAAAAABAAICAUAAAgBAAAAAAAAACAAAAAgACAAA=</HashCode>
+      <FileName>BE_Usuario.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BE.Bitacora">
-    <Position X="4.5" Y="1.75" Width="1.5" />
+  <Class Name="BE.BE_Bitacora">
+    <Position X="2.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAEAAAAAAAAIAAAAAAAAAAAAAAACAACAgQ=</HashCode>
-      <FileName>Bitacora.cs</FileName>
+      <HashCode>AAAAgAAAAAAAAAAAAQAAIAAAAAAAAAAAAAAAAAACAkA=</HashCode>
+      <FileName>BE_Bitacora.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

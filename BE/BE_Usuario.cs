@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BE
 {
-    public class Usuario
+    public class BE_Usuario
     {
 		private int id_Usuario;
 

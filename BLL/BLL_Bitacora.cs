@@ -24,6 +24,17 @@ namespace BLL
             return filas > 0;  
         }
 
+        public bool LimpiarBitacora()
+        {
+
+            BE.BE_Bitacora nuevaBitacora = new BE.BE_Bitacora();
+            DAL.MP_Bitacora mp_bitacora = new DAL.MP_Bitacora();
+
+            int filas = mp_bitacora.Limpiar(nuevaBitacora);
+
+            return filas > 0;
+        }
+
         public System.Data.DataTable ObtenerBitacora()
         {
             DAL.MP_Bitacora mpBitacora = new DAL.MP_Bitacora();

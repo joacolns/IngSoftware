@@ -29,11 +29,11 @@ namespace BLL
             }
             //Atributos de la Sesión
 
-            public BE.Usuario UsuarioActual { get; private set; }
+            public BE.BE_Usuario UsuarioActual { get; private set; }
 
             public bool EstaLogeado { get { return UsuarioActual != null; } }
 
-            public void IniciarSesion(BE.Usuario usuario)
+            public void IniciarSesion(BE.BE_Usuario usuario)
             {
                 UsuarioActual = usuario;
             }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BE;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,6 +13,9 @@ namespace GUI
 {
     public partial class PanelAdmin : Form
     {
+
+        public BLL.BLL_Bitacora BLLBitacora = new BLL.BLL_Bitacora();
+
         public PanelAdmin()
         {
             InitializeComponent();
@@ -114,6 +118,12 @@ namespace GUI
         private void Menu_Principal_FormClosing(object sender, FormClosingEventArgs e)
         {
             CerrarSesion();
+        }
+
+        private void btn_LimpiarBitacora_Click(object sender, EventArgs e)
+        {
+            BLLBitacora.LimpiarBitacora();
+            EnlazarBitacora();
         }
     }
 }

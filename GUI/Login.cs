@@ -15,7 +15,7 @@ namespace GUI
     {
 
         public BLL.BLL_Usuario BLLusuario = new BLL.BLL_Usuario();
-        public BE.Usuario BEUsuario;
+        public BE.BE_Usuario BEUsuario;
         public BLL.BLL_Bitacora BLLBitacora = new BLL.BLL_Bitacora();
 
         public Login()
@@ -41,7 +41,7 @@ namespace GUI
             }
             else
             {
-                MessageBox.Show("UsuarioBLL o contraseña incorrectos.", "Error de Acceso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Usuario o contraseña incorrectos.", "Error de Acceso", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 // Usamos 0 como ID genérico y el string 'user' del textbox porque no hay BEUsuario válido logueado
                 //BLLBitacora.RegistrarBitacora(0, user, "Login", "El usuario ha intentdo iniciar sesion", DateTime.Now);
 

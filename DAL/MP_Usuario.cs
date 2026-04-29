@@ -9,12 +9,12 @@ using System.Text;
 
 namespace DAL
 {
-    public class MP_Usuario : Mapper<BE.Usuario>
+    public class MP_Usuario : Mapper<BE.BE_Usuario>
     {
         Acceso acceso = new Acceso();
-        public BE.Usuario BuscarUsuarioPorNombre(string nombreUsuario)
+        public BE.BE_Usuario BuscarUsuarioPorNombre(string nombreUsuario)
         {
-            BE.Usuario usuarioEncontrado = null;
+            BE.BE_Usuario usuarioEncontrado = null;
 
             try
             {
@@ -31,7 +31,7 @@ namespace DAL
                 if (dt != null && dt.Rows.Count > 0)
                 {
                     DataRow fila = dt.Rows[0];
-                    usuarioEncontrado = new BE.Usuario();
+                    usuarioEncontrado = new BE.BE_Usuario();
 
                     usuarioEncontrado.ID_Usuario = Convert.ToInt32(fila["id_Usuario"]);
                     usuarioEncontrado.Nombre = fila["nombre"].ToString();
@@ -53,7 +53,7 @@ namespace DAL
         }
 
        
-        public override int Insertar(BE.Usuario entidad)
+        public override int Insertar(BE.BE_Usuario entidad)
         {
             int filasAfectadas = 0;
             try

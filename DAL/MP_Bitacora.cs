@@ -25,7 +25,8 @@ namespace DAL
                     acceso.CrearParametro("@ID_Usuario", entidad.ID_Usuario),
                     acceso.CrearParametro("@Username", entidad.Username),
                     acceso.CrearParametro("@Actividad", entidad.Actividad),
-                    acceso.CrearParametro("@Detalle", entidad.Detalle)
+                    acceso.CrearParametro("@Detalle", entidad.Detalle),
+                    acceso.CrearParametro("@FechaHora", entidad.FechaHora),
                 };
 
                 filasAfectadas = acceso.Escribir("SP_InsertarBitacora", parametros);
@@ -57,6 +58,28 @@ namespace DAL
             {
                 acceso.Cerrar();
             }
+        }
+
+        public int Limpiar(BE.BE_Bitacora entidad)
+        {
+            int filasAfectadas = 0;
+
+            try
+            {
+                acceso.Abrir();
+
+                filasAfectadas = acceso.Escribir("SP_LimpiarBitacora");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error en la bitacora: " + ex.Message);
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+
+            return filasAfectadas;
         }
     }
 }

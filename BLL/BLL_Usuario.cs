@@ -12,7 +12,7 @@ namespace BLL
         public bool Login(string nombreUsuario, string passwordIngresada)
         {
             DAL.MP_Usuario mp_usuario = new DAL.MP_Usuario();
-            BE.Usuario usuarioBD = mp_usuario.BuscarUsuarioPorNombre(nombreUsuario);
+            BE.BE_Usuario usuarioBD = mp_usuario.BuscarUsuarioPorNombre(nombreUsuario);
 
             if (usuarioBD != null)
             {
@@ -36,7 +36,7 @@ namespace BLL
           
             string passwordHasheada = BLL_Seguridad.HashearPassword(passwordPlana);
 
-            BE.Usuario nuevoUsuario = new BE.Usuario();
+            BE.BE_Usuario nuevoUsuario = new BE.BE_Usuario();
             nuevoUsuario.Nombre = nombre;
             nuevoUsuario.Password = passwordHasheada;
             nuevoUsuario.Role = role;

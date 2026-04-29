@@ -41,6 +41,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.btn_LimpiarBitacora = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBitacora)).BeginInit();
             this.SuspendLayout();
             // 
@@ -168,12 +169,23 @@
             this.label5.TabIndex = 13;
             this.label5.Text = "Rol";
             // 
+            // btn_LimpiarBitacora
+            // 
+            this.btn_LimpiarBitacora.Location = new System.Drawing.Point(792, 259);
+            this.btn_LimpiarBitacora.Name = "btn_LimpiarBitacora";
+            this.btn_LimpiarBitacora.Size = new System.Drawing.Size(109, 38);
+            this.btn_LimpiarBitacora.TabIndex = 14;
+            this.btn_LimpiarBitacora.Text = "Limpiar";
+            this.btn_LimpiarBitacora.UseVisualStyleBackColor = true;
+            this.btn_LimpiarBitacora.Click += new System.EventHandler(this.btn_LimpiarBitacora_Click);
+            // 
             // PanelAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Info;
-            this.ClientSize = new System.Drawing.Size(800, 494);
+            this.ClientSize = new System.Drawing.Size(924, 492);
+            this.Controls.Add(this.btn_LimpiarBitacora);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label4);
@@ -213,5 +225,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btn_LimpiarBitacora;
     }
 }
