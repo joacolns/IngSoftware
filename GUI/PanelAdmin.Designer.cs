@@ -201,7 +201,7 @@
             this.Controls.Add(this.labelNOMBREUSER);
             this.Name = "PanelAdmin";
             this.Text = "Form2";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Menu_Principal_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PanelAdmin_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Menu_Principal_FormClosed);
             this.Load += new System.EventHandler(this.Menu_Principal_Load_1);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBitacora)).EndInit();

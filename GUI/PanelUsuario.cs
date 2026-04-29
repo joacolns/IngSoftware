@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BE;
+using BLL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,12 +19,15 @@ namespace GUI
             InitializeComponent();
         }
 
+        public BE.BE_Usuario BEUsuario;
+        public BLL.BLL_Bitacora BLLBitacora = new BLL.BLL_Bitacora();
+
         private void PanelUsuario_Load(object sender, EventArgs e)
         {
-            if (BLL.BLL_GestorDeSesiones.Instancia.EstaLogeado)
+            if (BLL.BLL_GestorDeSesion.Instancia.EstaLogeado)
             {
 
-                label1.Text = "Bienvenido, " + BLL.BLL_GestorDeSesiones.Instancia.UsuarioActual.Nombre;
+                label1.Text = "Bienvenido, " + BLL.BLL_GestorDeSesion.Instancia.UsuarioActual.Nombre;
             }
         }
 
@@ -35,7 +40,14 @@ namespace GUI
         private void CerrarSesion()
         {
             BLL.BLL_Usuario gestorUsuario = new BLL.BLL_Usuario();
+            var usuarioSeison = BLL_GestorDeSesion.Instancia.UsuarioActual;
+            BLLBitacora.RegistrarBitacora(usuarioSeison.ID_Usuario, usuarioSeison.Nombre, "Logout", "El usuario ha cerrado sesión", DateTime.Now);
             gestorUsuario.Logout();
+        }
+
+        private void PanelUsuario_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            CerrarSesion();
         }
     }
 }

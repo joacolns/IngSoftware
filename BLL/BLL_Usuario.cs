@@ -22,7 +22,7 @@ namespace BLL
                 if (passwordCorrecta)
                 {
                    
-                    BLL_GestorDeSesiones.Instancia.IniciarSesion(usuarioBD);
+                    BLL_GestorDeSesion.Instancia.IniciarSesion(usuarioBD);
                     return true;
                 }
             }
@@ -49,7 +49,7 @@ namespace BLL
 
         public void Logout()
         {
-            BLL_GestorDeSesiones.Instancia.CerrarSesion();
+            BLL_GestorDeSesion.Instancia.CerrarSesion();
         }
     }
 }

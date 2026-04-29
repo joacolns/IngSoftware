@@ -7,11 +7,11 @@
       <FileName>BLL_Usuario.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BLL.BLL_GestorDeSesiones">
+  <Class Name="BLL.BLL_GestorDeSesion">
     <Position X="2.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAACAAAABAABACAAAAAAAAAAAAAAAAAECAAAAAA=</HashCode>
-      <FileName>BLL_GestorDeSesiones.cs</FileName>
+      <FileName>BLL_GestorDeSesion.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BLL.BLL_Seguridad">

@@ -37,10 +37,10 @@ namespace GUI
         private void Menu_Principal_Load_1(object sender, EventArgs e)
         {
 
-            if (BLL.BLL_GestorDeSesiones.Instancia.EstaLogeado)
+            if (BLL.BLL_GestorDeSesion.Instancia.EstaLogeado)
             {
 
-                labelUSER.Text = BLL.BLL_GestorDeSesiones.Instancia.UsuarioActual.Nombre;
+                labelUSER.Text = BLL.BLL_GestorDeSesion.Instancia.UsuarioActual.Nombre;
             }
 
             EnlazarBitacora();
@@ -74,18 +74,28 @@ namespace GUI
 
             bool registrado = gestorUsuario.RegistrarUsuario(nuevoNombre, nuevaClave, comboBox1.SelectedItem.ToString());
 
+            var usuarioSesion = BLL_GestorDeSesion.Instancia.UsuarioActual;
+
             if (registrado)
             {
                 MessageBox.Show("Usuario creado y encriptado con éxito");
-                BEUsuario = BLL_GestorDeSesiones.Instancia.UsuarioActual;
-                BLLBitacora.RegistrarBitacora(BEUsuario.ID_Usuario, BEUsuario.Nombre, "Registro", "El administrador ha creado un nuevo usuario", DateTime.Now);
+                
+                if (usuarioSesion != null)
+                {
+                    BLLBitacora.RegistrarBitacora(usuarioSesion.ID_Usuario, usuarioSesion.Nombre, "Registro", "El administrador ha creado un nuevo usuario", DateTime.Now);
+                }
+                
                 EnlazarBitacora();
             }
             else
             {
                 MessageBox.Show("Error al registrar");
-                BEUsuario = BLL_GestorDeSesiones.Instancia.UsuarioActual;
-                BLLBitacora.RegistrarBitacora(BEUsuario.ID_Usuario, BEUsuario.Nombre, "Registro", "El administrador ha intentado crear un nuevo usuario", DateTime.Now);
+                
+                if (usuarioSesion != null)
+                {
+                    BLLBitacora.RegistrarBitacora(usuarioSesion.ID_Usuario, usuarioSesion.Nombre, "Registro", "El administrador ha intentado crear un nuevo usuario", DateTime.Now);
+                }
+                
                 EnlazarBitacora();
             }
         }
@@ -93,9 +103,17 @@ namespace GUI
         private void CerrarSesion()
         {
             BLL.BLL_Usuario gestorUsuario = new BLL.BLL_Usuario();
+                    
+            var usuarioSesion = BLL_GestorDeSesion.Instancia.UsuarioActual;
+
+            if (usuarioSesion != null)
+            {
+                BLLBitacora.RegistrarBitacora(usuarioSesion.ID_Usuario, usuarioSesion.Nombre, "Logout", "El administrador ha cerrado sesión", DateTime.Now);
+            }
+            
             gestorUsuario.Logout();
         }
-
+        
         private void button2_Click(object sender, EventArgs e)
         {
             CerrarSesion();
@@ -126,7 +144,7 @@ namespace GUI
 
         }
 
-        private void Menu_Principal_FormClosing(object sender, FormClosingEventArgs e)
+        private void PanelAdmin_FormClosing(object sender, FormClosingEventArgs e)
         {
             CerrarSesion();
         }
@@ -134,8 +152,14 @@ namespace GUI
         private void btn_LimpiarBitacora_Click(object sender, EventArgs e)
         {
             BLLBitacora.LimpiarBitacora();
-            BEUsuario = BLL_GestorDeSesiones.Instancia.UsuarioActual;
-            BLLBitacora.RegistrarBitacora(BEUsuario.ID_Usuario, BEUsuario.Nombre, "Bitacora", "El administrador ha limpiado la bitacora", DateTime.Now);
+            
+            var usuarioSesion = BLL_GestorDeSesion.Instancia.UsuarioActual;
+
+            if (usuarioSesion != null)
+            {
+                BLLBitacora.RegistrarBitacora(usuarioSesion.ID_Usuario, usuarioSesion.Nombre, "Bitacora", "El administrador ha limpiado la bitacora", DateTime.Now);
+            }
+            
             EnlazarBitacora();
         }
     }

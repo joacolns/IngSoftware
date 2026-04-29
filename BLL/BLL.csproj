@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL_Bitacora.cs" />
-    <Compile Include="BLL_GestorDeSesiones.cs" />
+    <Compile Include="BLL_GestorDeSesion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BLL_Seguridad.cs" />
     <Compile Include="BLL_Usuario.cs" />

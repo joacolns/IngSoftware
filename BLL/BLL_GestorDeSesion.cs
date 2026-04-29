@@ -5,15 +5,15 @@ using System.Text;
 
 namespace BLL
 {
-        public sealed class BLL_GestorDeSesiones
+        public sealed class BLL_GestorDeSesion
         {
             //variable estática privada
-            private static BLL_GestorDeSesiones _instancia = null;
+            private static BLL_GestorDeSesion _instancia = null;
             private static  object _padlock = new object();
-            private BLL_GestorDeSesiones() { }
+            private BLL_GestorDeSesion() { }
 
             //puerta de acceso global
-            public static BLL_GestorDeSesiones Instancia
+            public static BLL_GestorDeSesion Instancia
             {
                 get
                 {
@@ -21,7 +21,7 @@ namespace BLL
                     {
                         if (_instancia == null)
                         {
-                            _instancia = new BLL_GestorDeSesiones();
+                            _instancia = new BLL_GestorDeSesion();
                         }
                         return _instancia;
                     }

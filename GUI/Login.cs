@@ -35,7 +35,7 @@ namespace GUI
 
             if (ingresoExitoso)
             {
-                BEUsuario = BLL_GestorDeSesiones.Instancia.UsuarioActual;
+                BEUsuario = BLL_GestorDeSesion.Instancia.UsuarioActual;
 
                 BLLBitacora.RegistrarBitacora(BEUsuario.ID_Usuario, BEUsuario.Nombre, "Login", "El usuario ha inicado sesion", DateTime.Now);
 
