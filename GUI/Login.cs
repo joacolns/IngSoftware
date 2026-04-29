@@ -76,7 +76,7 @@ namespace GUI
                 btn_Login.Enabled = false;
                 await Task.Delay(5000);
                 btn_Login.Enabled = true;
-
+                intentosFallidos = 0;
             }
             else
             {

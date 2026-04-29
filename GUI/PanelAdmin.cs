@@ -1,4 +1,5 @@
 ﻿using BE;
+using BLL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,6 +16,8 @@ namespace GUI
     {
 
         public BLL.BLL_Bitacora BLLBitacora = new BLL.BLL_Bitacora();
+        public BLL.BLL_Usuario BLLusuario = new BLL.BLL_Usuario();
+        public BE.BE_Usuario BEUsuario;
 
         public PanelAdmin()
         {
@@ -25,8 +28,6 @@ namespace GUI
         {
 
         }
-
-        
 
         private void labelUSER_Click(object sender, EventArgs e)
         {
@@ -71,12 +72,22 @@ namespace GUI
             string nuevaClave = txtNuevaPassword.Text; 
             BLL.BLL_Usuario gestorUsuario = new BLL.BLL_Usuario();
 
-            bool registrado = gestorUsuario.RegistrarUsuario(nuevoNombre, nuevaClave, comboBox1.SelectedItem.ToString()); 
+            bool registrado = gestorUsuario.RegistrarUsuario(nuevoNombre, nuevaClave, comboBox1.SelectedItem.ToString());
 
             if (registrado)
-                MessageBox.Show("UsuarioBLL creado y encriptado con éxito");
+            {
+                MessageBox.Show("Usuario creado y encriptado con éxito");
+                BEUsuario = BLL_GestorDeSesiones.Instancia.UsuarioActual;
+                BLLBitacora.RegistrarBitacora(BEUsuario.ID_Usuario, BEUsuario.Nombre, "Registro", "El administrador ha creado un nuevo usuario", DateTime.Now);
+                EnlazarBitacora();
+            }
             else
+            {
                 MessageBox.Show("Error al registrar");
+                BEUsuario = BLL_GestorDeSesiones.Instancia.UsuarioActual;
+                BLLBitacora.RegistrarBitacora(BEUsuario.ID_Usuario, BEUsuario.Nombre, "Registro", "El administrador ha intentado crear un nuevo usuario", DateTime.Now);
+                EnlazarBitacora();
+            }
         }
 
         private void CerrarSesion()
@@ -123,6 +134,8 @@ namespace GUI
         private void btn_LimpiarBitacora_Click(object sender, EventArgs e)
         {
             BLLBitacora.LimpiarBitacora();
+            BEUsuario = BLL_GestorDeSesiones.Instancia.UsuarioActual;
+            BLLBitacora.RegistrarBitacora(BEUsuario.ID_Usuario, BEUsuario.Nombre, "Bitacora", "El administrador ha limpiado la bitacora", DateTime.Now);
             EnlazarBitacora();
         }
     }
