@@ -18,6 +18,8 @@ namespace GUI
         public BE.BE_Usuario BEUsuario;
         public BLL.BLL_Bitacora BLLBitacora = new BLL.BLL_Bitacora();
 
+        int intentosFallidos = 0;
+
         public Login()
         {
             InitializeComponent();
@@ -41,7 +43,8 @@ namespace GUI
             }
             else
             {
-                MessageBox.Show("Usuario o contraseña incorrectos.", "Error de Acceso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                intentosFallidos++;
+                GestionarBloqueo();
                 // Usamos 0 como ID genérico y el string 'user' del textbox porque no hay BEUsuario válido logueado
                 //BLLBitacora.RegistrarBitacora(0, user, "Login", "El usuario ha intentdo iniciar sesion", DateTime.Now);
 
@@ -63,6 +66,22 @@ namespace GUI
                 this.Hide();
             }
             
+        }
+
+        private async Task GestionarBloqueo()
+        {
+            if (intentosFallidos >= 3)
+            {
+                MessageBox.Show("Usuario o contraseña incorrectos. Usuario Bloqueado por 5 segundos", "Error de acceso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                btn_Login.Enabled = false;
+                await Task.Delay(5000);
+                btn_Login.Enabled = true;
+
+            }
+            else
+            {
+                MessageBox.Show("Usuario o contraseña incorrectos.", "Error de Acceso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
