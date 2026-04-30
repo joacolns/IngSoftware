@@ -162,5 +162,41 @@ namespace GUI
             
             EnlazarBitacora();
         }
+
+        private void buttonBuscar_Click(object sender, EventArgs e)
+        {
+            FiltrarBitacora();
+        }
+
+
+        private void FiltrarBitacora()
+        {
+            try
+            {
+                DateTime fechaInicio = dateTimePickerFechaInicio.Value.Date;
+                DateTime fechaFin = dateTimePickerFechaFinal.Value.Date.AddDays(1).AddTicks(-1);
+                string filtroUsuario = textBoxUsuarioBuscar.Text.Trim().ToLower();
+
+                DataTable dtCompleto = BLLBitacora.ObtenerBitacora();
+
+                if (dtCompleto != null)
+                {
+                    // Consulta LINQ 
+                    var consultaFiltro = 
+                        from row in dtCompleto.AsEnumerable()
+                        let fecha = Convert.ToDateTime(row["FechaHora"])
+                        let usuario = row["Username"].ToString().ToLower()
+                        where fecha >= fechaInicio && fecha <= fechaFin && usuario.Contains(filtroUsuario)
+                        select row;
+
+                    // Asignamos el resultado o una tabla vacía en una sola línea si no hay coincidencias
+                    dataGridViewBitacora.DataSource = consultaFiltro.Any() ? consultaFiltro.CopyToDataTable() : dtCompleto.Clone();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al filtrar la bitácora: " + ex.Message);
+            }
+        }
     }
 }

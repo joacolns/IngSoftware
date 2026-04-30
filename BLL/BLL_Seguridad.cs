@@ -42,7 +42,7 @@ namespace BLL
                 byte[] salt = new byte[16];
                 Array.Copy(hashBytes, 0, salt, 0, 16);
 
-               
+                
                 using (var pbkdf2 = new Rfc2898DeriveBytes(passwordIngresada, salt, 10000))
                 {
                     byte[] hashCalculado = pbkdf2.GetBytes(20);

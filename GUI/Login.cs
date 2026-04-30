@@ -45,8 +45,7 @@ namespace GUI
             {
                 intentosFallidos++;
                 GestionarBloqueo();
-                // Usamos 0 como ID genérico y el string 'user' del textbox porque no hay BEUsuario válido logueado
-                //BLLBitacora.RegistrarBitacora(0, user, "Login", "El usuario ha intentdo iniciar sesion", DateTime.Now);
+                
 
             }
         }
