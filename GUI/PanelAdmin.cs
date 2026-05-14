@@ -189,7 +189,6 @@ namespace GUI
                         where fecha >= fechaInicio && fecha <= fechaFin && usuario.Contains(filtroUsuario)
                         select row;
 
-                    // Asignamos el resultado o una tabla vacía en una sola línea si no hay coincidencias
                     dataGridViewBitacora.DataSource = consultaFiltro.Any() ? consultaFiltro.CopyToDataTable() : dtCompleto.Clone();
                 }
             }
