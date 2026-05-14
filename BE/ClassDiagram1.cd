@@ -14,5 +14,26 @@
       <FileName>BE_Bitacora.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="BE.BE_Componente">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQACAAAACAAAAAgAAAAAAAAAAAAAQgAAAAQAA=</HashCode>
+      <FileName>BE_Componente.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BE.BE_Hoja">
+    <Position X="4.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BE_Hoja.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BE.BE_Composite">
+    <Position X="6.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BE_Composite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
