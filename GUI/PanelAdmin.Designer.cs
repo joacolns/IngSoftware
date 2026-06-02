@@ -1,4 +1,4 @@
-﻿namespace GUI
+namespace GUI
 {
     partial class PanelAdmin
     {
@@ -49,6 +49,14 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.labelSelectUsuario = new System.Windows.Forms.Label();
+            this.comboBoxUsuarios = new System.Windows.Forms.ComboBox();
+            this.labelTreePermisos = new System.Windows.Forms.Label();
+            this.treePermisos = new System.Windows.Forms.TreeView();
+            this.btnAsignar = new System.Windows.Forms.Button();
+            this.btnQuitar = new System.Windows.Forms.Button();
+            this.labelPermisosUsuario = new System.Windows.Forms.Label();
+            this.listBoxPermisosUsuario = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBitacora)).BeginInit();
             this.SuspendLayout();
             // 
@@ -65,7 +73,7 @@
             // labelUSER
             // 
             this.labelUSER.AutoSize = true;
-            this.labelUSER.Location = new System.Drawing.Point(1408, 35);
+            this.labelUSER.Location = new System.Drawing.Point(1755, 21);
             this.labelUSER.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelUSER.Name = "labelUSER";
             this.labelUSER.Size = new System.Drawing.Size(70, 25);
@@ -76,7 +84,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1266, 35);
+            this.label1.Location = new System.Drawing.Point(1624, 21);
             this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(119, 25);
@@ -87,7 +95,7 @@
             // txtNuevoUsuario
             // 
             this.txtNuevoUsuario.Location = new System.Drawing.Point(44, 87);
-            this.txtNuevoUsuario.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtNuevoUsuario.Margin = new System.Windows.Forms.Padding(6);
             this.txtNuevoUsuario.Name = "txtNuevoUsuario";
             this.txtNuevoUsuario.Size = new System.Drawing.Size(196, 31);
             this.txtNuevoUsuario.TabIndex = 3;
@@ -96,7 +104,7 @@
             // txtNuevaPassword
             // 
             this.txtNuevaPassword.Location = new System.Drawing.Point(44, 171);
-            this.txtNuevaPassword.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtNuevaPassword.Margin = new System.Windows.Forms.Padding(6);
             this.txtNuevaPassword.Name = "txtNuevaPassword";
             this.txtNuevaPassword.Size = new System.Drawing.Size(196, 31);
             this.txtNuevaPassword.TabIndex = 5;
@@ -126,7 +134,7 @@
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(42, 329);
-            this.button1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.button1.Margin = new System.Windows.Forms.Padding(6);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(202, 73);
             this.button1.TabIndex = 8;
@@ -136,8 +144,8 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(1394, 73);
-            this.button2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.button2.Location = new System.Drawing.Point(1651, 887);
+            this.button2.Margin = new System.Windows.Forms.Padding(6);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(182, 44);
             this.button2.TabIndex = 9;
@@ -149,7 +157,7 @@
             // 
             this.dataGridViewBitacora.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewBitacora.Location = new System.Drawing.Point(42, 498);
-            this.dataGridViewBitacora.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridViewBitacora.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridViewBitacora.Name = "dataGridViewBitacora";
             this.dataGridViewBitacora.RowHeadersWidth = 82;
             this.dataGridViewBitacora.RowTemplate.Height = 33;
@@ -173,7 +181,7 @@
             "usuario",
             "admin"});
             this.comboBox1.Location = new System.Drawing.Point(44, 258);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(6);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(192, 33);
             this.comboBox1.TabIndex = 12;
@@ -191,7 +199,7 @@
             // btn_LimpiarBitacora
             // 
             this.btn_LimpiarBitacora.Location = new System.Drawing.Point(1584, 498);
-            this.btn_LimpiarBitacora.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btn_LimpiarBitacora.Margin = new System.Windows.Forms.Padding(6);
             this.btn_LimpiarBitacora.Name = "btn_LimpiarBitacora";
             this.btn_LimpiarBitacora.Size = new System.Drawing.Size(218, 73);
             this.btn_LimpiarBitacora.TabIndex = 14;
@@ -255,9 +263,79 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(726, 408);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(125, 25);
+            this.label8.Size = new System.Drawing.Size(194, 25);
             this.label8.TabIndex = 21;
-            this.label8.Text = "Fecha Final";
+            this.label8.Text = "Nombre de usuario";
+            this.label8.Click += new System.EventHandler(this.label8_Click);
+            // 
+            // labelSelectUsuario
+            // 
+            this.labelSelectUsuario.AutoSize = true;
+            this.labelSelectUsuario.Location = new System.Drawing.Point(400, 30);
+            this.labelSelectUsuario.Name = "labelSelectUsuario";
+            this.labelSelectUsuario.Size = new System.Drawing.Size(211, 25);
+            this.labelSelectUsuario.TabIndex = 22;
+            this.labelSelectUsuario.Text = "Seleccionar Usuario:";
+            // 
+            // comboBoxUsuarios
+            // 
+            this.comboBoxUsuarios.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxUsuarios.Location = new System.Drawing.Point(400, 60);
+            this.comboBoxUsuarios.Name = "comboBoxUsuarios";
+            this.comboBoxUsuarios.Size = new System.Drawing.Size(220, 33);
+            this.comboBoxUsuarios.TabIndex = 23;
+            this.comboBoxUsuarios.SelectedIndexChanged += new System.EventHandler(this.comboBoxUsuarios_SelectedIndexChanged);
+            // 
+            // labelTreePermisos
+            // 
+            this.labelTreePermisos.AutoSize = true;
+            this.labelTreePermisos.Location = new System.Drawing.Point(650, 30);
+            this.labelTreePermisos.Name = "labelTreePermisos";
+            this.labelTreePermisos.Size = new System.Drawing.Size(311, 25);
+            this.labelTreePermisos.TabIndex = 24;
+            this.labelTreePermisos.Text = "Árbol de Permisos Disponibles:";
+            // 
+            // treePermisos
+            // 
+            this.treePermisos.Location = new System.Drawing.Point(650, 60);
+            this.treePermisos.Name = "treePermisos";
+            this.treePermisos.Size = new System.Drawing.Size(350, 300);
+            this.treePermisos.TabIndex = 25;
+            // 
+            // btnAsignar
+            // 
+            this.btnAsignar.Location = new System.Drawing.Point(1020, 100);
+            this.btnAsignar.Name = "btnAsignar";
+            this.btnAsignar.Size = new System.Drawing.Size(130, 45);
+            this.btnAsignar.TabIndex = 26;
+            this.btnAsignar.Text = "Asignar >>";
+            this.btnAsignar.Click += new System.EventHandler(this.btnAsignar_Click);
+            // 
+            // btnQuitar
+            // 
+            this.btnQuitar.Location = new System.Drawing.Point(1020, 160);
+            this.btnQuitar.Name = "btnQuitar";
+            this.btnQuitar.Size = new System.Drawing.Size(130, 45);
+            this.btnQuitar.TabIndex = 27;
+            this.btnQuitar.Text = "<< Quitar";
+            this.btnQuitar.Click += new System.EventHandler(this.btnQuitar_Click);
+            // 
+            // labelPermisosUsuario
+            // 
+            this.labelPermisosUsuario.AutoSize = true;
+            this.labelPermisosUsuario.Location = new System.Drawing.Point(1162, 30);
+            this.labelPermisosUsuario.Name = "labelPermisosUsuario";
+            this.labelPermisosUsuario.Size = new System.Drawing.Size(307, 25);
+            this.labelPermisosUsuario.TabIndex = 28;
+            this.labelPermisosUsuario.Text = "Permisos Directos del Usuario:";
+            // 
+            // listBoxPermisosUsuario
+            // 
+            this.listBoxPermisosUsuario.ItemHeight = 25;
+            this.listBoxPermisosUsuario.Location = new System.Drawing.Point(1170, 60);
+            this.listBoxPermisosUsuario.Name = "listBoxPermisosUsuario";
+            this.listBoxPermisosUsuario.Size = new System.Drawing.Size(250, 279);
+            this.listBoxPermisosUsuario.TabIndex = 29;
             // 
             // PanelAdmin
             // 
@@ -286,7 +364,15 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.labelUSER);
             this.Controls.Add(this.labelNOMBREUSER);
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Controls.Add(this.labelSelectUsuario);
+            this.Controls.Add(this.comboBoxUsuarios);
+            this.Controls.Add(this.labelTreePermisos);
+            this.Controls.Add(this.treePermisos);
+            this.Controls.Add(this.btnAsignar);
+            this.Controls.Add(this.btnQuitar);
+            this.Controls.Add(this.labelPermisosUsuario);
+            this.Controls.Add(this.listBoxPermisosUsuario);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "PanelAdmin";
             this.Text = "Form2";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PanelAdmin_FormClosing);
@@ -321,5 +407,13 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label labelSelectUsuario;
+        private System.Windows.Forms.ComboBox comboBoxUsuarios;
+        private System.Windows.Forms.Label labelTreePermisos;
+        private System.Windows.Forms.TreeView treePermisos;
+        private System.Windows.Forms.Button btnAsignar;
+        private System.Windows.Forms.Button btnQuitar;
+        private System.Windows.Forms.Label labelPermisosUsuario;
+        private System.Windows.Forms.ListBox listBoxPermisosUsuario;
     }
 }

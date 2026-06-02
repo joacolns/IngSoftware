@@ -1,4 +1,5 @@
-﻿using BLL;
+using BLL;
+using BE;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,7 +28,7 @@ namespace GUI
 
         private void btn_Login_Click(object sender, EventArgs e)
         {
-          
+
             string user = txtBox_usuario.Text;
             string pass = txtBox_password.Text;
 
@@ -45,26 +46,26 @@ namespace GUI
             {
                 intentosFallidos++;
                 GestionarBloqueo();
-                
+
 
             }
         }
 
         private void VerificarRol()
         {
-            if(BEUsuario.Role == "admin")
+            if (BEUsuario.Role == "admin")
             {
                 PanelAdmin panel_admin = new PanelAdmin();
                 panel_admin.Show();
                 this.Hide();
             }
-            else if(BEUsuario.Role == "usuario")
+            else if (BEUsuario.Role == "usuario")
             {
                 PanelUsuario panel_usuario = new PanelUsuario();
                 panel_usuario.Show();
                 this.Hide();
             }
-            
+
         }
 
         private async Task GestionarBloqueo()
@@ -83,14 +84,75 @@ namespace GUI
             }
         }
 
+        private void CrearAdminConPermisos()
+        {
+            try
+            {
+                BLL_Permiso bllPermiso = new BLL_Permiso();
+                var todos = bllPermiso.ObtenerTodos();
+
+                if (todos.Count == 0)
+                {
+                    // Create leaves
+                    BE_Hoja h1 = new BE_Hoja { Nombre = "Ver Bitacora" };
+                    BE_Hoja h2 = new BE_Hoja { Nombre = "Limpiar Bitacora" };
+                    BE_Hoja h3 = new BE_Hoja { Nombre = "Registrar Usuario" };
+                    BE_Hoja h4 = new BE_Hoja { Nombre = "Gestionar Permisos" };
+
+                    bllPermiso.GuardarComponente(h1);
+                    bllPermiso.GuardarComponente(h2);
+                    bllPermiso.GuardarComponente(h3);
+                    bllPermiso.GuardarComponente(h4);
+
+                    // Create composites
+                    BE_Composite rAdmin = new BE_Composite { Nombre = "Rol Admin" };
+                    BE_Composite rUser = new BE_Composite { Nombre = "Rol Usuario" };
+
+                    bllPermiso.GuardarComponente(rAdmin);
+                    bllPermiso.GuardarComponente(rUser);
+
+                    // Add children
+                    rAdmin.Agregar(h1);
+                    rAdmin.Agregar(h2);
+                    rAdmin.Agregar(h3);
+                    rAdmin.Agregar(h4);
+
+                    rUser.Agregar(h1);
+
+                    // Save relationships
+                    bllPermiso.GuardarComponente(rAdmin);
+                    bllPermiso.GuardarComponente(rUser);
+                }
+
+                // Seed Admin User if not exists
+                var usuarios = BLLusuario.ObtenerUsuarios();
+                if (!usuarios.Any(u => u.Nombre.Equals("admin", StringComparison.OrdinalIgnoreCase)))
+                {
+                    BLLusuario.RegistrarUsuario("admin", "123", "admin");
+
+                    usuarios = BLLusuario.ObtenerUsuarios();
+                    var adminUser = usuarios.FirstOrDefault(u => u.Nombre.Equals("admin", StringComparison.OrdinalIgnoreCase));
+
+                    if (adminUser != null)
+                    {
+                        var allPerms = bllPermiso.ObtenerTodos();
+                        var rolAdmin = allPerms.FirstOrDefault(p => p.Nombre == "Rol Admin");
+                        if (rolAdmin != null)
+                        {
+                            bllPermiso.GuardarPermisosUsuario(adminUser, new List<BE_Componente> { rolAdmin });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al inicializar base de datos de seguridad: " + ex.Message);
+            }
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
-            /*
-            BLL.BLL_Usuario gestorUsuario = new BLL.BLL_Usuario();
-
-            gestorUsuario.RegistrarUsuario("admin", "1234567", "admin");
-            */
+            CrearAdminConPermisos();
         }
     }
-    }
-
+}

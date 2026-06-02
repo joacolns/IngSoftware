@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -48,6 +48,6 @@ namespace BE
 			set { logeado = value; }
 		}
 
-
+		public List<BE_Componente> Permisos { get; set; } = new List<BE_Componente>();
 	}
 }

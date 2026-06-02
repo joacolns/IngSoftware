@@ -1,4 +1,4 @@
-﻿using BE;
+using BE;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -80,6 +80,35 @@ namespace DAL
             }
 
             return filasAfectadas;
+        }
+
+        public List<BE.BE_Usuario> ObtenerUsuarios()
+        {
+            List<BE.BE_Usuario> usuarios = new List<BE.BE_Usuario>();
+            try
+            {
+                acceso.Abrir();
+                DataTable dt = acceso.Leer("SP_ListarUsuarios");
+                foreach (DataRow row in dt.Rows)
+                {
+                    BE.BE_Usuario u = new BE.BE_Usuario();
+                    u.ID_Usuario = Convert.ToInt32(row["id_Usuario"]);
+                    u.Nombre = row["nombre"].ToString();
+                    u.Password = row["password"].ToString();
+                    u.Role = row["role"].ToString();
+                    u.Logeado = 0;
+                    usuarios.Add(u);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener usuarios: " + ex.Message);
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
+            return usuarios;
         }
     }
 }

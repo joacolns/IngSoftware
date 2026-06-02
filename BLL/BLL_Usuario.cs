@@ -1,4 +1,4 @@
-﻿using DAL;
+using DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +21,9 @@ namespace BLL
 
                 if (passwordCorrecta)
                 {
-                   
+                    BLL_Permiso bllPermiso = new BLL_Permiso();
+                    usuarioBD.Permisos = bllPermiso.ObtenerPermisosUsuario(usuarioBD);
+
                     BLL_GestorDeSesion.Instancia.IniciarSesion(usuarioBD);
                     return true;
                 }
@@ -50,6 +52,12 @@ namespace BLL
         public void Logout()
         {
             BLL_GestorDeSesion.Instancia.CerrarSesion();
+        }
+
+        public List<BE.BE_Usuario> ObtenerUsuarios()
+        {
+            DAL.MP_Usuario mp_usuario = new DAL.MP_Usuario();
+            return mp_usuario.ObtenerUsuarios();
         }
     }
 }
