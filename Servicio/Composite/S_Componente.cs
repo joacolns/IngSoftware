@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BE
 {
-    public abstract class Componente
+    public abstract class S_Componente
     {
 		private int id_Componente;
 
@@ -23,8 +23,8 @@ namespace BE
 			set { nombre = value; }
 		}
 
-        public abstract void Agregar(Componente permiso);
-        public abstract void Quitar(Componente permiso);
-        public abstract List<Componente> ObtenerHijos();
+        public abstract void Agregar(S_Componente permiso);
+        public abstract void Quitar(S_Componente permiso);
+        public abstract List<S_Componente> ObtenerHijos();
     }
 }

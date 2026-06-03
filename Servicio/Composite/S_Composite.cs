@@ -5,11 +5,11 @@ using System.Text;
 
 namespace BE
 {
-    public class Composite : Componente
+    public class S_Composite : S_Componente
     {
-        private List<Componente> hijos = new List<Componente>();
+        private List<S_Componente> hijos = new List<S_Componente>();
 
-        public override void Agregar(Componente permiso)
+        public override void Agregar(S_Componente permiso)
         {
             if (permiso != null)
             {
@@ -22,7 +22,7 @@ namespace BE
             }
         }
 
-        public override void Quitar(Componente permiso)
+        public override void Quitar(S_Componente permiso)
         {
             if (permiso != null)
             {
@@ -37,7 +37,7 @@ namespace BE
             }
         }
 
-        public override List<Componente> ObtenerHijos()
+        public override List<S_Componente> ObtenerHijos()
         {
             return hijos;
         }

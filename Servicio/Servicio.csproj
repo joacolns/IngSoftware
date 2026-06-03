@@ -41,9 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Componente.cs" />
-    <Compile Include="Composite.cs" />
-    <Compile Include="Hoja.cs" />
+    <Compile Include="Singleton\S_GestorDeSesion.cs" />
+    <Compile Include="Seguridad\S_Seguridad.cs" />
+    <Compile Include="Composite\S_Componente.cs" />
+    <Compile Include="Composite\S_Composite.cs" />
+    <Compile Include="Composite\S_Hoja.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

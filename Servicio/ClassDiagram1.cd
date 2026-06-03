@@ -1,24 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="BE.Componente">
+  <Class Name="BE.S_Componente">
     <Position X="1.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAQACAAAACAAAAAgAAAAAAAAAAAAAQgAAAAQAA=</HashCode>
-      <FileName>Componente.cs</FileName>
+      <FileName>Composite\S_Componente.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BE.Composite">
+  <Class Name="BE.S_Composite">
     <Position X="2.75" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAQACAAAAAAAAAAAAAAAAAAAAAAAAAgAEAAAAA=</HashCode>
-      <FileName>Composite.cs</FileName>
+      <HashCode>AAAAAAgQACAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Composite\S_Composite.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BE.Hoja">
+  <Class Name="BE.S_Hoja">
     <Position X="1" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAQACAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>Hoja.cs</FileName>
+      <FileName>Composite\S_Hoja.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

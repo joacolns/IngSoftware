@@ -34,7 +34,10 @@ namespace BLL
 
         public bool TienePermiso(BE_Usuario usuario, string nombrePermiso)
         {
-            if (usuario == null || usuario.Permisos == null) return false;
+            if (usuario == null || usuario.Permisos == null) {
+
+                return false;
+            } 
 
             foreach (var comp in usuario.Permisos)
             {

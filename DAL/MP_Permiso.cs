@@ -79,7 +79,6 @@ namespace DAL
             {
                 acceso.Abrir();
 
-                // 1. Leer todos los componentes
                 DataTable dtComp = acceso.Leer("SP_ListarComponentes");
                 foreach (DataRow row in dtComp.Rows)
                 {
@@ -152,7 +151,17 @@ namespace DAL
                 foreach (DataRow row in dt.Rows)
                 {
                     int idComp = Convert.ToInt32(row["id_Componente"]);
-                    BE_Componente comp = todosComponentes.FirstOrDefault(c => c.ID_Componente == idComp);
+
+                    BE_Componente comp = null;
+                    foreach (var c in todosComponentes)
+                    {
+                        if (c.ID_Componente == idComp)
+                        {
+                            comp = c;
+                            break;
+                        }
+                    }
+
                     if (comp != null)
                     {
                         permisosUsuario.Add(comp);
