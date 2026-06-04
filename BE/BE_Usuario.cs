@@ -49,5 +49,13 @@ namespace BE
 		}
 
 		public List<BE_Componente> Permisos { get; set; } = new List<BE_Componente>();
+
+		private string digVerH;
+
+		public string DigVerH
+		{
+			get { return digVerH; }
+			set { digVerH = value; }
+		}
 	}
 }

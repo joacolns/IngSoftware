@@ -18,6 +18,8 @@ namespace GUI
         public BLL.BLL_Usuario BLLusuario = new BLL.BLL_Usuario();
         public BE.BE_Usuario BEUsuario;
         public BLL.BLL_Bitacora BLLBitacora = new BLL.BLL_Bitacora();
+        public BLL.BLL_DigitoVerificador BLLDigitoVerificador =  new BLL.BLL_DigitoVerificador();
+        public BE.BE_DigitoVerificador BEDigitoVerificador;
 
         int intentosFallidos = 0;
 

@@ -43,8 +43,19 @@ namespace BLL
             nuevoUsuario.Password = passwordHasheada;
             nuevoUsuario.Role = role;
             nuevoUsuario.Logeado = 0;
+
+            // Calcular DVH antes de insertar (usamos id=0 temporalmente, se recalcula después)
+            nuevoUsuario.DigVerH = "";
+
             DAL.MP_Usuario mp_usuario = new DAL.MP_Usuario();
             int filas = mp_usuario.Insertar(nuevoUsuario);
+
+            if (filas > 0)
+            {
+                // Recalcular todos los DVH y DVV para mantener integridad
+                BLL_DigitoVerificador bllDigVer = new BLL_DigitoVerificador();
+                bllDigVer.RecalcularTodo();
+            }
 
             return filas > 0;
         }

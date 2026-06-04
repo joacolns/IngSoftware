@@ -50,6 +50,17 @@ namespace GUI
             CargarUsuarios();
             CargarArbolPermisos();
             ConfigurarPermisos();
+
+            // Recalcular dígitos verificadores al iniciar
+            try
+            {
+                BLL.BLL_DigitoVerificador bllDigVer = new BLL.BLL_DigitoVerificador();
+                bllDigVer.RecalcularTodo();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al recalcular dígitos verificadores: " + ex.Message);
+            }
         }
 
         private void label1_Click_1(object sender, EventArgs e)

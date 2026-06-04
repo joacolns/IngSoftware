@@ -47,6 +47,7 @@
     <Compile Include="BE_Hoja.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BE_Usuario.cs" />
+    <Compile Include="BE_DigitoVerificador.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

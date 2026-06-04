@@ -37,6 +37,7 @@ namespace DAL
                     usuarioEncontrado.Nombre = fila["nombre"].ToString();
                     usuarioEncontrado.Password = fila["password"].ToString();
                     usuarioEncontrado.Role = fila["role"].ToString();
+                    usuarioEncontrado.DigVerH = fila["DigVerH"] != DBNull.Value ? fila["DigVerH"].ToString() : null;
                     usuarioEncontrado.Logeado = 1;
                 }
             }
@@ -64,7 +65,8 @@ namespace DAL
                 {
                     acceso.CrearParametro("@Nombre", entidad.Nombre),
                     acceso.CrearParametro("@Password", entidad.Password),
-                    acceso.CrearParametro("@Role", entidad.Role)
+                    acceso.CrearParametro("@Role", entidad.Role),
+                    acceso.CrearParametro("@DigVerH", entidad.DigVerH ?? "")
                 };
 
             
@@ -96,6 +98,7 @@ namespace DAL
                     u.Nombre = row["nombre"].ToString();
                     u.Password = row["password"].ToString();
                     u.Role = row["role"].ToString();
+                    u.DigVerH = row["DigVerH"] != DBNull.Value ? row["DigVerH"].ToString() : null;
                     u.Logeado = 0;
                     usuarios.Add(u);
                 }
