@@ -14,11 +14,18 @@
       <FileName>Composite\S_Composite.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BE.S_Hoja">
-    <Position X="1" Y="4" Width="1.5" />
+  <Class Name="Servicio.S_Seguridad">
+    <Position X="4.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAQACAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>Composite\S_Hoja.cs</FileName>
+      <HashCode>AAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAIAAAAAAAAg=</HashCode>
+      <FileName>Seguridad\S_Seguridad.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Servicio.S_GestorDeSesion">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAACAAAABAABACAAAAAAAAAAAAAAAAAECAAAAAA=</HashCode>
+      <FileName>Singleton\S_GestorDeSesion.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

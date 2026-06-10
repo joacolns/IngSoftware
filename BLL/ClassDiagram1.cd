@@ -1,28 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="BLL.BLL_Usuario">
-    <Position X="0.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAQAAAAQAA=</HashCode>
-      <FileName>BLL_Usuario.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BLL.BLL_GestorDeSesion">
-    <Position X="2.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAAACAAAABAABACAAAAAAAAAAAAAAAAAECAAAAAA=</HashCode>
-      <FileName>BLL_GestorDeSesion.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BLL.BLL_Seguridad">
-    <Position X="4" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAg=</HashCode>
-      <FileName>BLL_Seguridad.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="BLL.BLL_Bitacora">
-    <Position X="5.75" Y="0.5" Width="1.5" />
+    <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAQAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAEA=</HashCode>
       <FileName>BLL_Bitacora.cs</FileName>

@@ -1,30 +1,39 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace BE
 {
-    public abstract class BE_Componente
+    public class BE_Componente
     {
-		private int id_Componente;
+        private int id_Componente;
 
-		public int ID_Componente
-		{
-			get { return id_Componente; }
-			set { id_Componente = value; }
-		}
+        public int ID_Componente
+        {
+            get { return id_Componente; }
+            set { id_Componente = value; }
+        }
 
-		private string nombre;
+        private string nombre;
 
-		public string Nombre
-		{
-			get { return nombre; }
-			set { nombre = value; }
-		}
+        public string Nombre
+        {
+            get { return nombre; }
+            set { nombre = value; }
+        }
 
-        public abstract void Agregar(BE_Componente permiso);
-        public abstract void Quitar(BE_Componente permiso);
-        public abstract List<BE_Componente> ObtenerHijos();
+        private string tipo;
+
+        public string Tipo
+        {
+            get { return tipo; }
+            set { tipo = value; }
+        }
+
+        private List<BE_Componente> _hijos = new List<BE_Componente>();
+        public List<BE_Componente> Hijos
+        {
+            get { return _hijos; }
+            set { _hijos = value; }
+        }
     }
 }

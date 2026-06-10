@@ -56,7 +56,7 @@ namespace BLL
                 return true;
             }
 
-            foreach (var hijo in comp.ObtenerHijos())
+            foreach (var hijo in comp.Hijos)
             {
                 if (EvaluarTienePermiso(hijo, nombrePermiso))
                 {

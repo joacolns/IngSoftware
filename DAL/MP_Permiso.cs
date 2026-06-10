@@ -28,7 +28,7 @@ namespace DAL
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@Nombre", componente.Nombre);
-                cmd.Parameters.AddWithValue("@Tipo", componente is BE_Composite ? "Composite" : "Hoja");
+                cmd.Parameters.AddWithValue("@Tipo", componente.Tipo);
 
                 SqlParameter paramId = new SqlParameter("@ID", SqlDbType.Int);
                 paramId.Direction = ParameterDirection.Output;
@@ -39,7 +39,7 @@ namespace DAL
                 id = Convert.ToInt32(paramId.Value);
                 componente.ID_Componente = id;
 
-                if (componente is BE_Composite composite)
+                if (componente.Tipo == "Composite")
                 {
                     // Limpiar relaciones viejas
                     SqlCommand cmdClean = new SqlCommand("SP_LimpiarRelacionesComponente", acceso.conexion);
@@ -48,7 +48,7 @@ namespace DAL
                     cmdClean.ExecuteNonQuery();
 
                     // Guardar nuevas relaciones
-                    foreach (var hijo in composite.ObtenerHijos())
+                    foreach (var hijo in componente.Hijos)
                     {
                         SqlCommand cmdRel = new SqlCommand("SP_GuardarRelacion", acceso.conexion);
                         cmdRel.CommandType = CommandType.StoredProcedure;
@@ -86,15 +86,8 @@ namespace DAL
                     string nombre = row["nombre"].ToString();
                     string tipo = row["tipo"].ToString();
 
-                    BE_Componente comp;
-                    if (tipo.Equals("Composite", StringComparison.OrdinalIgnoreCase))
-                    {
-                        comp = new BE_Composite();
-                    }
-                    else
-                    {
-                        comp = new BE_Hoja();
-                    }
+                    BE_Componente comp = new BE_Componente();
+                    comp.Tipo = tipo;
 
                     comp.ID_Componente = id;
                     comp.Nombre = nombre;
@@ -115,9 +108,21 @@ namespace DAL
                         BE_Componente padre = componentesDict[idPadre];
                         BE_Componente hijo = componentesDict[idHijo];
 
-                        if (padre is BE_Composite composite)
+                        if (padre.Tipo.Equals("Composite", StringComparison.OrdinalIgnoreCase))
                         {
-                            composite.Agregar(hijo);
+                            bool existe = false;
+                            foreach (var h in padre.Hijos)
+                            {
+                                if (h.ID_Componente == hijo.ID_Componente)
+                                {
+                                    existe = true;
+                                    break;
+                                }
+                            }
+                            if (!existe)
+                            {
+                                padre.Hijos.Add(hijo);
+                            }
                             hijosIds.Add(idHijo);
                         }
                     }

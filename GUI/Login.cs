@@ -96,10 +96,10 @@ namespace GUI
                 if (todos.Count == 0)
                 {
                     // Create leaves
-                    BE_Hoja h1 = new BE_Hoja { Nombre = "Ver Bitacora" };
-                    BE_Hoja h2 = new BE_Hoja { Nombre = "Limpiar Bitacora" };
-                    BE_Hoja h3 = new BE_Hoja { Nombre = "Registrar Usuario" };
-                    BE_Hoja h4 = new BE_Hoja { Nombre = "Gestionar Permisos" };
+                    BE_Componente h1 = new BE_Componente { Nombre = "Ver Bitacora", Tipo = "Hoja" };
+                    BE_Componente h2 = new BE_Componente { Nombre = "Limpiar Bitacora", Tipo = "Hoja" };
+                    BE_Componente h3 = new BE_Componente { Nombre = "Registrar Usuario", Tipo = "Hoja" };
+                    BE_Componente h4 = new BE_Componente { Nombre = "Gestionar Permisos", Tipo = "Hoja" };
 
                     bllPermiso.GuardarComponente(h1);
                     bllPermiso.GuardarComponente(h2);
@@ -107,19 +107,19 @@ namespace GUI
                     bllPermiso.GuardarComponente(h4);
 
                     // Create composites
-                    BE_Composite rAdmin = new BE_Composite { Nombre = "Rol Admin" };
-                    BE_Composite rUser = new BE_Composite { Nombre = "Rol Usuario" };
+                    BE_Componente rAdmin = new BE_Componente { Nombre = "Rol Admin", Tipo = "Composite" };
+                    BE_Componente rUser = new BE_Componente { Nombre = "Rol Usuario", Tipo = "Composite" };
 
                     bllPermiso.GuardarComponente(rAdmin);
                     bllPermiso.GuardarComponente(rUser);
 
                     // Add children
-                    rAdmin.Agregar(h1);
-                    rAdmin.Agregar(h2);
-                    rAdmin.Agregar(h3);
-                    rAdmin.Agregar(h4);
+                    rAdmin.Hijos.Add(h1);
+                    rAdmin.Hijos.Add(h2);
+                    rAdmin.Hijos.Add(h3);
+                    rAdmin.Hijos.Add(h4);
 
-                    rUser.Agregar(h1);
+                    rUser.Hijos.Add(h1);
 
                     // Save relationships
                     bllPermiso.GuardarComponente(rAdmin);
