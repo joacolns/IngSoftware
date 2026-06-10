@@ -1,6 +1,14 @@
 USE [IngDeSoftDB]
 GO
 
+-- Add DigVerH column to Usuarios if not exists
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'Usuarios' AND COLUMN_NAME = 'DigVerH')
+BEGIN
+    ALTER TABLE Usuarios ADD DigVerH VARCHAR(500) NULL;
+END
+GO
+
+
 -- 1. Create Componentes Table
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Componentes]') AND type in (N'U'))
 BEGIN
@@ -245,12 +253,6 @@ BEGIN
 END
 GO
 
--- Add DigVerH column to Usuarios if not exists
-IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'Usuarios' AND COLUMN_NAME = 'DigVerH')
-BEGIN
-    ALTER TABLE Usuarios ADD DigVerH VARCHAR(500) NULL;
-END
-GO
 
 IF OBJECT_ID('dbo.SP_ActualizarDigVerH', 'P') IS NOT NULL DROP PROCEDURE dbo.SP_ActualizarDigVerH
 GO

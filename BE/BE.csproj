@@ -48,6 +48,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BE_Usuario.cs" />
     <Compile Include="BE_DigitoVerificador.cs" />
+    <Compile Include="BE_UsuarioCambio.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

@@ -57,7 +57,12 @@ namespace GUI
             this.btnQuitar = new System.Windows.Forms.Button();
             this.labelPermisosUsuario = new System.Windows.Forms.Label();
             this.listBoxPermisosUsuario = new System.Windows.Forms.ListBox();
+            this.dataGridViewControldecambios = new System.Windows.Forms.DataGridView();
+            this.label9 = new System.Windows.Forms.Label();
+            this.buttonRecomponerEstadoAnterior = new System.Windows.Forms.Button();
+            this.buttonModificarUsuario = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBitacora)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewControldecambios)).BeginInit();
             this.SuspendLayout();
             // 
             // labelNOMBREUSER
@@ -144,7 +149,7 @@ namespace GUI
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(1651, 887);
+            this.button2.Location = new System.Drawing.Point(1643, 56);
             this.button2.Margin = new System.Windows.Forms.Padding(6);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(182, 44);
@@ -161,7 +166,7 @@ namespace GUI
             this.dataGridViewBitacora.Name = "dataGridViewBitacora";
             this.dataGridViewBitacora.RowHeadersWidth = 82;
             this.dataGridViewBitacora.RowTemplate.Height = 33;
-            this.dataGridViewBitacora.Size = new System.Drawing.Size(1532, 383);
+            this.dataGridViewBitacora.Size = new System.Drawing.Size(893, 383);
             this.dataGridViewBitacora.TabIndex = 10;
             // 
             // label4
@@ -198,7 +203,7 @@ namespace GUI
             // 
             // btn_LimpiarBitacora
             // 
-            this.btn_LimpiarBitacora.Location = new System.Drawing.Point(1584, 498);
+            this.btn_LimpiarBitacora.Location = new System.Drawing.Point(41, 891);
             this.btn_LimpiarBitacora.Margin = new System.Windows.Forms.Padding(6);
             this.btn_LimpiarBitacora.Name = "btn_LimpiarBitacora";
             this.btn_LimpiarBitacora.Size = new System.Drawing.Size(218, 73);
@@ -209,21 +214,21 @@ namespace GUI
             // 
             // dateTimePickerFechaInicio
             // 
-            this.dateTimePickerFechaInicio.Location = new System.Drawing.Point(273, 450);
+            this.dateTimePickerFechaInicio.Location = new System.Drawing.Point(222, 456);
             this.dateTimePickerFechaInicio.Name = "dateTimePickerFechaInicio";
             this.dateTimePickerFechaInicio.Size = new System.Drawing.Size(200, 31);
             this.dateTimePickerFechaInicio.TabIndex = 15;
             // 
             // dateTimePickerFechaFinal
             // 
-            this.dateTimePickerFechaFinal.Location = new System.Drawing.Point(509, 450);
+            this.dateTimePickerFechaFinal.Location = new System.Drawing.Point(442, 456);
             this.dateTimePickerFechaFinal.Name = "dateTimePickerFechaFinal";
             this.dateTimePickerFechaFinal.Size = new System.Drawing.Size(200, 31);
             this.dateTimePickerFechaFinal.TabIndex = 16;
             // 
             // textBoxUsuarioBuscar
             // 
-            this.textBoxUsuarioBuscar.Location = new System.Drawing.Point(731, 450);
+            this.textBoxUsuarioBuscar.Location = new System.Drawing.Point(667, 453);
             this.textBoxUsuarioBuscar.Margin = new System.Windows.Forms.Padding(6);
             this.textBoxUsuarioBuscar.Name = "textBoxUsuarioBuscar";
             this.textBoxUsuarioBuscar.Size = new System.Drawing.Size(196, 31);
@@ -231,7 +236,7 @@ namespace GUI
             // 
             // buttonBuscar
             // 
-            this.buttonBuscar.Location = new System.Drawing.Point(939, 408);
+            this.buttonBuscar.Location = new System.Drawing.Point(887, 414);
             this.buttonBuscar.Margin = new System.Windows.Forms.Padding(6);
             this.buttonBuscar.Name = "buttonBuscar";
             this.buttonBuscar.Size = new System.Drawing.Size(202, 73);
@@ -243,7 +248,7 @@ namespace GUI
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(277, 408);
+            this.label6.Location = new System.Drawing.Point(217, 417);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(128, 25);
             this.label6.TabIndex = 19;
@@ -252,7 +257,7 @@ namespace GUI
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(504, 408);
+            this.label7.Location = new System.Drawing.Point(447, 423);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(125, 25);
             this.label7.TabIndex = 20;
@@ -261,7 +266,7 @@ namespace GUI
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(726, 408);
+            this.label8.Location = new System.Drawing.Point(662, 411);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(194, 25);
             this.label8.TabIndex = 21;
@@ -337,12 +342,58 @@ namespace GUI
             this.listBoxPermisosUsuario.Size = new System.Drawing.Size(250, 279);
             this.listBoxPermisosUsuario.TabIndex = 29;
             // 
+            // dataGridViewControldecambios
+            // 
+            this.dataGridViewControldecambios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewControldecambios.Location = new System.Drawing.Point(1182, 498);
+            this.dataGridViewControldecambios.Margin = new System.Windows.Forms.Padding(4);
+            this.dataGridViewControldecambios.Name = "dataGridViewControldecambios";
+            this.dataGridViewControldecambios.RowHeadersWidth = 82;
+            this.dataGridViewControldecambios.RowTemplate.Height = 33;
+            this.dataGridViewControldecambios.Size = new System.Drawing.Size(587, 383);
+            this.dataGridViewControldecambios.TabIndex = 30;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(1177, 456);
+            this.label9.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(197, 25);
+            this.label9.TabIndex = 31;
+            this.label9.Text = "Control de cambios";
+            // 
+            // buttonRecomponerEstadoAnterior
+            // 
+            this.buttonRecomponerEstadoAnterior.Location = new System.Drawing.Point(1182, 891);
+            this.buttonRecomponerEstadoAnterior.Margin = new System.Windows.Forms.Padding(6);
+            this.buttonRecomponerEstadoAnterior.Name = "buttonRecomponerEstadoAnterior";
+            this.buttonRecomponerEstadoAnterior.Size = new System.Drawing.Size(393, 73);
+            this.buttonRecomponerEstadoAnterior.TabIndex = 32;
+            this.buttonRecomponerEstadoAnterior.Text = "Recomponer estado anterior";
+            this.buttonRecomponerEstadoAnterior.UseVisualStyleBackColor = true;
+            // 
+            // buttonModificarUsuario
+            // 
+            this.buttonModificarUsuario.Location = new System.Drawing.Point(260, 329);
+            this.buttonModificarUsuario.Margin = new System.Windows.Forms.Padding(6);
+            this.buttonModificarUsuario.Name = "buttonModificarUsuario";
+            this.buttonModificarUsuario.Size = new System.Drawing.Size(202, 73);
+            this.buttonModificarUsuario.TabIndex = 33;
+            this.buttonModificarUsuario.Text = "Modificar";
+            this.buttonModificarUsuario.UseVisualStyleBackColor = true;
+            this.buttonModificarUsuario.Click += new System.EventHandler(this.buttonModificarUsuario_Click);
+            // 
             // PanelAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Info;
-            this.ClientSize = new System.Drawing.Size(1848, 946);
+            this.ClientSize = new System.Drawing.Size(1848, 1022);
+            this.Controls.Add(this.buttonModificarUsuario);
+            this.Controls.Add(this.buttonRecomponerEstadoAnterior);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.dataGridViewControldecambios);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -379,6 +430,7 @@ namespace GUI
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Menu_Principal_FormClosed);
             this.Load += new System.EventHandler(this.Menu_Principal_Load_1);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBitacora)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewControldecambios)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -415,5 +467,9 @@ namespace GUI
         private System.Windows.Forms.Button btnQuitar;
         private System.Windows.Forms.Label labelPermisosUsuario;
         private System.Windows.Forms.ListBox listBoxPermisosUsuario;
+        private System.Windows.Forms.DataGridView dataGridViewControldecambios;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button buttonRecomponerEstadoAnterior;
+        private System.Windows.Forms.Button buttonModificarUsuario;
     }
 }

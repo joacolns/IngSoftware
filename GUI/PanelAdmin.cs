@@ -51,6 +51,11 @@ namespace GUI
             CargarArbolPermisos();
             ConfigurarPermisos();
 
+            // Bind control de cambios events and config
+            dataGridViewControldecambios.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridViewControldecambios.MultiSelect = false;
+            buttonRecomponerEstadoAnterior.Click += buttonRecomponerEstadoAnterior_Click;
+
             // Recalcular dígitos verificadores al iniciar
             try
             {
@@ -300,6 +305,7 @@ namespace GUI
                 {
                     comboBoxUsuarios.SelectedIndex = 0;
                     CargarPermisosUsuario();
+                    CargarControlCambiosUsuario();
                 }
             }
             catch (Exception ex)
@@ -376,6 +382,15 @@ namespace GUI
         private void comboBoxUsuarios_SelectedIndexChanged(object sender, EventArgs e)
         {
             CargarPermisosUsuario();
+            CargarControlCambiosUsuario();
+
+            var usuarioSelected = comboBoxUsuarios.SelectedItem as BE_Usuario;
+            if (usuarioSelected != null)
+            {
+                txtNuevoUsuario.Text = usuarioSelected.Nombre;
+                txtNuevaPassword.Text = "";
+                comboBox1.SelectedItem = usuarioSelected.Role;
+            }
         }
 
         private void btnAsignar_Click(object sender, EventArgs e)
@@ -526,6 +541,134 @@ namespace GUI
         private void label8_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void CargarControlCambiosUsuario()
+        {
+            try
+            {
+                dataGridViewControldecambios.DataSource = null;
+                var usuarioSelected = comboBoxUsuarios.SelectedItem as BE_Usuario;
+                if (usuarioSelected != null)
+                {
+                    BLL_UsuarioCambio bllCambio = new BLL_UsuarioCambio();
+                    dataGridViewControldecambios.DataSource = bllCambio.ObtenerCambiosUsuario(usuarioSelected.ID_Usuario);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar el control de cambios: " + ex.Message);
+            }
+        }
+
+        private void buttonModificarUsuario_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var usuarioSelected = comboBoxUsuarios.SelectedItem as BE_Usuario;
+                if (usuarioSelected == null)
+                {
+                    MessageBox.Show("Seleccione un usuario para modificar.");
+                    return;
+                }
+
+                string nuevoNombre = txtNuevoUsuario.Text.Trim();
+                string nuevaClave = txtNuevaPassword.Text.Trim();
+                string nuevoRol = comboBox1.SelectedItem != null ? comboBox1.SelectedItem.ToString() : usuarioSelected.Role;
+
+                if (string.IsNullOrEmpty(nuevoNombre))
+                {
+                    MessageBox.Show("El nombre del usuario no puede estar vacío.");
+                    return;
+                }
+
+                // If password is not empty, hashear it. Otherwise keep the original.
+                string passwordHasheada = usuarioSelected.Password;
+                if (!string.IsNullOrEmpty(nuevaClave))
+                {
+                    passwordHasheada = BLL_Seguridad.HashearPassword(nuevaClave);
+                }
+
+                // Update in database using MP_UsuarioCambio
+                BLL_UsuarioCambio bllCambio = new BLL_UsuarioCambio();
+                int filas = bllCambio.ActualizarUsuario(usuarioSelected.ID_Usuario, nuevoNombre, passwordHasheada, nuevoRol);
+
+                if (filas > 0)
+                {
+                    MessageBox.Show("Usuario modificado con éxito.");
+
+                    // Recalcular dígitos verificadores
+                    BLL_DigitoVerificador bllDigVer = new BLL_DigitoVerificador();
+                    bllDigVer.RecalcularTodo();
+
+                    // Log the change
+                    BE_Usuario usuarioModificado = new BE_Usuario();
+                    usuarioModificado.ID_Usuario = usuarioSelected.ID_Usuario;
+                    usuarioModificado.Nombre = nuevoNombre;
+                    usuarioModificado.Password = passwordHasheada;
+                    usuarioModificado.Role = nuevoRol;
+
+                    string modificadoPor = "admin";
+                    if (BLL_GestorDeSesion.Instancia.EstaLogeado)
+                    {
+                        modificadoPor = BLL_GestorDeSesion.Instancia.UsuarioActual.Nombre;
+                    }
+
+                    bllCambio.RegistrarCambio(usuarioModificado, "Modificacion", modificadoPor);
+
+                    // Refresh
+                    CargarUsuarios();
+                    EnlazarBitacora();
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo modificar el usuario.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al modificar usuario: " + ex.Message);
+            }
+        }
+
+        private void buttonRecomponerEstadoAnterior_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridViewControldecambios.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Seleccione una versión en la tabla de control de cambios para recomponer.");
+                    return;
+                }
+
+                var cambio = dataGridViewControldecambios.SelectedRows[0].DataBoundItem as BE_UsuarioCambio;
+                if (cambio == null)
+                {
+                    MessageBox.Show("No se pudo obtener el cambio seleccionado.");
+                    return;
+                }
+
+                var usuarioSesion = BLL_GestorDeSesion.Instancia.UsuarioActual;
+                string modificadoPor = usuarioSesion != null ? usuarioSesion.Nombre : "admin";
+
+                BLL_UsuarioCambio bllCambio = new BLL_UsuarioCambio();
+                bool exito = bllCambio.RecomponerEstadoAnterior(cambio, modificadoPor);
+
+                if (exito)
+                {
+                    MessageBox.Show("El estado del usuario ha sido recompuesto a la versión " + cambio.Version + " con éxito.");
+                    CargarUsuarios();
+                    EnlazarBitacora();
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo recomponer el estado del usuario.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al recomponer el estado: " + ex.Message);
+            }
         }
     }
 }

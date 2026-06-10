@@ -48,6 +48,7 @@
     <Compile Include="BLL_Seguridad.cs" />
     <Compile Include="BLL_Usuario.cs" />
     <Compile Include="BLL_DigitoVerificador.cs" />
+    <Compile Include="BLL_UsuarioCambio.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BE\BE.csproj">

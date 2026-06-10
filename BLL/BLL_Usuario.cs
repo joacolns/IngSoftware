@@ -55,6 +55,19 @@ namespace BLL
                 // Recalcular todos los DVH y DVV para mantener integridad
                 BLL_DigitoVerificador bllDigVer = new BLL_DigitoVerificador();
                 bllDigVer.RecalcularTodo();
+
+                // Registrar en control de cambios
+                BE.BE_Usuario usuarioCreado = mp_usuario.BuscarUsuarioPorNombre(nombre);
+                if (usuarioCreado != null)
+                {
+                    BLL_UsuarioCambio bllCambio = new BLL_UsuarioCambio();
+                    string modificadoPor = "admin";
+                    if (BLL_GestorDeSesion.Instancia.EstaLogeado)
+                    {
+                        modificadoPor = BLL_GestorDeSesion.Instancia.UsuarioActual.Nombre;
+                    }
+                    bllCambio.RegistrarCambio(usuarioCreado, "Registro", modificadoPor);
+                }
             }
 
             return filas > 0;
