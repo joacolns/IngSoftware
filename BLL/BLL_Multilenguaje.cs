@@ -24,11 +24,11 @@ namespace BLL
 
         private BLL_Multilenguaje()
         {
-            // Cargar idioma por defecto (Español) si existe en la base de datos
+            // Cargar idioma por defecto (Espanol) si existe en la base de datos
             List<BE_Idioma> idiomas = mpMultilang.ObtenerIdiomas();
             foreach (var idm in idiomas)
             {
-                if (idm.Nombre.Equals("Español", StringComparison.OrdinalIgnoreCase) && idm.Agregado)
+                if (idm.Nombre.Equals("Espanol", StringComparison.OrdinalIgnoreCase) && idm.Agregado)
                 {
                     _idiomaActual = idm;
                     break;

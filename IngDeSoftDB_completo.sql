@@ -1,4 +1,4 @@
--- ===================================================================
+﻿-- ===================================================================
 -- DATABASE CREATION AND INITIALIZATION SCRIPT FOR IngDeSoftDB
 -- ===================================================================
 
@@ -152,36 +152,36 @@ GO
 -- Data for Bitacora
 SET IDENTITY_INSERT [Bitacora] ON;
 INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-06-10 14:53:04.140');
-INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (2, 1, 'Logout', 'El administrador ha cerrado sesión', 'admin', '2026-06-10 14:53:16.703');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (2, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-06-10 14:53:16.703');
 INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (3, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-06-10 19:33:26.453');
-INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (4, 1, 'Logout', 'El administrador ha cerrado sesión', 'admin', '2026-06-10 19:33:59.803');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (4, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-06-10 19:33:59.803');
 INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (5, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-06-10 19:38:38.763');
 INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (6, 1, 'Registro', 'El administrador ha creado un nuevo usuario', 'admin', '2026-06-10 19:39:15.513');
-INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (7, 1, 'Logout', 'El administrador ha cerrado sesión', 'admin', '2026-06-10 19:40:51.090');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (7, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-06-10 19:40:51.090');
 INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (8, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-06-10 19:42:12.987');
-INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (9, 1, 'Logout', 'El administrador ha cerrado sesión', 'admin', '2026-06-10 19:43:07.530');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (9, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-06-10 19:43:07.530');
 INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (10, 2, 'Login', 'El usuario ha inicado sesion', 'user', '2026-06-10 19:43:24.460');
-INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (11, 2, 'Logout', 'El administrador ha cerrado sesión', 'user', '2026-06-10 19:43:44.547');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (11, 2, 'Logout', 'El administrador ha cerrado sesion', 'user', '2026-06-10 19:43:44.547');
 INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (12, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-06-10 19:44:04.277');
-INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (13, 1, 'Logout', 'El administrador ha cerrado sesión', 'admin', '2026-06-10 19:45:03.667');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (13, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-06-10 19:45:03.667');
 INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (14, 2, 'Login', 'El usuario ha inicado sesion', 'user', '2026-06-10 19:45:09.420');
-INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (15, 2, 'Logout', 'El administrador ha cerrado sesión', 'user', '2026-06-10 19:45:13.830');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (15, 2, 'Logout', 'El administrador ha cerrado sesion', 'user', '2026-06-10 19:45:13.830');
 INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (16, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-06-10 20:24:45.730');
-INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (17, 1, 'Logout', 'El administrador ha cerrado sesión', 'admin', '2026-06-10 20:27:47.803');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (17, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-06-10 20:27:47.803');
 INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (18, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-06-10 21:10:29.937');
-INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (19, 1, 'Logout', 'El administrador ha cerrado sesión', 'admin', '2026-06-10 21:10:41.773');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (19, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-06-10 21:10:41.773');
 INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (20, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-06-10 21:16:34.390');
-INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (21, 1, 'Logout', 'El administrador ha cerrado sesión', 'admin', '2026-06-10 21:16:53.597');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (21, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-06-10 21:16:53.597');
 INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (22, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-06-10 21:16:59.597');
-INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (23, 1, 'Logout', 'El administrador ha cerrado sesión', 'admin', '2026-06-10 21:17:05.813');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (23, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-06-10 21:17:05.813');
 INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (24, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-06-10 21:17:34.510');
-INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (25, 1, 'Logout', 'El administrador ha cerrado sesión', 'admin', '2026-06-10 21:17:51.503');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (25, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-06-10 21:17:51.503');
 INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (26, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-06-10 21:21:46.467');
-INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (27, 1, 'Logout', 'El administrador ha cerrado sesión', 'admin', '2026-06-10 21:22:08.470');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (27, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-06-10 21:22:08.470');
 INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (28, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-06-10 21:22:18.677');
-INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (29, 1, 'Logout', 'El administrador ha cerrado sesión', 'admin', '2026-06-10 21:22:35.820');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (29, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-06-10 21:22:35.820');
 INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (30, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-06-10 21:22:42.653');
-INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (31, 1, 'Logout', 'El administrador ha cerrado sesión', 'admin', '2026-06-10 21:23:06.840');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (31, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-06-10 21:23:06.840');
 SET IDENTITY_INSERT [Bitacora] OFF;
 GO
 
@@ -194,7 +194,7 @@ SET IDENTITY_INSERT [Usuario_Cambios] OFF;
 GO
 
 -- Data for Idioma
-INSERT INTO [Idioma] ([id_Idioma], [Nombre], [Agregado]) VALUES (1, 'Español', 1);
+INSERT INTO [Idioma] ([id_Idioma], [Nombre], [Agregado]) VALUES (1, 'Espanol', 1);
 INSERT INTO [Idioma] ([id_Idioma], [Nombre], [Agregado]) VALUES (2, 'Ingles', 1);
 GO
 
@@ -205,7 +205,7 @@ INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (3, 'btnLo
 INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (4, 'Login', 'Login');
 INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (5, 'labelBienvenido', 'PanelAdmin');
 INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (6, 'labelUsuario', 'PanelAdmin');
-INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (7, 'labelContraseña', 'PanelAdmin');
+INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (7, 'labelContrasena', 'PanelAdmin');
 INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (8, 'buttonRegistrarUsuario', 'PanelAdmin');
 INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (9, 'buttonCerrarSesion', 'PanelAdmin');
 INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (10, 'labelBitacora', 'PanelAdmin');
@@ -241,15 +241,15 @@ GO
 
 -- Data for Traduccion
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (1, 1, 1, 'Usuario');
-INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (2, 1, 2, 'Contraseña');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (2, 1, 2, 'Contrasena');
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (3, 1, 3, 'Iniciar Sesion');
-INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (4, 1, 4, 'Iniciar Sesión');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (4, 1, 4, 'Iniciar Sesion');
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (5, 1, 5, 'Bienvenido');
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (6, 1, 6, 'Usuario');
-INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (7, 1, 7, 'Contraseña');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (7, 1, 7, 'Contrasena');
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (8, 1, 8, 'Registrar');
-INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (9, 1, 9, 'Cerrar Sesión');
-INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (10, 1, 10, 'Bitácora');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (9, 1, 9, 'Cerrar Sesion');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (10, 1, 10, 'Bitacora');
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (11, 1, 11, 'Rol');
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (12, 1, 12, 'Limpiar');
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (13, 1, 13, 'Filtrar');
@@ -257,7 +257,7 @@ INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) V
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (15, 1, 15, 'Fecha Final');
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (16, 1, 16, 'Nombre de usuario');
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (17, 1, 17, 'Seleccionar Usuario:');
-INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (18, 1, 18, 'Árbol de Permisos Disponibles:');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (18, 1, 18, 'arbol de Permisos Disponibles:');
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (19, 1, 19, 'Asignar >>');
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (20, 1, 20, '<< Quitar');
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (21, 1, 21, 'Permisos Directos del Usuario:');
@@ -271,10 +271,10 @@ INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) V
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (29, 1, 29, 'Nombre del idioma');
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (30, 1, 30, 'Agregar');
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (31, 1, 31, 'Aplicar Cambios');
-INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (32, 1, 32, 'Panel de Administración');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (32, 1, 32, 'Panel de Administracion');
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (33, 1, 33, 'Actualizar');
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (34, 1, 34, 'Usuarios y Permisos');
-INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (35, 1, 35, 'Bitácora');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (35, 1, 35, 'Bitacora');
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (36, 1, 36, 'Control de Cambios');
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (37, 1, 37, 'Idiomas');
 
@@ -1037,3 +1037,4 @@ BEGIN
 END
 
 GO
+

@@ -47,6 +47,7 @@ namespace GUI
 
             listBoxPermisosUsuario.DisplayMember = "Nombre";
             InicializarPermisosYAdministrador();
+            InicializarControlesRol();
             CargarUsuarios();
             CargarArbolPermisos();
             ConfigurarPermisos();
@@ -749,6 +750,17 @@ namespace GUI
                 btnAsignar.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Gestionar Permisos");
                 btnQuitar.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Gestionar Permisos");
 
+                if (textBoxNuevoRol != null)
+                {
+                    textBoxNuevoRol.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Gestionar Permisos");
+                    buttonCrearRol.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Gestionar Permisos");
+                    comboBoxRoles.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Gestionar Permisos");
+                    listBoxPermisosRol.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Gestionar Permisos");
+                    comboBoxPermisosTodos.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Gestionar Permisos");
+                    btnAsignarARol.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Gestionar Permisos");
+                    btnQuitarDeRol.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Gestionar Permisos");
+                }
+
                 // 4. Ver Bitacora
                 dataGridViewBitacora.Visible = bllPermisoEval.TienePermiso(usuarioSesion, "Ver Bitacora");
                 buttonBuscar.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Ver Bitacora");
@@ -840,6 +852,11 @@ namespace GUI
 
                     bllCambio.RegistrarCambio(usuarioModificado, "Modificacion", modificadoPor);
 
+                    if (BLL_GestorDeSesion.Instancia.EstaLogeado)
+                    {
+                        BLLBitacora.RegistrarBitacora(BLL_GestorDeSesion.Instancia.UsuarioActual.ID_Usuario, BLL_GestorDeSesion.Instancia.UsuarioActual.Nombre, "Modificar", $"Modificó al usuario '{nuevoNombre}'", DateTime.Now);
+                    }
+
                     // Refresh
                     CargarUsuarios();
                     EnlazarBitacora();
@@ -881,6 +898,10 @@ namespace GUI
                 if (exito)
                 {
                     MessageBox.Show("El estado del usuario ha sido recompuesto a la versión " + cambio.Version + " con éxito.");
+                    if (usuarioSesion != null)
+                    {
+                        BLLBitacora.RegistrarBitacora(usuarioSesion.ID_Usuario, usuarioSesion.Nombre, "Recomponer", $"Recompuso al usuario '{cambio.Nombre}' a versión {cambio.Version}", DateTime.Now);
+                    }
                     CargarUsuarios();
                     EnlazarBitacora();
                 }
@@ -1117,7 +1138,7 @@ namespace GUI
         {
             labelBienvenido.Text = BLL_Multilenguaje.Instancia.Traducir("labelBienvenido", "PanelAdmin");
             labelUsuario.Text = BLL_Multilenguaje.Instancia.Traducir("labelUsuario", "PanelAdmin");
-            labelContraseña.Text = BLL_Multilenguaje.Instancia.Traducir("labelContraseña", "PanelAdmin");
+            labelContraseña.Text = BLL_Multilenguaje.Instancia.Traducir("labelContrasena", "PanelAdmin");
             buttonRegistrarUsuario.Text = BLL_Multilenguaje.Instancia.Traducir("buttonRegistrarUsuario", "PanelAdmin");
             buttonCerrarSesion.Text = BLL_Multilenguaje.Instancia.Traducir("buttonCerrarSesion", "PanelAdmin");
             labelBitacora.Text = BLL_Multilenguaje.Instancia.Traducir("labelBitacora", "PanelAdmin");
@@ -1158,6 +1179,213 @@ namespace GUI
 
             string tIdiomas = BLL_Multilenguaje.Instancia.Traducir("tabPageIdiomas", "PanelAdmin");
             tabPageIdiomas.Text = tIdiomas.StartsWith("[Default:") ? "Idiomas" : tIdiomas;
+        }
+        // --- Role Management Controls ---
+        private System.Windows.Forms.Label labelNuevoRol;
+        private System.Windows.Forms.TextBox textBoxNuevoRol;
+        private System.Windows.Forms.Button buttonCrearRol;
+        private System.Windows.Forms.Label labelSelectRol;
+        private System.Windows.Forms.ComboBox comboBoxRoles;
+        private System.Windows.Forms.Button btnAsignarARol;
+        private System.Windows.Forms.Button btnQuitarDeRol;
+        private System.Windows.Forms.ListBox listBoxPermisosRol;
+        private System.Windows.Forms.ComboBox comboBoxPermisosTodos;
+
+        private void InicializarControlesRol()
+        {
+            labelNuevoRol = new System.Windows.Forms.Label { Text = "Nuevo Rol:", Location = new System.Drawing.Point(325, 200), AutoSize = true };
+            textBoxNuevoRol = new System.Windows.Forms.TextBox { Location = new System.Drawing.Point(325, 220), Size = new System.Drawing.Size(100, 20) };
+            buttonCrearRol = new System.Windows.Forms.Button { Text = "Crear", Location = new System.Drawing.Point(430, 218), Size = new System.Drawing.Size(70, 23) };
+            buttonCrearRol.Click += buttonCrearRol_Click;
+
+            labelSelectRol = new System.Windows.Forms.Label { Text = "Editar Rol:", Location = new System.Drawing.Point(585, 200), AutoSize = true };
+            comboBoxRoles = new System.Windows.Forms.ComboBox { DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList, Location = new System.Drawing.Point(585, 220), Size = new System.Drawing.Size(127, 21) };
+            comboBoxRoles.SelectedIndexChanged += comboBoxRoles_SelectedIndexChanged;
+
+            listBoxPermisosRol = new System.Windows.Forms.ListBox { Location = new System.Drawing.Point(585, 250), Size = new System.Drawing.Size(127, 80), DisplayMember = "Nombre" };
+
+            comboBoxPermisosTodos = new System.Windows.Forms.ComboBox { DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList, Location = new System.Drawing.Point(450, 250), Size = new System.Drawing.Size(125, 21) };
+
+            btnAsignarARol = new System.Windows.Forms.Button { Text = "Asig. Rol", Location = new System.Drawing.Point(510, 275), Size = new System.Drawing.Size(65, 23) };
+            btnAsignarARol.Click += btnAsignarARol_Click;
+
+            btnQuitarDeRol = new System.Windows.Forms.Button { Text = "Quit. Rol", Location = new System.Drawing.Point(510, 305), Size = new System.Drawing.Size(65, 23) };
+            btnQuitarDeRol.Click += btnQuitarDeRol_Click;
+
+            tabPageUsuarios.Controls.Add(labelNuevoRol);
+            tabPageUsuarios.Controls.Add(textBoxNuevoRol);
+            tabPageUsuarios.Controls.Add(buttonCrearRol);
+            tabPageUsuarios.Controls.Add(labelSelectRol);
+            tabPageUsuarios.Controls.Add(comboBoxRoles);
+            tabPageUsuarios.Controls.Add(listBoxPermisosRol);
+            tabPageUsuarios.Controls.Add(comboBoxPermisosTodos);
+            tabPageUsuarios.Controls.Add(btnAsignarARol);
+            tabPageUsuarios.Controls.Add(btnQuitarDeRol);
+
+            CargarRoles();
+        }
+
+        private void CargarRoles()
+        {
+            var todos = bllPermiso.ObtenerTodos();
+            var roles = new System.Collections.Generic.List<BE_Componente>();
+            var permisosComunes = new System.Collections.Generic.List<BE_Componente>();
+
+            foreach(var c in todos)
+            {
+                if(c.Tipo == "Composite") roles.Add(c);
+                permisosComunes.Add(c);
+            }
+
+            comboBoxRoles.SelectedIndexChanged -= comboBoxRoles_SelectedIndexChanged;
+            comboBoxRoles.DataSource = null;
+            comboBoxRoles.DataSource = roles;
+            comboBoxRoles.DisplayMember = "Nombre";
+            comboBoxRoles.SelectedIndexChanged += comboBoxRoles_SelectedIndexChanged;
+
+            comboBoxPermisosTodos.DataSource = null;
+            comboBoxPermisosTodos.DataSource = permisosComunes;
+            comboBoxPermisosTodos.DisplayMember = "Nombre";
+
+            if (roles.Count > 0)
+            {
+                comboBoxRoles.SelectedIndex = 0;
+            }
+            CargarPermisosRol();
+        }
+
+        private void comboBoxRoles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CargarPermisosRol();
+        }
+
+        private void CargarPermisosRol()
+        {
+            listBoxPermisosRol.Items.Clear();
+            var rol = comboBoxRoles.SelectedItem as BE_Componente;
+            if (rol != null)
+            {
+                var todos = bllPermiso.ObtenerTodos();
+                BE_Componente rolActualizado = null;
+                foreach(var c in todos)
+                {
+                    if (c.ID_Componente == rol.ID_Componente)
+                    {
+                        rolActualizado = c;
+                        break;
+                    }
+                }
+                if (rolActualizado != null)
+                {
+                    foreach (var h in rolActualizado.Hijos)
+                    {
+                        listBoxPermisosRol.Items.Add(h);
+                    }
+                }
+            }
+        }
+
+        private void buttonCrearRol_Click(object sender, EventArgs e)
+        {
+            string nombreRol = textBoxNuevoRol.Text.Trim();
+            if (string.IsNullOrEmpty(nombreRol)) return;
+
+            var comp = new BE_Componente { Nombre = nombreRol, Tipo = "Composite" };
+            bllPermiso.GuardarComponente(comp);
+            MessageBox.Show("Rol creado con éxito.");
+            textBoxNuevoRol.Text = "";
+            CargarArbolPermisos();
+            CargarRoles();
+        }
+
+        private void btnAsignarARol_Click(object sender, EventArgs e)
+        {
+            var rol = comboBoxRoles.SelectedItem as BE_Componente;
+            var permiso = comboBoxPermisosTodos.SelectedItem as BE_Componente;
+            if (rol == null || permiso == null) return;
+
+            if (permiso.ID_Componente == rol.ID_Componente)
+            {
+                MessageBox.Show("No puede asignarse un rol a sí mismo.");
+                return;
+            }
+
+            var todos = bllPermiso.ObtenerTodos();
+            BE_Componente rolActual = null;
+            BE_Componente permisoCompleto = null;
+            foreach(var c in todos) 
+            { 
+                if (c.ID_Componente == rol.ID_Componente) rolActual = c; 
+                if (c.ID_Componente == permiso.ID_Componente) permisoCompleto = c;
+            }
+            if (rolActual == null || permisoCompleto == null) return;
+
+            foreach(var h in rolActual.Hijos)
+            {
+                if (h.ID_Componente == permiso.ID_Componente)
+                {
+                    MessageBox.Show("El rol ya tiene este permiso.");
+                    return;
+                }
+            }
+
+            // Verificar circularidad: el rolActual no puede estar dentro del permiso (si es que el permiso es un Composite)
+            bool EsHijo(BE_Componente padre, int idBuscado)
+            {
+                if (padre.ID_Componente == idBuscado) return true;
+                foreach(var h in padre.Hijos)
+                {
+                    if (EsHijo(h, idBuscado)) return true;
+                }
+                return false;
+            }
+
+            if (EsHijo(permisoCompleto, rolActual.ID_Componente))
+            {
+                MessageBox.Show("No se puede asignar porque generaría una referencia circular.");
+                return;
+            }
+
+            rolActual.Hijos.Add(permiso);
+            bllPermiso.GuardarComponente(rolActual);
+            CargarArbolPermisos();
+            CargarPermisosRol();
+            
+            var u = BLL_GestorDeSesion.Instancia.UsuarioActual;
+            if (u != null) BLLBitacora.RegistrarBitacora(u.ID_Usuario, u.Nombre, "Roles", $"Asignó permiso '{permiso.Nombre}' al rol '{rolActual.Nombre}'", DateTime.Now);
+            EnlazarBitacora();
+            ConfigurarPermisos();
+        }
+
+        private void btnQuitarDeRol_Click(object sender, EventArgs e)
+        {
+            var rol = comboBoxRoles.SelectedItem as BE_Componente;
+            var permiso = listBoxPermisosRol.SelectedItem as BE_Componente;
+            if (rol == null || permiso == null) return;
+
+            var todos = bllPermiso.ObtenerTodos();
+            BE_Componente rolActual = null;
+            foreach(var c in todos) { if (c.ID_Componente == rol.ID_Componente) rolActual = c; }
+            if (rolActual == null) return;
+
+            BE_Componente aRemover = null;
+            foreach(var h in rolActual.Hijos)
+            {
+                if (h.ID_Componente == permiso.ID_Componente) aRemover = h;
+            }
+
+            if (aRemover != null)
+            {
+                rolActual.Hijos.Remove(aRemover);
+                bllPermiso.GuardarComponente(rolActual);
+                CargarArbolPermisos();
+                CargarPermisosRol();
+
+                var u = BLL_GestorDeSesion.Instancia.UsuarioActual;
+                if (u != null) BLLBitacora.RegistrarBitacora(u.ID_Usuario, u.Nombre, "Roles", $"Quitó permiso '{permiso.Nombre}' al rol '{rolActual.Nombre}'", DateTime.Now);
+                EnlazarBitacora();
+                ConfigurarPermisos();
+            }
         }
     }
 }

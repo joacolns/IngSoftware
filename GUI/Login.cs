@@ -159,12 +159,6 @@ namespace GUI
         private void Form1_Load(object sender, EventArgs e)
         {
             //CrearAdminConPermisos();
-
-            List<string> errores;
-            if (!BLLDigitoVerificador.VerificarIntegridad(out errores))
-            {
-                MessageBox.Show("Los digitos verificadores no coinciden", "Error de integridad", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         private void Login_FormClosed(object sender, FormClosedEventArgs e)
