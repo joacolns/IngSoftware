@@ -28,7 +28,8 @@ namespace GUI
             InitializeComponent();
             BLL_Multilenguaje.Instancia.Registrar(this);
             this.FormClosed += Login_FormClosed;
-            UpdateLanguage();
+            CargarIdiomas();
+            ActualizarLenguaje();
         }
 
         private void btn_Login_Click(object sender, EventArgs e)
@@ -58,19 +59,19 @@ namespace GUI
 
         private void VerificarRol()
         {
-            if (BEUsuario.Role == "admin")
+            BLL_Permiso bllPermiso = new BLL_Permiso();
+            if (bllPermiso.TienePermiso(BEUsuario, "Gestionar Permisos"))
             {
                 PanelAdmin panel_admin = new PanelAdmin();
                 panel_admin.Show();
                 this.Hide();
             }
-            else if (BEUsuario.Role == "usuario")
+            else
             {
                 PanelUsuario panel_usuario = new PanelUsuario();
                 panel_usuario.Show();
                 this.Hide();
             }
-
         }
 
         private async Task GestionarBloqueo()
@@ -133,7 +134,7 @@ namespace GUI
                 var usuarios = BLLusuario.ObtenerUsuarios();
                 if (!usuarios.Any(u => u.Nombre.Equals("admin", StringComparison.OrdinalIgnoreCase)))
                 {
-                    BLLusuario.RegistrarUsuario("admin", "123", "admin");
+                    BLLusuario.RegistrarUsuario("admin", "123");
 
                     usuarios = BLLusuario.ObtenerUsuarios();
                     var adminUser = usuarios.FirstOrDefault(u => u.Nombre.Equals("admin", StringComparison.OrdinalIgnoreCase));
@@ -158,6 +159,12 @@ namespace GUI
         private void Form1_Load(object sender, EventArgs e)
         {
             //CrearAdminConPermisos();
+
+            List<string> errores;
+            if (!BLLDigitoVerificador.VerificarIntegridad(out errores))
+            {
+                MessageBox.Show("Los digitos verificadores no coinciden", "Error de integridad", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void Login_FormClosed(object sender, FormClosedEventArgs e)
@@ -165,12 +172,92 @@ namespace GUI
             BLL_Multilenguaje.Instancia.Desregistrar(this);
         }
 
-        public void UpdateLanguage()
+        private void CargarIdiomas()
+        {
+            try
+            {
+                List<BE_Idioma> idiomas = BLL_Multilenguaje.Instancia.ObtenerIdiomas();
+                List<BE_Idioma> idiomasActivos = new List<BE_Idioma>();
+                foreach (var idm in idiomas)
+                {
+                    if (idm.Agregado)
+                    {
+                        idiomasActivos.Add(idm);
+                    }
+                }
+
+                comboBoxIdiomaLogin.SelectedIndexChanged -= comboBoxIdiomaLogin_SelectedIndexChanged;
+
+                comboBoxIdiomaLogin.DataSource = null;
+                comboBoxIdiomaLogin.DataSource = idiomasActivos;
+                comboBoxIdiomaLogin.DisplayMember = "Nombre";
+
+                var actual = BLL_Multilenguaje.Instancia.IdiomaActual;
+                if (actual != null)
+                {
+                    foreach (var idm in idiomasActivos)
+                    {
+                        if (idm.ID_Idioma == actual.ID_Idioma)
+                        {
+                            comboBoxIdiomaLogin.SelectedItem = idm;
+                            break;
+                        }
+                    }
+                }
+
+                comboBoxIdiomaLogin.SelectedIndexChanged += comboBoxIdiomaLogin_SelectedIndexChanged;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar idiomas: " + ex.Message);
+            }
+        }
+
+        private void comboBoxIdiomaLogin_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                var selectedIdioma = comboBoxIdiomaLogin.SelectedItem as BE_Idioma;
+                if (selectedIdioma != null)
+                {
+                    BLL_Multilenguaje.Instancia.IdiomaActual = selectedIdioma;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cambiar de idioma: " + ex.Message);
+            }
+        }
+
+        public void ActualizarLenguaje()
         {
             labelUsuario.Text = BLL_Multilenguaje.Instancia.Traducir("labelUsuario", "Login");
             labelPassword.Text = BLL_Multilenguaje.Instancia.Traducir("labelPassword", "Login");
             btnLogin.Text = BLL_Multilenguaje.Instancia.Traducir("btnLogin", "Login");
             this.Text = BLL_Multilenguaje.Instancia.Traducir("Login", "Login");
+
+            string tLabelIdioma = BLL_Multilenguaje.Instancia.Traducir("labelIdiomaLogin", "Login");
+            labelIdiomaLogin.Text = tLabelIdioma.StartsWith("[Default:") ? "Idioma" : tLabelIdioma;
+
+            // Asegurarse de que el ComboBox muestre el idioma actual si cambió externamente
+            var actual = BLL_Multilenguaje.Instancia.IdiomaActual;
+            if (actual != null && comboBoxIdiomaLogin.SelectedItem != null)
+            {
+                var selected = comboBoxIdiomaLogin.SelectedItem as BE_Idioma;
+                if (selected != null && selected.ID_Idioma != actual.ID_Idioma)
+                {
+                    comboBoxIdiomaLogin.SelectedIndexChanged -= comboBoxIdiomaLogin_SelectedIndexChanged;
+                    foreach (BE_Idioma item in comboBoxIdiomaLogin.Items)
+                    {
+                        if (item.ID_Idioma == actual.ID_Idioma)
+                        {
+                            comboBoxIdiomaLogin.SelectedItem = item;
+                            break;
+                        }
+                    }
+                    comboBoxIdiomaLogin.SelectedIndexChanged += comboBoxIdiomaLogin_SelectedIndexChanged;
+                }
+            }
         }
     }
 }

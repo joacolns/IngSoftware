@@ -19,7 +19,6 @@ namespace BLL
             cambio.Version = nuevaVersion;
             cambio.Nombre = usuario.Nombre;
             cambio.Password = usuario.Password;
-            cambio.Role = usuario.Role;
             cambio.Fecha = DateTime.Now;
             cambio.Modificado_Por = modificadoPor;
             cambio.Tipo_Cambio = tipoCambio;
@@ -32,14 +31,14 @@ namespace BLL
             return mpCambio.ObtenerCambiosUsuario(idUsuario);
         }
 
-        public int ActualizarUsuario(int idUsuario, string nombre, string password, string role)
+        public int ActualizarUsuario(int idUsuario, string nombre, string password)
         {
-            return mpCambio.ActualizarUsuario(idUsuario, nombre, password, role);
+            return mpCambio.ActualizarUsuario(idUsuario, nombre, password);
         }
 
         public bool RecomponerEstadoAnterior(BE_UsuarioCambio cambio, string modificadoPor)
         {
-            int filas = mpCambio.ActualizarUsuario(cambio.ID_Usuario, cambio.Nombre, cambio.Password, cambio.Role);
+            int filas = mpCambio.ActualizarUsuario(cambio.ID_Usuario, cambio.Nombre, cambio.Password);
             if (filas > 0)
             {
                 // Recalcular dígitos verificadores
@@ -51,7 +50,6 @@ namespace BLL
                 usuarioRecompuesto.ID_Usuario = cambio.ID_Usuario;
                 usuarioRecompuesto.Nombre = cambio.Nombre;
                 usuarioRecompuesto.Password = cambio.Password;
-                usuarioRecompuesto.Role = cambio.Role;
 
                 RegistrarCambio(usuarioRecompuesto, "Recomposicion (v" + cambio.Version + ")", modificadoPor);
                 return true;

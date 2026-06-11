@@ -4,6 +4,6 @@ namespace Servicio
 {
     public interface IObserver
     {
-        void UpdateLanguage();
+        void ActualizarLenguaje();
     }
 }

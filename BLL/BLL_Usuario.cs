@@ -33,7 +33,7 @@ namespace BLL
         }
 
       
-        public bool RegistrarUsuario(string nombre, string passwordPlana, string role)
+        public bool RegistrarUsuario(string nombre, string passwordPlana)
         {
           
             string passwordHasheada = BLL_Seguridad.HashearPassword(passwordPlana);
@@ -41,7 +41,6 @@ namespace BLL
             BE.BE_Usuario nuevoUsuario = new BE.BE_Usuario();
             nuevoUsuario.Nombre = nombre;
             nuevoUsuario.Password = passwordHasheada;
-            nuevoUsuario.Role = role;
             nuevoUsuario.Logeado = 0;
 
             // Calcular DVH antes de insertar (usamos id=0 temporalmente, se recalcula después)

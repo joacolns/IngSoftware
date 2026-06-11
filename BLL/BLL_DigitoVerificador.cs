@@ -11,27 +11,22 @@ namespace BLL
     {
         private MP_DigitoVerificador mpDigVer = new MP_DigitoVerificador();
 
-        /// <summary>
         /// Calcula el DVH de un registro de usuario concatenando sus campos
-        /// </summary>
-        public string CalcularDVH(int idUsuario, string nombre, string password, string role)
+        public string CalcularDVH(int idUsuario, string nombre, string password)
         {
-            string cadena = idUsuario.ToString() + nombre + password + role;
+            string cadena = idUsuario.ToString() + nombre + password;
             return Servicio.S_Seguridad.GenerarHashSHA256(cadena);
         }
 
-        /// <summary>
         /// Actualiza el DVH de un usuario específico
-        /// </summary>
-        public void ActualizarDVH(int idUsuario, string nombre, string password, string role)
+        public void ActualizarDVH(int idUsuario, string nombre, string password)
         {
-            string dvh = CalcularDVH(idUsuario, nombre, password, role);
+            string dvh = CalcularDVH(idUsuario, nombre, password);
             mpDigVer.ActualizarDVH(idUsuario, dvh);
         }
 
-        /// <summary>
-        /// Recalcula y actualiza los DVH de TODOS los usuarios y luego el DVV
-        /// </summary>
+        /// Recalcula y actualiza los DVH de todos los usuarios y luego el DVV
+
         public void RecalcularTodo()
         {
             DataTable dt = mpDigVer.ObtenerUsuariosConDVH();
@@ -41,19 +36,18 @@ namespace BLL
                 int id = Convert.ToInt32(row["id_Usuario"]);
                 string nombre = row["nombre"].ToString();
                 string password = row["password"].ToString();
-                string role = row["role"].ToString();
 
-                string dvh = CalcularDVH(id, nombre, password, role);
+                string dvh = CalcularDVH(id, nombre, password);
                 mpDigVer.ActualizarDVH(id, dvh);
             }
 
             ActualizarDVV();
         }
 
-        /// <summary>
+
         /// Calcula y almacena el DVV de la tabla Usuarios.
         /// Concatena todos los DVH y genera un hash del conjunto.
-        /// </summary>
+
         public void ActualizarDVV()
         {
             DataTable dt = mpDigVer.ObtenerUsuariosConDVH();
@@ -69,19 +63,19 @@ namespace BLL
             mpDigVer.ActualizarDVV("Usuarios", dvv);
         }
 
-        /// <summary>
+
         /// Verifica la integridad de un usuario específico (DVH)
-        /// </summary>
-        public bool VerificarDVH(int idUsuario, string nombre, string password, string role, string dvhAlmacenado)
+
+        public bool VerificarDVH(int idUsuario, string nombre, string password, string dvhAlmacenado)
         {
-            string dvhCalculado = CalcularDVH(idUsuario, nombre, password, role);
+            string dvhCalculado = CalcularDVH(idUsuario, nombre, password);
             return dvhCalculado == dvhAlmacenado;
         }
 
-        /// <summary>
+
         /// Verifica la integridad de TODA la tabla Usuarios.
         /// Devuelve true si tanto los DVH individuales como el DVV son válidos.
-        /// </summary>
+
         public bool VerificarIntegridad(out List<string> errores)
         {
             errores = new List<string>();
@@ -96,10 +90,9 @@ namespace BLL
                 int id = Convert.ToInt32(row["id_Usuario"]);
                 string nombre = row["nombre"].ToString();
                 string password = row["password"].ToString();
-                string role = row["role"].ToString();
                 string dvhAlmacenado = row["DigVerH"] != DBNull.Value ? row["DigVerH"].ToString() : "";
 
-                string dvhCalculado = CalcularDVH(id, nombre, password, role);
+                string dvhCalculado = CalcularDVH(id, nombre, password);
 
                 if (dvhCalculado != dvhAlmacenado)
                 {

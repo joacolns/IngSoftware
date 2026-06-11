@@ -12,9 +12,9 @@ namespace DAL
     {
         private Acceso acceso = new Acceso();
 
-        /// <summary>
+
         /// Actualiza el Dígito Verificador Horizontal de un usuario
-        /// </summary>
+
         public void ActualizarDVH(int idUsuario, string digVerH)
         {
             try
@@ -39,9 +39,9 @@ namespace DAL
             }
         }
 
-        /// <summary>
+
         /// Obtiene todos los usuarios con su DVH para verificación
-        /// </summary>
+
         public DataTable ObtenerUsuariosConDVH()
         {
             try
@@ -59,9 +59,7 @@ namespace DAL
             }
         }
 
-        /// <summary>
         /// Actualiza el Dígito Verificador Vertical de una tabla
-        /// </summary>
         public void ActualizarDVV(string nombreTabla, string hashVertical)
         {
             try
@@ -86,9 +84,7 @@ namespace DAL
             }
         }
 
-        /// <summary>
         /// Obtiene el DVV almacenado para una tabla
-        /// </summary>
         public string ObtenerDVV(string nombreTabla)
         {
             try

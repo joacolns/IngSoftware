@@ -1,4 +1,4 @@
-﻿namespace GUI
+namespace GUI
 {
     partial class Login
     {
@@ -33,6 +33,8 @@
             this.labelUsuario = new System.Windows.Forms.Label();
             this.labelPassword = new System.Windows.Forms.Label();
             this.btnLogin = new System.Windows.Forms.Button();
+            this.labelIdiomaLogin = new System.Windows.Forms.Label();
+            this.comboBoxIdiomaLogin = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // txtBox_usuario
@@ -83,11 +85,33 @@
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btn_Login_Click);
             // 
+            // labelIdiomaLogin
+            // 
+            this.labelIdiomaLogin.AutoSize = true;
+            this.labelIdiomaLogin.Location = new System.Drawing.Point(134, 38);
+            this.labelIdiomaLogin.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.labelIdiomaLogin.Name = "labelIdiomaLogin";
+            this.labelIdiomaLogin.Size = new System.Drawing.Size(76, 25);
+            this.labelIdiomaLogin.TabIndex = 5;
+            this.labelIdiomaLogin.Text = "Idioma";
+            // 
+            // comboBoxIdiomaLogin
+            // 
+            this.comboBoxIdiomaLogin.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxIdiomaLogin.FormattingEnabled = true;
+            this.comboBoxIdiomaLogin.Location = new System.Drawing.Point(140, 69);
+            this.comboBoxIdiomaLogin.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.comboBoxIdiomaLogin.Name = "comboBoxIdiomaLogin";
+            this.comboBoxIdiomaLogin.Size = new System.Drawing.Size(308, 33);
+            this.comboBoxIdiomaLogin.TabIndex = 6;
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(618, 671);
+            this.Controls.Add(this.labelIdiomaLogin);
+            this.Controls.Add(this.comboBoxIdiomaLogin);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.labelPassword);
             this.Controls.Add(this.labelUsuario);
@@ -109,6 +133,8 @@
         private System.Windows.Forms.Label labelUsuario;
         private System.Windows.Forms.Label labelPassword;
         private System.Windows.Forms.Button btnLogin;
+        private System.Windows.Forms.Label labelIdiomaLogin;
+        private System.Windows.Forms.ComboBox comboBoxIdiomaLogin;
     }
 }
 

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BE.BE_Bitacora">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAQAAIAAAAAAAAAAAAAAAAAACAkA=</HashCode>
+      <FileName>BE_Bitacora.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BE.BE_Componente">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAIAACAAAAAgAAAAAAAAAAAAAQAAEAAQAQ=</HashCode>
+      <FileName>BE_Componente.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BE.BE_Control">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>BE_Control.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BE.BE_DigitoVerificador">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAACAAAAAAACAAAAAgAAAAAAAgAAAAAACAAA=</HashCode>
+      <FileName>BE_DigitoVerificador.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BE.BE_Idioma">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAgAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>BE_Idioma.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BE.BE_Traduccion">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAQAAAAAAAAAAAAQAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>BE_Traduccion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BE.BE_Usuario">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAJCAUAAAgBAAAAAAAAACAAAAAgACEAI=</HashCode>
+      <FileName>BE_Usuario.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BE.BE_UsuarioCambio">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>YAAAAAQAAAAAAAEAEAAAgAAAAAAAAAACAAAgAAACAAA=</HashCode>
+      <FileName>BE_UsuarioCambio.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

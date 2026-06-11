@@ -1,4 +1,4 @@
-﻿-- ===================================================================
+-- ===================================================================
 -- DATABASE CREATION AND INITIALIZATION SCRIPT FOR IngDeSoftDB
 -- ===================================================================
 
@@ -24,9 +24,8 @@ GO
 CREATE TABLE [dbo].[Usuarios](
     [id_Usuario] [int] IDENTITY(1,1) NOT NULL,
     [nombre] [varchar](50) NOT NULL,
-    [password] [varchar](255) NOT NULL,
-    [role] [varchar](50) NOT NULL,
-    [DigVerH] [varchar](500) NULL,
+    [password] [varchar](250) NOT NULL,
+    [DigVerH] [varchar](500) NOT NULL,
     CONSTRAINT [PK_Usuarios] PRIMARY KEY CLUSTERED ([id_Usuario] ASC)
 );
 GO
@@ -73,8 +72,7 @@ CREATE TABLE [dbo].[Usuario_Cambios](
     [id_Usuario] [int] NOT NULL,
     [version] [int] NOT NULL,
     [nombre] [varchar](50) NOT NULL,
-    [password] [varchar](255) NOT NULL,
-    [role] [varchar](50) NOT NULL,
+    [password] [varchar](250) NOT NULL,
     [fecha] [datetime] NOT NULL,
     [modificado_por] [varchar](50) NOT NULL,
     [tipo_cambio] [varchar](50) NOT NULL,
@@ -123,8 +121,8 @@ GO
 
 -- Data for Usuarios
 SET IDENTITY_INSERT [Usuarios] ON;
-INSERT INTO [Usuarios] ([id_Usuario], [nombre], [password], [role], [DigVerH]) VALUES (1, 'admin', '3pQQAVt/op6AR9q4Aju4z8AjVMU1pmo9fg//hv+O97Cs9z7X', 'admin', 'b78417a2c89367782a78beacd88ecb1ceee79510d220e68a33b7e83c2d24d6cc');
-INSERT INTO [Usuarios] ([id_Usuario], [nombre], [password], [role], [DigVerH]) VALUES (2, 'user', 'G/5pk0OyXlYg7BPNn227bwEniH4DD5nPx+3cq1/tKnvM8UcH', 'admin', '247a98708ffeac6423bfdaa86733f929f76ec186f905fcd1beaf4ad7a6feccc8');
+INSERT INTO [Usuarios] ([id_Usuario], [nombre], [password], [DigVerH]) VALUES (1, 'admin', '3pQQAVt/op6AR9q4Aju4z8AjVMU1pmo9fg//hv+O97Cs9z7X', '75452c39b9c981fb8f4587cf74d170f315a1709e6eaccba6365bd643c95d1380');
+INSERT INTO [Usuarios] ([id_Usuario], [nombre], [password], [DigVerH]) VALUES (2, 'user', 'G/5pk0OyXlYg7BPNn227bwEniH4DD5nPx+3cq1/tKnvM8UcH', 'f076f1e80989c7f084fe1ea1529da68738e65b8bfd010ac8e2d81da1f48fe648');
 SET IDENTITY_INSERT [Usuarios] OFF;
 GO
 
@@ -189,14 +187,15 @@ GO
 
 -- Data for Usuario_Cambios
 SET IDENTITY_INSERT [Usuario_Cambios] ON;
-INSERT INTO [Usuario_Cambios] ([id_Cambio], [id_Usuario], [version], [nombre], [password], [role], [fecha], [modificado_por], [tipo_cambio]) VALUES (1, 2, 1, 'user', 'G/5pk0OyXlYg7BPNn227bwEniH4DD5nPx+3cq1/tKnvM8UcH', 'admin', '2026-06-10 19:39:14.463', 'admin', 'Registro');
-INSERT INTO [Usuario_Cambios] ([id_Cambio], [id_Usuario], [version], [nombre], [password], [role], [fecha], [modificado_por], [tipo_cambio]) VALUES (2, 2, 2, 'user', 'exY0Ldk2WMVdT4UOCswV4ckH1gtNT1lRIDCvrWJTiTYv2BBd', 'admin', '2026-06-10 19:42:58.930', 'admin', 'Modificacion');
-INSERT INTO [Usuario_Cambios] ([id_Cambio], [id_Usuario], [version], [nombre], [password], [role], [fecha], [modificado_por], [tipo_cambio]) VALUES (3, 2, 3, 'user', 'G/5pk0OyXlYg7BPNn227bwEniH4DD5nPx+3cq1/tKnvM8UcH', 'admin', '2026-06-10 19:44:51.940', 'admin', 'Recomposicion (v1)');
+INSERT INTO [Usuario_Cambios] ([id_Cambio], [id_Usuario], [version], [nombre], [password], [fecha], [modificado_por], [tipo_cambio]) VALUES (1, 2, 1, 'user', 'G/5pk0OyXlYg7BPNn227bwEniH4DD5nPx+3cq1/tKnvM8UcH', '2026-06-10 19:39:14.463', 'admin', 'Registro');
+INSERT INTO [Usuario_Cambios] ([id_Cambio], [id_Usuario], [version], [nombre], [password], [fecha], [modificado_por], [tipo_cambio]) VALUES (2, 2, 2, 'user', 'exY0Ldk2WMVdT4UOCswV4ckH1gtNT1lRIDCvrWJTiTYv2BBd', '2026-06-10 19:42:58.930', 'admin', 'Modificacion');
+INSERT INTO [Usuario_Cambios] ([id_Cambio], [id_Usuario], [version], [nombre], [password], [fecha], [modificado_por], [tipo_cambio]) VALUES (3, 2, 3, 'user', 'G/5pk0OyXlYg7BPNn227bwEniH4DD5nPx+3cq1/tKnvM8UcH', '2026-06-10 19:44:51.940', 'admin', 'Recomposicion (v1)');
 SET IDENTITY_INSERT [Usuario_Cambios] OFF;
 GO
 
 -- Data for Idioma
 INSERT INTO [Idioma] ([id_Idioma], [Nombre], [Agregado]) VALUES (1, 'Español', 1);
+INSERT INTO [Idioma] ([id_Idioma], [Nombre], [Agregado]) VALUES (2, 'Ingles', 1);
 GO
 
 -- Data for Control
@@ -232,6 +231,12 @@ INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (29, 'labe
 INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (30, 'buttonAgregarIdioma', 'PanelAdmin');
 INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (31, 'buttonAplicarCambiosIdioma', 'PanelAdmin');
 INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (32, 'PanelAdmin', 'PanelAdmin');
+INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (33, 'buttonActualizarIdiomaMostrar', 'PanelAdmin');
+INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (34, 'tabPageUsuarios', 'PanelAdmin');
+INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (35, 'tabPageBitacora', 'PanelAdmin');
+INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (36, 'tabPageControlCambios', 'PanelAdmin');
+INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (37, 'tabPageIdiomas', 'PanelAdmin');
+INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (38, 'labelIdiomaLogin', 'Login');
 GO
 
 -- Data for Traduccion
@@ -267,10 +272,56 @@ INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) V
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (30, 1, 30, 'Agregar');
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (31, 1, 31, 'Aplicar Cambios');
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (32, 1, 32, 'Panel de Administración');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (33, 1, 33, 'Actualizar');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (34, 1, 34, 'Usuarios y Permisos');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (35, 1, 35, 'Bitácora');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (36, 1, 36, 'Control de Cambios');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (37, 1, 37, 'Idiomas');
+
+-- English Translations (id_Idioma = 2)
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (38, 2, 1, 'Username');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (39, 2, 2, 'Password');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (40, 2, 3, 'Login');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (41, 2, 4, 'Login');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (42, 2, 5, 'Welcome');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (43, 2, 6, 'User');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (44, 2, 7, 'Password');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (45, 2, 8, 'Register');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (46, 2, 9, 'Logout');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (47, 2, 10, 'Activity Log');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (48, 2, 11, 'Role');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (49, 2, 12, 'Clear');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (50, 2, 13, 'Filter');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (51, 2, 14, 'Start Date');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (52, 2, 15, 'End Date');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (53, 2, 16, 'Username');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (54, 2, 17, 'Select User:');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (55, 2, 18, 'Available Permissions Tree:');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (56, 2, 19, 'Assign >>');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (57, 2, 20, '<< Remove');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (58, 2, 21, 'User Direct Permissions:');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (59, 2, 22, 'Change Log');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (60, 2, 23, 'Restore previous state');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (61, 2, 24, 'Modify');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (62, 2, 25, 'Language Management');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (63, 2, 26, 'Language');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (64, 2, 27, 'Activate language');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (65, 2, 28, 'Deactivate language');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (66, 2, 29, 'Language name');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (67, 2, 30, 'Add');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (68, 2, 31, 'Apply Changes');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (69, 2, 32, 'Admin Panel');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (70, 2, 33, 'Update');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (71, 2, 34, 'Users and Permissions');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (72, 2, 35, 'Activity Log');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (73, 2, 36, 'Change Log');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (74, 2, 37, 'Languages');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (75, 1, 38, 'Idioma');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (76, 2, 38, 'Language');
 GO
 
 -- Data for IntegridadDigVefV
-INSERT INTO [IntegridadDigVefV] ([id_Tabla], [nombreTabla], [hashVertical]) VALUES (1, 'Usuarios', '5105ebdc23867c9ddb923529a67da97bba182c7e0292a8361efe7caf4da87053');
+INSERT INTO [IntegridadDigVefV] ([id_Tabla], [nombreTabla], [hashVertical]) VALUES (1, 'Usuarios', 'b99555ee1b8225110bc11bff12d7dc14414cab2ca2053b1c14cb7cc10fd0e080');
 GO
 
 -- ===================================================================
@@ -285,7 +336,7 @@ CREATE PROCEDURE [dbo].[SP_ListarCambiosUsuario]
 AS
 BEGIN
     SET NOCOUNT ON;
-    SELECT id_Cambio, id_Usuario, [version], nombre, [password], [role], fecha, modificado_por, tipo_cambio
+    SELECT id_Cambio, id_Usuario, [version], nombre, [password], fecha, modificado_por, tipo_cambio
     FROM Usuario_Cambios
     WHERE id_Usuario = @ID_Usuario
     ORDER BY [version] DESC;
@@ -314,14 +365,12 @@ GO
 CREATE PROCEDURE [dbo].[SP_ActualizarUsuario]
     @ID_Usuario INT,
     @Nombre VARCHAR(50),
-    @Password VARCHAR(255),
-    @Role VARCHAR(50)
+    @Password VARCHAR(255)
 AS
 BEGIN
     UPDATE Usuarios
     SET nombre = @Nombre,
-        [password] = @Password,
-        [role] = @Role
+        [password] = @Password
     WHERE id_Usuario = @ID_Usuario;
 END
 
@@ -335,14 +384,13 @@ CREATE PROCEDURE [dbo].[SP_InsertarCambioUsuario]
     @Version INT,
     @Nombre VARCHAR(50),
     @Password VARCHAR(255),
-    @Role VARCHAR(50),
     @Fecha DATETIME,
     @ModificadoPor VARCHAR(50),
     @TipoCambio VARCHAR(50)
 AS
 BEGIN
-    INSERT INTO Usuario_Cambios (id_Usuario, [version], nombre, [password], [role], fecha, modificado_por, tipo_cambio)
-    VALUES (@ID_Usuario, @Version, @Nombre, @Password, @Role, @Fecha, @ModificadoPor, @TipoCambio);
+    INSERT INTO Usuario_Cambios (id_Usuario, [version], nombre, [password], fecha, modificado_por, tipo_cambio)
+    VALUES (@ID_Usuario, @Version, @Nombre, @Password, @Fecha, @ModificadoPor, @TipoCambio);
 END
 
 GO
@@ -753,12 +801,11 @@ GO
 CREATE PROCEDURE [dbo].[SP_InsertarUsuario]
     @Nombre VARCHAR(50),
     @Password VARCHAR(255),
-	@Role VARCHAR(50),
 	@DigVerH VARCHAR(500)
 AS
 BEGIN
-    INSERT INTO Usuarios (nombre, password, role, DigVerH) 
-    VALUES (@Nombre, @Password, @Role, @DigVerH);
+    INSERT INTO Usuarios (nombre, password, DigVerH) 
+    VALUES (@Nombre, @Password, @DigVerH);
 END
 
 GO
@@ -792,7 +839,6 @@ BEGIN
         id_Usuario, 
         nombre, 
         password,
-		role,
 		DigVerH
     FROM 
         Usuarios
@@ -918,7 +964,7 @@ CREATE PROCEDURE [dbo].[SP_ListarUsuarios]
 AS
 BEGIN
     SET NOCOUNT ON;
-    SELECT id_Usuario, nombre, password, role, DigVerH FROM Usuarios;
+    SELECT id_Usuario, nombre, password, DigVerH FROM Usuarios;
 END
 
 GO
@@ -955,7 +1001,7 @@ CREATE PROCEDURE [dbo].[SP_ObtenerDigVerH]
 AS
 BEGIN
     SET NOCOUNT ON;
-    SELECT id_Usuario, nombre, password, role, DigVerH FROM Usuarios WHERE id_Usuario = @ID_Usuario;
+    SELECT id_Usuario, nombre, password, DigVerH FROM Usuarios WHERE id_Usuario = @ID_Usuario;
 END
 
 GO

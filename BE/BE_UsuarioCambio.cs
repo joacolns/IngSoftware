@@ -9,7 +9,6 @@ namespace BE
         public int Version { get; set; }
         public string Nombre { get; set; }
         public string Password { get; set; }
-        public string Role { get; set; }
         public DateTime Fecha { get; set; }
         public string Modificado_Por { get; set; }
         public string Tipo_Cambio { get; set; }

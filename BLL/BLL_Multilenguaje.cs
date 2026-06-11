@@ -95,7 +95,7 @@ namespace BLL
         {
             foreach (var obs in _observers)
             {
-                obs.UpdateLanguage();
+                obs.ActualizarLenguaje();
             }
         }
 
@@ -150,5 +150,6 @@ namespace BLL
                 Notificar();
             }
         }
+
     }
 }

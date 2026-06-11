@@ -21,7 +21,6 @@ namespace DAL
                 parametros.Add(acceso.CrearParametro("@Version", cambio.Version));
                 parametros.Add(acceso.CrearParametro("@Nombre", cambio.Nombre));
                 parametros.Add(acceso.CrearParametro("@Password", cambio.Password));
-                parametros.Add(acceso.CrearParametro("@Role", cambio.Role));
                 parametros.Add(acceso.CrearParametro("@Fecha", cambio.Fecha));
                 parametros.Add(acceso.CrearParametro("@ModificadoPor", cambio.Modificado_Por));
                 parametros.Add(acceso.CrearParametro("@TipoCambio", cambio.Tipo_Cambio));
@@ -86,7 +85,6 @@ namespace DAL
                     cambio.Version = Convert.ToInt32(row["version"]);
                     cambio.Nombre = row["nombre"].ToString();
                     cambio.Password = row["password"].ToString();
-                    cambio.Role = row["role"].ToString();
                     cambio.Fecha = Convert.ToDateTime(row["fecha"]);
                     cambio.Modificado_Por = row["modificado_por"].ToString();
                     cambio.Tipo_Cambio = row["tipo_cambio"].ToString();
@@ -105,7 +103,7 @@ namespace DAL
             return lista;
         }
 
-        public int ActualizarUsuario(int idUsuario, string nombre, string password, string role)
+        public int ActualizarUsuario(int idUsuario, string nombre, string password)
         {
             try
             {
@@ -115,7 +113,6 @@ namespace DAL
                 parametros.Add(acceso.CrearParametro("@ID_Usuario", idUsuario));
                 parametros.Add(acceso.CrearParametro("@Nombre", nombre));
                 parametros.Add(acceso.CrearParametro("@Password", password));
-                parametros.Add(acceso.CrearParametro("@Role", role));
 
                 return acceso.Escribir("SP_ActualizarUsuario", parametros);
             }
