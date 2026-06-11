@@ -47,6 +47,9 @@
     <Compile Include="BE_Usuario.cs" />
     <Compile Include="BE_DigitoVerificador.cs" />
     <Compile Include="BE_UsuarioCambio.cs" />
+    <Compile Include="BE_Idioma.cs" />
+    <Compile Include="BE_Control.cs" />
+    <Compile Include="BE_Traduccion.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

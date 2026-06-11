@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Observer\IObserver.cs" />
+    <Compile Include="Observer\ISujeto.cs" />
     <Compile Include="Singleton\S_GestorDeSesion.cs" />
     <Compile Include="Seguridad\S_Seguridad.cs" />
     <Compile Include="Composite\S_Componente.cs" />

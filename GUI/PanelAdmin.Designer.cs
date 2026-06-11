@@ -30,25 +30,25 @@ namespace GUI
         {
             this.labelNOMBREUSER = new System.Windows.Forms.Label();
             this.labelUSER = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelBienvenido = new System.Windows.Forms.Label();
             this.txtNuevoUsuario = new System.Windows.Forms.TextBox();
             this.txtNuevaPassword = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.labelUsuario = new System.Windows.Forms.Label();
+            this.labelContraseña = new System.Windows.Forms.Label();
+            this.buttonRegistrarUsuario = new System.Windows.Forms.Button();
+            this.buttonCerrarSesion = new System.Windows.Forms.Button();
             this.dataGridViewBitacora = new System.Windows.Forms.DataGridView();
-            this.label4 = new System.Windows.Forms.Label();
+            this.labelBitacora = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.labelRol = new System.Windows.Forms.Label();
             this.btn_LimpiarBitacora = new System.Windows.Forms.Button();
             this.dateTimePickerFechaInicio = new System.Windows.Forms.DateTimePicker();
             this.dateTimePickerFechaFinal = new System.Windows.Forms.DateTimePicker();
             this.textBoxUsuarioBuscar = new System.Windows.Forms.TextBox();
             this.buttonBuscar = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
+            this.labelFechaInicio = new System.Windows.Forms.Label();
+            this.labelFechaFinal = new System.Windows.Forms.Label();
+            this.labelNombredeusuario = new System.Windows.Forms.Label();
             this.labelSelectUsuario = new System.Windows.Forms.Label();
             this.comboBoxUsuarios = new System.Windows.Forms.ComboBox();
             this.labelTreePermisos = new System.Windows.Forms.Label();
@@ -58,11 +58,22 @@ namespace GUI
             this.labelPermisosUsuario = new System.Windows.Forms.Label();
             this.listBoxPermisosUsuario = new System.Windows.Forms.ListBox();
             this.dataGridViewControldecambios = new System.Windows.Forms.DataGridView();
-            this.label9 = new System.Windows.Forms.Label();
+            this.labelControldecambios = new System.Windows.Forms.Label();
             this.buttonRecomponerEstadoAnterior = new System.Windows.Forms.Button();
             this.buttonModificarUsuario = new System.Windows.Forms.Button();
+            this.dataGridViewTraducirControl = new System.Windows.Forms.DataGridView();
+            this.labelManejodeidiomas = new System.Windows.Forms.Label();
+            this.comboBoxIdioma = new System.Windows.Forms.ComboBox();
+            this.labelIdioma = new System.Windows.Forms.Label();
+            this.buttonActivarIdioma = new System.Windows.Forms.Button();
+            this.buttonDesactivarIdioma = new System.Windows.Forms.Button();
+            this.labelNombredelidioma = new System.Windows.Forms.Label();
+            this.textBoxAgregarNombreIdioma = new System.Windows.Forms.TextBox();
+            this.buttonAgregarIdioma = new System.Windows.Forms.Button();
+            this.buttonAplicarCambiosIdioma = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBitacora)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewControldecambios)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTraducirControl)).BeginInit();
             this.SuspendLayout();
             // 
             // labelNOMBREUSER
@@ -86,16 +97,16 @@ namespace GUI
             this.labelUSER.Text = "label1";
             this.labelUSER.Click += new System.EventHandler(this.labelUSER_Click);
             // 
-            // label1
+            // labelBienvenido
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1624, 21);
-            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(119, 25);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Bienvenido";
-            this.label1.Click += new System.EventHandler(this.label1_Click_1);
+            this.labelBienvenido.AutoSize = true;
+            this.labelBienvenido.Location = new System.Drawing.Point(1624, 21);
+            this.labelBienvenido.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.labelBienvenido.Name = "labelBienvenido";
+            this.labelBienvenido.Size = new System.Drawing.Size(119, 25);
+            this.labelBienvenido.TabIndex = 2;
+            this.labelBienvenido.Text = "Bienvenido";
+            this.labelBienvenido.Click += new System.EventHandler(this.label1_Click_1);
             // 
             // txtNuevoUsuario
             // 
@@ -115,48 +126,48 @@ namespace GUI
             this.txtNuevaPassword.TabIndex = 5;
             this.txtNuevaPassword.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
-            // label2
+            // labelUsuario
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(36, 56);
-            this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(86, 25);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Usuario";
+            this.labelUsuario.AutoSize = true;
+            this.labelUsuario.Location = new System.Drawing.Point(36, 56);
+            this.labelUsuario.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.labelUsuario.Name = "labelUsuario";
+            this.labelUsuario.Size = new System.Drawing.Size(86, 25);
+            this.labelUsuario.TabIndex = 6;
+            this.labelUsuario.Text = "Usuario";
             // 
-            // label3
+            // labelContraseña
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(36, 140);
-            this.label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(123, 25);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Contraseña";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
+            this.labelContraseña.AutoSize = true;
+            this.labelContraseña.Location = new System.Drawing.Point(36, 140);
+            this.labelContraseña.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.labelContraseña.Name = "labelContraseña";
+            this.labelContraseña.Size = new System.Drawing.Size(123, 25);
+            this.labelContraseña.TabIndex = 7;
+            this.labelContraseña.Text = "Contraseña";
+            this.labelContraseña.Click += new System.EventHandler(this.label3_Click);
             // 
-            // button1
+            // buttonRegistrarUsuario
             // 
-            this.button1.Location = new System.Drawing.Point(42, 329);
-            this.button1.Margin = new System.Windows.Forms.Padding(6);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(202, 73);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "Registrar";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.buttonRegistrarUsuario.Location = new System.Drawing.Point(42, 329);
+            this.buttonRegistrarUsuario.Margin = new System.Windows.Forms.Padding(6);
+            this.buttonRegistrarUsuario.Name = "buttonRegistrarUsuario";
+            this.buttonRegistrarUsuario.Size = new System.Drawing.Size(202, 73);
+            this.buttonRegistrarUsuario.TabIndex = 8;
+            this.buttonRegistrarUsuario.Text = "Registrar";
+            this.buttonRegistrarUsuario.UseVisualStyleBackColor = true;
+            this.buttonRegistrarUsuario.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // buttonCerrarSesion
             // 
-            this.button2.Location = new System.Drawing.Point(1643, 56);
-            this.button2.Margin = new System.Windows.Forms.Padding(6);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(182, 44);
-            this.button2.TabIndex = 9;
-            this.button2.Text = "Cerrar sesion";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.buttonCerrarSesion.Location = new System.Drawing.Point(1643, 56);
+            this.buttonCerrarSesion.Margin = new System.Windows.Forms.Padding(6);
+            this.buttonCerrarSesion.Name = "buttonCerrarSesion";
+            this.buttonCerrarSesion.Size = new System.Drawing.Size(182, 44);
+            this.buttonCerrarSesion.TabIndex = 9;
+            this.buttonCerrarSesion.Text = "Cerrar sesion";
+            this.buttonCerrarSesion.UseVisualStyleBackColor = true;
+            this.buttonCerrarSesion.Click += new System.EventHandler(this.button2_Click);
             // 
             // dataGridViewBitacora
             // 
@@ -169,15 +180,15 @@ namespace GUI
             this.dataGridViewBitacora.Size = new System.Drawing.Size(893, 383);
             this.dataGridViewBitacora.TabIndex = 10;
             // 
-            // label4
+            // labelBitacora
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(36, 456);
-            this.label4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(91, 25);
-            this.label4.TabIndex = 11;
-            this.label4.Text = "Bitacora";
+            this.labelBitacora.AutoSize = true;
+            this.labelBitacora.Location = new System.Drawing.Point(36, 456);
+            this.labelBitacora.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.labelBitacora.Name = "labelBitacora";
+            this.labelBitacora.Size = new System.Drawing.Size(91, 25);
+            this.labelBitacora.TabIndex = 11;
+            this.labelBitacora.Text = "Bitacora";
             // 
             // comboBox1
             // 
@@ -191,15 +202,15 @@ namespace GUI
             this.comboBox1.Size = new System.Drawing.Size(192, 33);
             this.comboBox1.TabIndex = 12;
             // 
-            // label5
+            // labelRol
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(38, 227);
-            this.label5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(44, 25);
-            this.label5.TabIndex = 13;
-            this.label5.Text = "Rol";
+            this.labelRol.AutoSize = true;
+            this.labelRol.Location = new System.Drawing.Point(38, 227);
+            this.labelRol.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.labelRol.Name = "labelRol";
+            this.labelRol.Size = new System.Drawing.Size(44, 25);
+            this.labelRol.TabIndex = 13;
+            this.labelRol.Text = "Rol";
             // 
             // btn_LimpiarBitacora
             // 
@@ -245,33 +256,33 @@ namespace GUI
             this.buttonBuscar.UseVisualStyleBackColor = true;
             this.buttonBuscar.Click += new System.EventHandler(this.buttonBuscar_Click);
             // 
-            // label6
+            // labelFechaInicio
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(217, 417);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(128, 25);
-            this.label6.TabIndex = 19;
-            this.label6.Text = "Fecha Inicio";
+            this.labelFechaInicio.AutoSize = true;
+            this.labelFechaInicio.Location = new System.Drawing.Point(217, 417);
+            this.labelFechaInicio.Name = "labelFechaInicio";
+            this.labelFechaInicio.Size = new System.Drawing.Size(128, 25);
+            this.labelFechaInicio.TabIndex = 19;
+            this.labelFechaInicio.Text = "Fecha Inicio";
             // 
-            // label7
+            // labelFechaFinal
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(447, 423);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(125, 25);
-            this.label7.TabIndex = 20;
-            this.label7.Text = "Fecha Final";
+            this.labelFechaFinal.AutoSize = true;
+            this.labelFechaFinal.Location = new System.Drawing.Point(447, 423);
+            this.labelFechaFinal.Name = "labelFechaFinal";
+            this.labelFechaFinal.Size = new System.Drawing.Size(125, 25);
+            this.labelFechaFinal.TabIndex = 20;
+            this.labelFechaFinal.Text = "Fecha Final";
             // 
-            // label8
+            // labelNombredeusuario
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(662, 411);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(194, 25);
-            this.label8.TabIndex = 21;
-            this.label8.Text = "Nombre de usuario";
-            this.label8.Click += new System.EventHandler(this.label8_Click);
+            this.labelNombredeusuario.AutoSize = true;
+            this.labelNombredeusuario.Location = new System.Drawing.Point(662, 411);
+            this.labelNombredeusuario.Name = "labelNombredeusuario";
+            this.labelNombredeusuario.Size = new System.Drawing.Size(194, 25);
+            this.labelNombredeusuario.TabIndex = 21;
+            this.labelNombredeusuario.Text = "Nombre de usuario";
+            this.labelNombredeusuario.Click += new System.EventHandler(this.label8_Click);
             // 
             // labelSelectUsuario
             // 
@@ -353,15 +364,15 @@ namespace GUI
             this.dataGridViewControldecambios.Size = new System.Drawing.Size(587, 383);
             this.dataGridViewControldecambios.TabIndex = 30;
             // 
-            // label9
+            // labelControldecambios
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(1177, 456);
-            this.label9.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(197, 25);
-            this.label9.TabIndex = 31;
-            this.label9.Text = "Control de cambios";
+            this.labelControldecambios.AutoSize = true;
+            this.labelControldecambios.Location = new System.Drawing.Point(1177, 456);
+            this.labelControldecambios.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.labelControldecambios.Name = "labelControldecambios";
+            this.labelControldecambios.Size = new System.Drawing.Size(197, 25);
+            this.labelControldecambios.TabIndex = 31;
+            this.labelControldecambios.Text = "Control de cambios";
             // 
             // buttonRecomponerEstadoAnterior
             // 
@@ -384,35 +395,136 @@ namespace GUI
             this.buttonModificarUsuario.UseVisualStyleBackColor = true;
             this.buttonModificarUsuario.Click += new System.EventHandler(this.buttonModificarUsuario_Click);
             // 
+            // dataGridViewTraducirControl
+            // 
+            this.dataGridViewTraducirControl.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewTraducirControl.Location = new System.Drawing.Point(43, 1196);
+            this.dataGridViewTraducirControl.Name = "dataGridViewTraducirControl";
+            this.dataGridViewTraducirControl.RowHeadersWidth = 82;
+            this.dataGridViewTraducirControl.RowTemplate.Height = 33;
+            this.dataGridViewTraducirControl.Size = new System.Drawing.Size(1726, 293);
+            this.dataGridViewTraducirControl.TabIndex = 34;
+            // 
+            // labelManejodeidiomas
+            // 
+            this.labelManejodeidiomas.AutoSize = true;
+            this.labelManejodeidiomas.Location = new System.Drawing.Point(37, 1040);
+            this.labelManejodeidiomas.Name = "labelManejodeidiomas";
+            this.labelManejodeidiomas.Size = new System.Drawing.Size(193, 25);
+            this.labelManejodeidiomas.TabIndex = 35;
+            this.labelManejodeidiomas.Text = "Manejo de idiomas";
+            // 
+            // comboBoxIdioma
+            // 
+            this.comboBoxIdioma.FormattingEnabled = true;
+            this.comboBoxIdioma.Location = new System.Drawing.Point(122, 1084);
+            this.comboBoxIdioma.Name = "comboBoxIdioma";
+            this.comboBoxIdioma.Size = new System.Drawing.Size(388, 33);
+            this.comboBoxIdioma.TabIndex = 36;
+            // 
+            // labelIdioma
+            // 
+            this.labelIdioma.AutoSize = true;
+            this.labelIdioma.Location = new System.Drawing.Point(38, 1087);
+            this.labelIdioma.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.labelIdioma.Name = "labelIdioma";
+            this.labelIdioma.Size = new System.Drawing.Size(75, 25);
+            this.labelIdioma.TabIndex = 37;
+            this.labelIdioma.Text = "Idioma";
+            // 
+            // buttonActivarIdioma
+            // 
+            this.buttonActivarIdioma.Location = new System.Drawing.Point(529, 1017);
+            this.buttonActivarIdioma.Name = "buttonActivarIdioma";
+            this.buttonActivarIdioma.Size = new System.Drawing.Size(186, 100);
+            this.buttonActivarIdioma.TabIndex = 38;
+            this.buttonActivarIdioma.Text = "Activar idioma";
+            this.buttonActivarIdioma.UseVisualStyleBackColor = true;
+            // 
+            // buttonDesactivarIdioma
+            // 
+            this.buttonDesactivarIdioma.Location = new System.Drawing.Point(721, 1017);
+            this.buttonDesactivarIdioma.Name = "buttonDesactivarIdioma";
+            this.buttonDesactivarIdioma.Size = new System.Drawing.Size(214, 100);
+            this.buttonDesactivarIdioma.TabIndex = 39;
+            this.buttonDesactivarIdioma.Text = "Desactivar idioma";
+            this.buttonDesactivarIdioma.UseVisualStyleBackColor = true;
+            // 
+            // labelNombredelidioma
+            // 
+            this.labelNombredelidioma.AutoSize = true;
+            this.labelNombredelidioma.Location = new System.Drawing.Point(1047, 1069);
+            this.labelNombredelidioma.Name = "labelNombredelidioma";
+            this.labelNombredelidioma.Size = new System.Drawing.Size(191, 25);
+            this.labelNombredelidioma.TabIndex = 40;
+            this.labelNombredelidioma.Text = "Nombre del idioma";
+            this.labelNombredelidioma.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // textBoxAgregarNombreIdioma
+            // 
+            this.textBoxAgregarNombreIdioma.Location = new System.Drawing.Point(1244, 1069);
+            this.textBoxAgregarNombreIdioma.Name = "textBoxAgregarNombreIdioma";
+            this.textBoxAgregarNombreIdioma.Size = new System.Drawing.Size(278, 31);
+            this.textBoxAgregarNombreIdioma.TabIndex = 41;
+            // 
+            // buttonAgregarIdioma
+            // 
+            this.buttonAgregarIdioma.Location = new System.Drawing.Point(1528, 1069);
+            this.buttonAgregarIdioma.Name = "buttonAgregarIdioma";
+            this.buttonAgregarIdioma.Size = new System.Drawing.Size(241, 100);
+            this.buttonAgregarIdioma.TabIndex = 42;
+            this.buttonAgregarIdioma.Text = "Agregar";
+            this.buttonAgregarIdioma.UseVisualStyleBackColor = true;
+            // 
+            // buttonAplicarCambiosIdioma
+            // 
+            this.buttonAplicarCambiosIdioma.Location = new System.Drawing.Point(1571, 973);
+            this.buttonAplicarCambiosIdioma.Name = "buttonAplicarCambiosIdioma";
+            this.buttonAplicarCambiosIdioma.Size = new System.Drawing.Size(214, 100);
+            this.buttonAplicarCambiosIdioma.TabIndex = 43;
+            this.buttonAplicarCambiosIdioma.Text = "Aplicar Cambios";
+            this.buttonAplicarCambiosIdioma.UseVisualStyleBackColor = true;
+            // 
             // PanelAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.BackColor = System.Drawing.SystemColors.Info;
-            this.ClientSize = new System.Drawing.Size(1848, 1022);
+            this.ClientSize = new System.Drawing.Size(1848, 1662);
+            this.Controls.Add(this.buttonAplicarCambiosIdioma);
+            this.Controls.Add(this.buttonAgregarIdioma);
+            this.Controls.Add(this.textBoxAgregarNombreIdioma);
+            this.Controls.Add(this.labelNombredelidioma);
+            this.Controls.Add(this.buttonDesactivarIdioma);
+            this.Controls.Add(this.buttonActivarIdioma);
+            this.Controls.Add(this.labelIdioma);
+            this.Controls.Add(this.comboBoxIdioma);
+            this.Controls.Add(this.labelManejodeidiomas);
+            this.Controls.Add(this.dataGridViewTraducirControl);
             this.Controls.Add(this.buttonModificarUsuario);
             this.Controls.Add(this.buttonRecomponerEstadoAnterior);
-            this.Controls.Add(this.label9);
+            this.Controls.Add(this.labelControldecambios);
             this.Controls.Add(this.dataGridViewControldecambios);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
+            this.Controls.Add(this.labelNombredeusuario);
+            this.Controls.Add(this.labelFechaFinal);
+            this.Controls.Add(this.labelFechaInicio);
             this.Controls.Add(this.buttonBuscar);
             this.Controls.Add(this.textBoxUsuarioBuscar);
             this.Controls.Add(this.dateTimePickerFechaFinal);
             this.Controls.Add(this.dateTimePickerFechaInicio);
             this.Controls.Add(this.btn_LimpiarBitacora);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(this.labelRol);
             this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.labelBitacora);
             this.Controls.Add(this.dataGridViewBitacora);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.buttonCerrarSesion);
+            this.Controls.Add(this.buttonRegistrarUsuario);
+            this.Controls.Add(this.labelContraseña);
+            this.Controls.Add(this.labelUsuario);
             this.Controls.Add(this.txtNuevaPassword);
             this.Controls.Add(this.txtNuevoUsuario);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelBienvenido);
             this.Controls.Add(this.labelUSER);
             this.Controls.Add(this.labelNOMBREUSER);
             this.Controls.Add(this.labelSelectUsuario);
@@ -431,6 +543,7 @@ namespace GUI
             this.Load += new System.EventHandler(this.Menu_Principal_Load_1);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBitacora)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewControldecambios)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTraducirControl)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -440,25 +553,25 @@ namespace GUI
 
         private System.Windows.Forms.Label labelNOMBREUSER;
         private System.Windows.Forms.Label labelUSER;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelBienvenido;
         private System.Windows.Forms.TextBox txtNuevoUsuario;
         private System.Windows.Forms.TextBox txtNuevaPassword;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label labelUsuario;
+        private System.Windows.Forms.Label labelContraseña;
+        private System.Windows.Forms.Button buttonRegistrarUsuario;
+        private System.Windows.Forms.Button buttonCerrarSesion;
         private System.Windows.Forms.DataGridView dataGridViewBitacora;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label labelBitacora;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label labelRol;
         private System.Windows.Forms.Button btn_LimpiarBitacora;
         private System.Windows.Forms.DateTimePicker dateTimePickerFechaInicio;
         private System.Windows.Forms.DateTimePicker dateTimePickerFechaFinal;
         private System.Windows.Forms.TextBox textBoxUsuarioBuscar;
         private System.Windows.Forms.Button buttonBuscar;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label labelFechaInicio;
+        private System.Windows.Forms.Label labelFechaFinal;
+        private System.Windows.Forms.Label labelNombredeusuario;
         private System.Windows.Forms.Label labelSelectUsuario;
         private System.Windows.Forms.ComboBox comboBoxUsuarios;
         private System.Windows.Forms.Label labelTreePermisos;
@@ -468,8 +581,18 @@ namespace GUI
         private System.Windows.Forms.Label labelPermisosUsuario;
         private System.Windows.Forms.ListBox listBoxPermisosUsuario;
         private System.Windows.Forms.DataGridView dataGridViewControldecambios;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label labelControldecambios;
         private System.Windows.Forms.Button buttonRecomponerEstadoAnterior;
         private System.Windows.Forms.Button buttonModificarUsuario;
+        private System.Windows.Forms.DataGridView dataGridViewTraducirControl;
+        private System.Windows.Forms.Label labelManejodeidiomas;
+        private System.Windows.Forms.ComboBox comboBoxIdioma;
+        private System.Windows.Forms.Label labelIdioma;
+        private System.Windows.Forms.Button buttonActivarIdioma;
+        private System.Windows.Forms.Button buttonDesactivarIdioma;
+        private System.Windows.Forms.Label labelNombredelidioma;
+        private System.Windows.Forms.TextBox textBoxAgregarNombreIdioma;
+        private System.Windows.Forms.Button buttonAgregarIdioma;
+        private System.Windows.Forms.Button buttonAplicarCambiosIdioma;
     }
 }

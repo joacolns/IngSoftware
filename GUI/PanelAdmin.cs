@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace GUI
 {
-    public partial class PanelAdmin : Form
+    public partial class PanelAdmin : Form, Servicio.IObserver
     {
 
         public BLL.BLL_Bitacora BLLBitacora = new BLL.BLL_Bitacora();
@@ -55,6 +55,20 @@ namespace GUI
             dataGridViewControldecambios.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridViewControldecambios.MultiSelect = false;
             buttonRecomponerEstadoAnterior.Click += buttonRecomponerEstadoAnterior_Click;
+
+            // Register to Multilenguaje Observer
+            BLL_Multilenguaje.Instancia.Registrar(this);
+
+            // Bind translation events
+            comboBoxIdioma.SelectedIndexChanged += comboBoxIdioma_SelectedIndexChanged;
+            buttonActivarIdioma.Click += buttonActivarIdioma_Click;
+            buttonDesactivarIdioma.Click += buttonDesactivarIdioma_Click;
+            buttonAgregarIdioma.Click += buttonAgregarIdioma_Click;
+            buttonAplicarCambiosIdioma.Click += buttonAplicarCambiosIdioma_Click;
+
+            // Load initial languages
+            CargarIdiomas();
+            UpdateLanguage();
 
             // Recalcular dígitos verificadores al iniciar
             try
@@ -169,6 +183,7 @@ namespace GUI
 
         private void PanelAdmin_FormClosing(object sender, FormClosingEventArgs e)
         {
+            BLL_Multilenguaje.Instancia.Desregistrar(this);
             CerrarSesion();
         }
 
@@ -524,7 +539,7 @@ namespace GUI
                 btn_LimpiarBitacora.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Limpiar Bitacora");
 
                 // 2. Registrar Usuario
-                button1.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Registrar Usuario");
+                buttonRegistrarUsuario.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Registrar Usuario");
                 txtNuevoUsuario.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Registrar Usuario");
                 txtNuevaPassword.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Registrar Usuario");
                 comboBox1.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Registrar Usuario");
@@ -676,6 +691,212 @@ namespace GUI
             {
                 MessageBox.Show("Error al recomponer el estado: " + ex.Message);
             }
+        }
+
+        private void CargarIdiomas()
+        {
+            try
+            {
+                comboBoxIdioma.SelectedIndexChanged -= comboBoxIdioma_SelectedIndexChanged;
+                
+                var idiomas = BLL_Multilenguaje.Instancia.ObtenerIdiomas();
+                comboBoxIdioma.DataSource = null;
+                comboBoxIdioma.DataSource = idiomas;
+                comboBoxIdioma.DisplayMember = "Nombre";
+
+                comboBoxIdioma.SelectedIndexChanged += comboBoxIdioma_SelectedIndexChanged;
+
+                // Select current language
+                var actual = BLL_Multilenguaje.Instancia.IdiomaActual;
+                if (actual != null)
+                {
+                    foreach (var idm in listToArrayHack(idiomas))
+                    {
+                        if (idm.ID_Idioma == actual.ID_Idioma)
+                        {
+                            comboBoxIdioma.SelectedItem = idm;
+                            break;
+                        }
+                    }
+                }
+                else if (idiomas.Count > 0)
+                {
+                    comboBoxIdioma.SelectedIndex = 0;
+                    BLL_Multilenguaje.Instancia.IdiomaActual = idiomas[0];
+                }
+                
+                CargarTraducciones();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar idiomas: " + ex.Message);
+            }
+        }
+
+        private BE_Idioma[] listToArrayHack(List<BE_Idioma> list)
+        {
+            BE_Idioma[] arr = new BE_Idioma[list.Count];
+            for (int i = 0; i < list.Count; i++)
+            {
+                arr[i] = list[i];
+            }
+            return arr;
+        }
+
+        private void CargarTraducciones()
+        {
+            try
+            {
+                var selectedIdioma = comboBoxIdioma.SelectedItem as BE_Idioma;
+                if (selectedIdioma != null)
+                {
+                    dataGridViewTraducirControl.DataSource = null;
+                    dataGridViewTraducirControl.DataSource = BLL_Multilenguaje.Instancia.ObtenerTablaTraducciones(selectedIdioma.ID_Idioma);
+
+                    if (dataGridViewTraducirControl.Columns.Count > 0)
+                    {
+                        dataGridViewTraducirControl.Columns["id_Control"].ReadOnly = true;
+                        dataGridViewTraducirControl.Columns["nombre_control"].ReadOnly = true;
+                        dataGridViewTraducirControl.Columns["form"].ReadOnly = true;
+                        dataGridViewTraducirControl.Columns["texto"].ReadOnly = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar traducciones: " + ex.Message);
+            }
+        }
+
+        private void comboBoxIdioma_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selectedIdioma = comboBoxIdioma.SelectedItem as BE_Idioma;
+            if (selectedIdioma != null)
+            {
+                BLL_Multilenguaje.Instancia.IdiomaActual = selectedIdioma;
+                CargarTraducciones();
+            }
+        }
+
+        private void buttonActivarIdioma_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var selectedIdioma = comboBoxIdioma.SelectedItem as BE_Idioma;
+                if (selectedIdioma != null)
+                {
+                    selectedIdioma.Agregado = true;
+                    BLL_Multilenguaje.Instancia.GuardarIdioma(selectedIdioma);
+                    MessageBox.Show("Idioma activado con éxito.");
+                    CargarIdiomas();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al activar idioma: " + ex.Message);
+            }
+        }
+
+        private void buttonDesactivarIdioma_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var selectedIdioma = comboBoxIdioma.SelectedItem as BE_Idioma;
+                if (selectedIdioma != null)
+                {
+                    selectedIdioma.Agregado = false;
+                    BLL_Multilenguaje.Instancia.GuardarIdioma(selectedIdioma);
+                    MessageBox.Show("Idioma desactivado con éxito.");
+                    CargarIdiomas();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al desactivar idioma: " + ex.Message);
+            }
+        }
+
+        private void buttonAgregarIdioma_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string nombre = textBoxAgregarNombreIdioma.Text.Trim();
+                if (string.IsNullOrEmpty(nombre))
+                {
+                    MessageBox.Show("El nombre del idioma no puede estar vacío.");
+                    return;
+                }
+
+                BE_Idioma nuevo = new BE_Idioma();
+                nuevo.Nombre = nombre;
+                nuevo.Agregado = false; // Deactivated by default
+
+                BLL_Multilenguaje.Instancia.GuardarIdioma(nuevo);
+                textBoxAgregarNombreIdioma.Text = "";
+                MessageBox.Show("Idioma agregado con éxito. Active el idioma y traduzca sus controles.");
+                CargarIdiomas();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al agregar idioma: " + ex.Message);
+            }
+        }
+
+        private void buttonAplicarCambiosIdioma_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var selectedIdioma = comboBoxIdioma.SelectedItem as BE_Idioma;
+                if (selectedIdioma == null) return;
+
+                DataTable dt = dataGridViewTraducirControl.DataSource as DataTable;
+                if (dt != null)
+                {
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        int idControl = Convert.ToInt32(row["id_Control"]);
+                        string texto = row["texto"].ToString();
+                        BLL_Multilenguaje.Instancia.GuardarTraduccion(selectedIdioma.ID_Idioma, idControl, texto);
+                    }
+                    MessageBox.Show("Traducciones aplicadas con éxito.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al aplicar cambios: " + ex.Message);
+            }
+        }
+
+        public void UpdateLanguage()
+        {
+            labelBienvenido.Text = BLL_Multilenguaje.Instancia.Traducir("labelBienvenido", "PanelAdmin");
+            labelUsuario.Text = BLL_Multilenguaje.Instancia.Traducir("labelUsuario", "PanelAdmin");
+            labelContraseña.Text = BLL_Multilenguaje.Instancia.Traducir("labelContraseña", "PanelAdmin");
+            buttonRegistrarUsuario.Text = BLL_Multilenguaje.Instancia.Traducir("buttonRegistrarUsuario", "PanelAdmin");
+            buttonCerrarSesion.Text = BLL_Multilenguaje.Instancia.Traducir("buttonCerrarSesion", "PanelAdmin");
+            labelBitacora.Text = BLL_Multilenguaje.Instancia.Traducir("labelBitacora", "PanelAdmin");
+            labelRol.Text = BLL_Multilenguaje.Instancia.Traducir("labelRol", "PanelAdmin");
+            btn_LimpiarBitacora.Text = BLL_Multilenguaje.Instancia.Traducir("btn_LimpiarBitacora", "PanelAdmin");
+            buttonBuscar.Text = BLL_Multilenguaje.Instancia.Traducir("buttonBuscar", "PanelAdmin");
+            labelFechaInicio.Text = BLL_Multilenguaje.Instancia.Traducir("labelFechaInicio", "PanelAdmin");
+            labelFechaFinal.Text = BLL_Multilenguaje.Instancia.Traducir("labelFechaFinal", "PanelAdmin");
+            labelNombredeusuario.Text = BLL_Multilenguaje.Instancia.Traducir("labelNombredeusuario", "PanelAdmin");
+            labelSelectUsuario.Text = BLL_Multilenguaje.Instancia.Traducir("labelSelectUsuario", "PanelAdmin");
+            labelTreePermisos.Text = BLL_Multilenguaje.Instancia.Traducir("labelTreePermisos", "PanelAdmin");
+            btnAsignar.Text = BLL_Multilenguaje.Instancia.Traducir("btnAsignar", "PanelAdmin");
+            btnQuitar.Text = BLL_Multilenguaje.Instancia.Traducir("btnQuitar", "PanelAdmin");
+            labelPermisosUsuario.Text = BLL_Multilenguaje.Instancia.Traducir("labelPermisosUsuario", "PanelAdmin");
+            labelControldecambios.Text = BLL_Multilenguaje.Instancia.Traducir("labelControldecambios", "PanelAdmin");
+            buttonRecomponerEstadoAnterior.Text = BLL_Multilenguaje.Instancia.Traducir("buttonRecomponerEstadoAnterior", "PanelAdmin");
+            buttonModificarUsuario.Text = BLL_Multilenguaje.Instancia.Traducir("buttonModificarUsuario", "PanelAdmin");
+            labelManejodeidiomas.Text = BLL_Multilenguaje.Instancia.Traducir("labelManejodeidiomas", "PanelAdmin");
+            labelIdioma.Text = BLL_Multilenguaje.Instancia.Traducir("labelIdioma", "PanelAdmin");
+            buttonActivarIdioma.Text = BLL_Multilenguaje.Instancia.Traducir("buttonActivarIdioma", "PanelAdmin");
+            buttonDesactivarIdioma.Text = BLL_Multilenguaje.Instancia.Traducir("buttonDesactivarIdioma", "PanelAdmin");
+            labelNombredelidioma.Text = BLL_Multilenguaje.Instancia.Traducir("labelNombredelidioma", "PanelAdmin");
+            buttonAgregarIdioma.Text = BLL_Multilenguaje.Instancia.Traducir("buttonAgregarIdioma", "PanelAdmin");
+            buttonAplicarCambiosIdioma.Text = BLL_Multilenguaje.Instancia.Traducir("buttonAplicarCambiosIdioma", "PanelAdmin");
+            this.Text = BLL_Multilenguaje.Instancia.Traducir("PanelAdmin", "PanelAdmin");
         }
     }
 }

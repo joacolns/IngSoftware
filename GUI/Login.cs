@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace GUI
 {
-    public partial class Login : Form
+    public partial class Login : Form, Servicio.IObserver
     {
 
         public BLL.BLL_Usuario BLLusuario = new BLL.BLL_Usuario();
@@ -26,6 +26,9 @@ namespace GUI
         public Login()
         {
             InitializeComponent();
+            BLL_Multilenguaje.Instancia.Registrar(this);
+            this.FormClosed += Login_FormClosed;
+            UpdateLanguage();
         }
 
         private void btn_Login_Click(object sender, EventArgs e)
@@ -75,9 +78,9 @@ namespace GUI
             if (intentosFallidos >= 3)
             {
                 MessageBox.Show("Usuario o contraseña incorrectos. Usuario Bloqueado por 5 segundos", "Error de acceso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                btn_Login.Enabled = false;
+                btnLogin.Enabled = false;
                 await Task.Delay(5000);
-                btn_Login.Enabled = true;
+                btnLogin.Enabled = true;
                 intentosFallidos = 0;
             }
             else
@@ -155,6 +158,19 @@ namespace GUI
         private void Form1_Load(object sender, EventArgs e)
         {
             //CrearAdminConPermisos();
+        }
+
+        private void Login_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            BLL_Multilenguaje.Instancia.Desregistrar(this);
+        }
+
+        public void UpdateLanguage()
+        {
+            labelUsuario.Text = BLL_Multilenguaje.Instancia.Traducir("labelUsuario", "Login");
+            labelPassword.Text = BLL_Multilenguaje.Instancia.Traducir("labelPassword", "Login");
+            btnLogin.Text = BLL_Multilenguaje.Instancia.Traducir("btnLogin", "Login");
+            this.Text = BLL_Multilenguaje.Instancia.Traducir("Login", "Login");
         }
     }
 }
