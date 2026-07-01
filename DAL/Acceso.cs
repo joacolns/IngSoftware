@@ -14,8 +14,9 @@ namespace DAL
         
         public void Abrir()
         {
-            SqlConnection conexion = new SqlConnection();
-            conexion.ConnectionString = "Integrated Security=SSI;Initial Catalog=Nombre;Data Source=.";
+            conexion = new SqlConnection();
+            conexion.ConnectionString = "Integrated Security=SSPI;Initial Catalog=IngDeSoftDB;Data Source=localhost\\SQLEXPRESS01";
+            //conexion.ConnectionString = "Integrated Security=SSPI;Initial Catalog=IngDeSoftDB;Data Source=ADMINB33C\\SQLEXPRESS";
             conexion.Open();
         }
 
@@ -31,6 +32,7 @@ namespace DAL
             SqlCommand cmd = new SqlCommand();
             cmd.CommandText = nombre;
             cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = conexion;
 
             if(parametros != null)
             {
@@ -51,7 +53,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                filas = -1;
+                throw new Exception("Error en la BD: " + ex.Message);
             }
 
             cmd.Parameters.Clear();
@@ -88,6 +90,16 @@ namespace DAL
             parametro.ParameterName = nombre;
             parametro.Value = valor;
             parametro.DbType = DbType.Int32;
+
+            return parametro;
+        }
+
+        public SqlParameter CrearParametro(string nombre, DateTime valor)
+        {
+            SqlParameter parametro = new SqlParameter();
+            parametro.ParameterName = nombre;
+            parametro.Value = valor;
+            parametro.DbType = DbType.DateTime;
 
             return parametro;
         }

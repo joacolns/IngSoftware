@@ -46,16 +46,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PanelAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PanelAdmin.Designer.cs">
+      <DependentUpon>PanelAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PanelUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PanelUsuario.Designer.cs">
+      <DependentUpon>PanelUsuario.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PanelAdmin.resx">
+      <DependentUpon>PanelAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PanelUsuario.resx">
+      <DependentUpon>PanelUsuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -87,6 +105,10 @@
     <ProjectReference Include="..\BLL\BLL.csproj">
       <Project>{adf14768-7693-4460-bd3b-b2b333751db1}</Project>
       <Name>BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Servicio\Servicio.csproj">
+      <Project>{581EE051-A15F-44DA-9FB1-BA815D28A84F}</Project>
+      <Name>Servicio</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

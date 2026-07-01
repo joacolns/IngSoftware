@@ -1,0 +1,80 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Security.Cryptography;
+
+namespace Servicio
+{
+    public class S_Seguridad
+    {
+        public static string HashearPassword(string password)
+        {
+            
+            byte[] salt = new byte[16];
+            using (var rng = new RNGCryptoServiceProvider())
+            {
+                rng.GetBytes(salt);
+            }
+
+            using (var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000))
+            {
+                byte[] hash = pbkdf2.GetBytes(20);
+
+              
+                byte[] hashBytes = new byte[36];
+                Array.Copy(salt, 0, hashBytes, 0, 16);
+                Array.Copy(hash, 0, hashBytes, 16, 20);
+
+                return Convert.ToBase64String(hashBytes);
+            }
+        }
+
+        
+        public static bool VerificarPassword(string passwordIngresada, string hashGuardado)
+        {
+            try
+            {
+                
+                byte[] hashBytes = Convert.FromBase64String(hashGuardado);
+
+                
+                byte[] salt = new byte[16];
+                Array.Copy(hashBytes, 0, salt, 0, 16);
+
+                
+                using (var pbkdf2 = new Rfc2898DeriveBytes(passwordIngresada, salt, 10000))
+                {
+                    byte[] hashCalculado = pbkdf2.GetBytes(20);
+
+                    
+                    for (int i = 0; i < 20; i++)
+                    {
+                        if (hashBytes[i + 16] != hashCalculado[i])
+                            return false; 
+                    }
+                    return true; 
+                }
+            }
+            catch
+            {
+                return false; 
+            }
+        }
+
+        // Método determinístico para Dígito Verificador (Horizontal y Vertical)
+        public static string GenerarHashSHA256(string input)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    sb.Append(bytes[i].ToString("x2"));
+                }
+                return sb.ToString();
+            }
+        }
+    }
+}

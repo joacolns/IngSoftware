@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="DAL.Acceso">
-    <Position X="5" Y="0.75" Width="1.5" />
+    <Position X="7" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EABAAAAAQAAAAAAAAAAAAAAAAACAAABAIAAAAAAAAAE=</HashCode>
       <FileName>Acceso.cs</FileName>
@@ -10,15 +10,50 @@
   <Class Name="DAL.Mapper&lt;T&gt;">
     <Position X="3" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAIAAAAAAAAAQAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Mapper.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DAL.MP_Usuario">
-    <Position X="3" Y="3" Width="1.5" />
+  <Class Name="DAL.MP_Bitacora">
+    <Position X="3" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAQAAAAAAA=</HashCode>
+      <HashCode>AAQAAAAAQAAAAAAAAAAAABAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MP_Bitacora.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.MP_DigitoVerificador">
+    <Position X="9.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAQAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAIgAAAA=</HashCode>
+      <FileName>MP_DigitoVerificador.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.MP_Multilenguaje">
+    <Position X="9.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAQAAQAAAIAAABgAAAAAAAAACAAACAABAAAAA=</HashCode>
+      <FileName>MP_Multilenguaje.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.MP_Permiso">
+    <Position X="5.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAgAAAAAAAAAAIgAAYAAAAAAAAAAAAA=</HashCode>
+      <FileName>MP_Permiso.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.MP_Usuario">
+    <Position X="0.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAACAAAAIAAAAAAAAAAAAAAAIA=</HashCode>
       <FileName>MP_Usuario.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.MP_UsuarioCambio">
+    <Position X="11" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAQAAAAACAAAAAAAAAAIAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MP_UsuarioCambio.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

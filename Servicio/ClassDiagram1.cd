@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BE.S_Componente">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQACAAAACAAAAAgAAAAAAAAAAAAAQgAAAAQAA=</HashCode>
+      <FileName>Composite\S_Componente.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BE.S_Composite">
+    <Position X="2.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgQACAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Composite\S_Composite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BE.S_Hoja">
+    <Position X="0.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQACAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Composite\S_Hoja.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Servicio.S_Seguridad">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAIAAAAAAAAg=</HashCode>
+      <FileName>Seguridad\S_Seguridad.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Servicio.S_GestorDeSesion">
+    <Position X="6.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAACAAAABAABACAAAAAAAAAAAAAAAAAECAAAAAA=</HashCode>
+      <FileName>Singleton\S_GestorDeSesion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Servicio.IObserver">
+    <Position X="4.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Observer\IObserver.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Servicio.ISujeto">
+    <Position X="6.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAACAAAAQ=</HashCode>
+      <FileName>Observer\ISujeto.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
