@@ -1,4 +1,4 @@
-﻿-- ===================================================================
+-- ===================================================================
 -- DATABASE CREATION AND INITIALIZATION SCRIPT FOR IngDeSoftDB
 -- ===================================================================
 
@@ -237,6 +237,13 @@ INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (35, 'tabP
 INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (36, 'tabPageControlCambios', 'PanelAdmin');
 INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (37, 'tabPageIdiomas', 'PanelAdmin');
 INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (38, 'labelIdiomaLogin', 'Login');
+INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (39, 'labelSelectUsuarioCambio', 'PanelAdmin');
+INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (40, 'labelFechaInicioCambio', 'PanelAdmin');
+INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (41, 'labelFechaFinCambio', 'PanelAdmin');
+INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (42, 'labelTipoCambio', 'PanelAdmin');
+INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (43, 'btnFiltrarCambio', 'PanelAdmin');
+INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (44, 'btnLimpiarFiltrosCambio', 'PanelAdmin');
+INSERT INTO [Control] ([id_Control], [nombre_control], [form]) VALUES (45, 'Todos', 'PanelAdmin');
 GO
 
 -- Data for Traduccion
@@ -318,6 +325,20 @@ INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) V
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (74, 2, 37, 'Languages');
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (75, 1, 38, 'Idioma');
 INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (76, 2, 38, 'Language');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (77, 1, 39, 'Usuario:');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (78, 1, 40, 'Desde:');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (79, 1, 41, 'Hasta:');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (80, 1, 42, 'Tipo:');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (81, 1, 43, 'Filtrar');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (82, 1, 44, 'Limpiar');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (83, 1, 45, 'Todos');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (84, 2, 39, 'User:');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (85, 2, 40, 'From:');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (86, 2, 41, 'To:');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (87, 2, 42, 'Type:');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (88, 2, 43, 'Filter');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (89, 2, 44, 'Clear');
+INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) VALUES (90, 2, 45, 'All');
 GO
 
 -- Data for IntegridadDigVefV
@@ -336,10 +357,19 @@ CREATE PROCEDURE [dbo].[SP_ListarCambiosUsuario]
 AS
 BEGIN
     SET NOCOUNT ON;
-    SELECT id_Cambio, id_Usuario, [version], nombre, [password], fecha, modificado_por, tipo_cambio
-    FROM Usuario_Cambios
-    WHERE id_Usuario = @ID_Usuario
-    ORDER BY [version] DESC;
+    IF @ID_Usuario = 0
+    BEGIN
+        SELECT id_Cambio, id_Usuario, [version], nombre, [password], fecha, modificado_por, tipo_cambio
+        FROM Usuario_Cambios
+        ORDER BY fecha DESC, [version] DESC;
+    END
+    ELSE
+    BEGIN
+        SELECT id_Cambio, id_Usuario, [version], nombre, [password], fecha, modificado_por, tipo_cambio
+        FROM Usuario_Cambios
+        WHERE id_Usuario = @ID_Usuario
+        ORDER BY [version] DESC;
+    END
 END
 
 GO

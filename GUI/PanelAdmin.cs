@@ -48,6 +48,7 @@ namespace GUI
             listBoxPermisosUsuario.DisplayMember = "Nombre";
             InicializarPermisosYAdministrador();
             InicializarControlesRol();
+            InicializarControlesControlCambios();
             CargarUsuarios();
             CargarArbolPermisos();
             ConfigurarPermisos();
@@ -783,20 +784,8 @@ namespace GUI
 
         private void CargarControlCambiosUsuario()
         {
-            try
-            {
-                dataGridViewControldecambios.DataSource = null;
-                var usuarioSelected = comboBoxUsuarios.SelectedItem as BE_Usuario;
-                if (usuarioSelected != null)
-                {
-                    BLL_UsuarioCambio bllCambio = new BLL_UsuarioCambio();
-                    dataGridViewControldecambios.DataSource = bllCambio.ObtenerCambiosUsuario(usuarioSelected.ID_Usuario);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cargar el control de cambios: " + ex.Message);
-            }
+            CargarUsuariosCambios();
+            FiltrarControlCambios();
         }
 
         private void buttonModificarUsuario_Click(object sender, EventArgs e)
@@ -1179,6 +1168,30 @@ namespace GUI
 
             string tIdiomas = BLL_Multilenguaje.Instancia.Traducir("tabPageIdiomas", "PanelAdmin");
             tabPageIdiomas.Text = tIdiomas.StartsWith("[Default:") ? "Idiomas" : tIdiomas;
+
+            // Traducir nuevos controles de control de cambios
+            if (labelSelectUsuarioCambio != null)
+            {
+                string tLblUsuarioCambio = BLL_Multilenguaje.Instancia.Traducir("labelSelectUsuarioCambio", "PanelAdmin");
+                labelSelectUsuarioCambio.Text = tLblUsuarioCambio.StartsWith("[Default:") ? "Usuario:" : tLblUsuarioCambio;
+
+                string tLblFechaInicio = BLL_Multilenguaje.Instancia.Traducir("labelFechaInicioCambio", "PanelAdmin");
+                labelFechaInicioCambio.Text = tLblFechaInicio.StartsWith("[Default:") ? "Desde:" : tLblFechaInicio;
+
+                string tLblFechaFin = BLL_Multilenguaje.Instancia.Traducir("labelFechaFinCambio", "PanelAdmin");
+                labelFechaFinCambio.Text = tLblFechaFin.StartsWith("[Default:") ? "Hasta:" : tLblFechaFin;
+
+                string tLblTipoCambio = BLL_Multilenguaje.Instancia.Traducir("labelTipoCambio", "PanelAdmin");
+                labelTipoCambio.Text = tLblTipoCambio.StartsWith("[Default:") ? "Tipo:" : tLblTipoCambio;
+
+                string tBtnFiltrar = BLL_Multilenguaje.Instancia.Traducir("btnFiltrarCambio", "PanelAdmin");
+                btnFiltrarCambio.Text = tBtnFiltrar.StartsWith("[Default:") ? "Filtrar" : tBtnFiltrar;
+
+                string tBtnLimpiar = BLL_Multilenguaje.Instancia.Traducir("btnLimpiarFiltrosCambio", "PanelAdmin");
+                btnLimpiarFiltrosCambio.Text = tBtnLimpiar.StartsWith("[Default:") ? "Limpiar" : tBtnLimpiar;
+                
+                CargarUsuariosCambios();
+            }
         }
         // --- Role Management Controls ---
         private System.Windows.Forms.Label labelNuevoRol;
@@ -1190,6 +1203,18 @@ namespace GUI
         private System.Windows.Forms.Button btnQuitarDeRol;
         private System.Windows.Forms.ListBox listBoxPermisosRol;
         private System.Windows.Forms.ComboBox comboBoxPermisosTodos;
+
+        // --- Control de Cambios Filter Controls ---
+        private System.Windows.Forms.Label labelSelectUsuarioCambio;
+        private System.Windows.Forms.ComboBox comboBoxUsuarioCambio;
+        private System.Windows.Forms.Label labelFechaInicioCambio;
+        private System.Windows.Forms.DateTimePicker dateTimePickerInicioCambio;
+        private System.Windows.Forms.Label labelFechaFinCambio;
+        private System.Windows.Forms.DateTimePicker dateTimePickerFinCambio;
+        private System.Windows.Forms.Label labelTipoCambio;
+        private System.Windows.Forms.ComboBox comboBoxTipoCambio;
+        private System.Windows.Forms.Button btnFiltrarCambio;
+        private System.Windows.Forms.Button btnLimpiarFiltrosCambio;
 
         private void InicializarControlesRol()
         {
@@ -1386,6 +1411,171 @@ namespace GUI
                 EnlazarBitacora();
                 ConfigurarPermisos();
             }
+        }
+
+        private void InicializarControlesControlCambios()
+        {
+            // Shifting dataGridViewControldecambios down and adjusting height
+            dataGridViewControldecambios.Location = new System.Drawing.Point(21, 80);
+            dataGridViewControldecambios.Size = new System.Drawing.Size(850, 170);
+
+            // Shifting title label slightly up
+            labelControldecambios.Location = new System.Drawing.Point(18, 10);
+
+            // User Select
+            labelSelectUsuarioCambio = new System.Windows.Forms.Label { Text = "Usuario:", Location = new System.Drawing.Point(18, 48), AutoSize = true };
+            comboBoxUsuarioCambio = new System.Windows.Forms.ComboBox { DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList, Location = new System.Drawing.Point(75, 45), Size = new System.Drawing.Size(120, 21) };
+            comboBoxUsuarioCambio.SelectedIndexChanged += comboBoxUsuarioCambio_SelectedIndexChanged;
+
+            // Date Range
+            labelFechaInicioCambio = new System.Windows.Forms.Label { Text = "Desde:", Location = new System.Drawing.Point(210, 48), AutoSize = true };
+            dateTimePickerInicioCambio = new System.Windows.Forms.DateTimePicker { Format = System.Windows.Forms.DateTimePickerFormat.Short, Location = new System.Drawing.Point(260, 45), Size = new System.Drawing.Size(110, 20), Value = DateTime.Now.AddDays(-30) };
+
+            labelFechaFinCambio = new System.Windows.Forms.Label { Text = "Hasta:", Location = new System.Drawing.Point(385, 48), AutoSize = true };
+            dateTimePickerFinCambio = new System.Windows.Forms.DateTimePicker { Format = System.Windows.Forms.DateTimePickerFormat.Short, Location = new System.Drawing.Point(435, 45), Size = new System.Drawing.Size(110, 20), Value = DateTime.Now };
+
+            // Change Type
+            labelTipoCambio = new System.Windows.Forms.Label { Text = "Tipo:", Location = new System.Drawing.Point(560, 48), AutoSize = true };
+            comboBoxTipoCambio = new System.Windows.Forms.ComboBox { DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList, Location = new System.Drawing.Point(600, 45), Size = new System.Drawing.Size(110, 21) };
+            comboBoxTipoCambio.Items.AddRange(new string[] { "Todos", "Registro", "Modificacion", "Recomposicion" });
+            comboBoxTipoCambio.SelectedIndex = 0;
+            comboBoxTipoCambio.SelectedIndexChanged += (s, e) => FiltrarControlCambios();
+
+            // Buttons
+            btnFiltrarCambio = new System.Windows.Forms.Button { Text = "Filtrar", Location = new System.Drawing.Point(720, 43), Size = new System.Drawing.Size(70, 25) };
+            btnFiltrarCambio.Click += btnFiltrarCambio_Click;
+
+            btnLimpiarFiltrosCambio = new System.Windows.Forms.Button { Text = "Limpiar", Location = new System.Drawing.Point(800, 43), Size = new System.Drawing.Size(70, 25) };
+            btnLimpiarFiltrosCambio.Click += btnLimpiarFiltrosCambio_Click;
+
+            // Add controls to TabPage
+            tabPageControlCambios.Controls.Add(labelSelectUsuarioCambio);
+            tabPageControlCambios.Controls.Add(comboBoxUsuarioCambio);
+            tabPageControlCambios.Controls.Add(labelFechaInicioCambio);
+            tabPageControlCambios.Controls.Add(dateTimePickerInicioCambio);
+            tabPageControlCambios.Controls.Add(labelFechaFinCambio);
+            tabPageControlCambios.Controls.Add(dateTimePickerFinCambio);
+            tabPageControlCambios.Controls.Add(labelTipoCambio);
+            tabPageControlCambios.Controls.Add(comboBoxTipoCambio);
+            tabPageControlCambios.Controls.Add(btnFiltrarCambio);
+            tabPageControlCambios.Controls.Add(btnLimpiarFiltrosCambio);
+
+            CargarUsuariosCambios();
+        }
+
+        private void CargarUsuariosCambios()
+        {
+            try
+            {
+                comboBoxUsuarioCambio.SelectedIndexChanged -= comboBoxUsuarioCambio_SelectedIndexChanged;
+
+                int idSeleccionado = 0;
+                if (comboBoxUsuarioCambio.SelectedItem is BE_Usuario prevSelected)
+                {
+                    idSeleccionado = prevSelected.ID_Usuario;
+                }
+
+                var usuarios = BLLusuario.ObtenerUsuarios();
+                List<BE_Usuario> listaUsuarios = new List<BE_Usuario>();
+
+                BE_Usuario todos = new BE_Usuario();
+                todos.ID_Usuario = 0;
+                string txtTodos = BLL_Multilenguaje.Instancia.Traducir("Todos", "PanelAdmin");
+                todos.Nombre = txtTodos.StartsWith("[Default:") ? "Todos" : txtTodos;
+
+                listaUsuarios.Add(todos);
+                listaUsuarios.AddRange(usuarios);
+
+                comboBoxUsuarioCambio.DataSource = null;
+                comboBoxUsuarioCambio.DataSource = listaUsuarios;
+                comboBoxUsuarioCambio.DisplayMember = "Nombre";
+
+                if (idSeleccionado > 0)
+                {
+                    var found = listaUsuarios.FirstOrDefault(u => u.ID_Usuario == idSeleccionado);
+                    if (found != null)
+                    {
+                        comboBoxUsuarioCambio.SelectedItem = found;
+                    }
+                    else
+                    {
+                        comboBoxUsuarioCambio.SelectedIndex = 0;
+                    }
+                }
+                else
+                {
+                    comboBoxUsuarioCambio.SelectedIndex = 0;
+                }
+
+                comboBoxUsuarioCambio.SelectedIndexChanged += comboBoxUsuarioCambio_SelectedIndexChanged;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar usuarios en control de cambios: " + ex.Message);
+            }
+        }
+
+        private void FiltrarControlCambios()
+        {
+            try
+            {
+                dataGridViewControldecambios.DataSource = null;
+                if (comboBoxUsuarioCambio.SelectedItem == null) return;
+
+                var usuarioSelected = comboBoxUsuarioCambio.SelectedItem as BE_Usuario;
+                if (usuarioSelected != null)
+                {
+                    BLL_UsuarioCambio bllCambio = new BLL_UsuarioCambio();
+                    var listaCambios = bllCambio.ObtenerCambiosUsuario(usuarioSelected.ID_Usuario);
+
+                    DateTime fechaInicio = dateTimePickerInicioCambio.Value.Date;
+                    DateTime fechaFin = dateTimePickerFinCambio.Value.Date.AddDays(1).AddTicks(-1);
+                    string tipoSeleccionado = comboBoxTipoCambio.SelectedItem?.ToString() ?? "Todos";
+
+                    var consulta = listaCambios.AsEnumerable();
+
+                    // Filter by Date range
+                    consulta = consulta.Where(c => c.Fecha >= fechaInicio && c.Fecha <= fechaFin);
+
+                    // Filter by Tipo de Cambio
+                    if (tipoSeleccionado != "Todos")
+                    {
+                        if (tipoSeleccionado == "Recomposicion")
+                        {
+                            consulta = consulta.Where(c => c.Tipo_Cambio != null && c.Tipo_Cambio.Contains("Recomposicion"));
+                        }
+                        else
+                        {
+                            consulta = consulta.Where(c => c.Tipo_Cambio != null && c.Tipo_Cambio.Equals(tipoSeleccionado, StringComparison.OrdinalIgnoreCase));
+                        }
+                    }
+
+                    dataGridViewControldecambios.DataSource = consulta.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al filtrar el control de cambios: " + ex.Message);
+            }
+        }
+
+        private void comboBoxUsuarioCambio_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FiltrarControlCambios();
+        }
+
+        private void btnFiltrarCambio_Click(object sender, EventArgs e)
+        {
+            FiltrarControlCambios();
+        }
+
+        private void btnLimpiarFiltrosCambio_Click(object sender, EventArgs e)
+        {
+            dateTimePickerInicioCambio.Value = DateTime.Now.AddDays(-30);
+            dateTimePickerFinCambio.Value = DateTime.Now;
+            comboBoxTipoCambio.SelectedIndex = 0;
+            comboBoxUsuarioCambio.SelectedIndex = 0;
+            FiltrarControlCambios();
         }
     }
 }
