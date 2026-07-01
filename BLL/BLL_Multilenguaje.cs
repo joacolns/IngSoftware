@@ -24,6 +24,12 @@ namespace BLL
 
         private BLL_Multilenguaje()
         {
+            BE_Usuario.ObtenerIdiomaActual = () => this.IdiomaActual;
+            BE_Usuario.GuardarIdiomaUsuarioBD = (userId, langId) => {
+                DAL.MP_Usuario mp = new DAL.MP_Usuario();
+                mp.ActualizarUsuarioIdioma(userId, langId);
+            };
+
             // Cargar idioma por defecto (Espanol) si existe en la base de datos
             List<BE_Idioma> idiomas = mpMultilang.ObtenerIdiomas();
             foreach (var idm in idiomas)

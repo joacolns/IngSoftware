@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace GUI
 {
-    public partial class PanelAdmin : Form, Servicio.IObserver
+    public partial class PanelAdmin : Form
     {
 
         public BLL.BLL_Bitacora BLLBitacora = new BLL.BLL_Bitacora();
@@ -57,7 +57,10 @@ namespace GUI
             dataGridViewControldecambios.MultiSelect = false;
             buttonRecomponerEstadoAnterior.Click += buttonRecomponerEstadoAnterior_Click;
 
-            BLL_Multilenguaje.Instancia.Registrar(this);
+            if (BLL_GestorDeSesion.Instancia.EstaLogeado)
+            {
+                BLL_GestorDeSesion.Instancia.UsuarioActual.IdiomaCambiado += UsuarioActual_IdiomaCambiado;
+            }
 
             comboBoxIdioma.SelectedIndexChanged += comboBoxIdioma_SelectedIndexChanged;
             buttonActivarIdioma.Click += buttonActivarIdioma_Click;
@@ -156,6 +159,11 @@ namespace GUI
             
             gestorUsuario.Logout();
         }
+
+        private void UsuarioActual_IdiomaCambiado(object sender, EventArgs e)
+        {
+            ActualizarLenguaje();
+        }
         
         private void button2_Click(object sender, EventArgs e)
         {
@@ -189,7 +197,10 @@ namespace GUI
 
         private void PanelAdmin_FormClosing(object sender, FormClosingEventArgs e)
         {
-            BLL_Multilenguaje.Instancia.Desregistrar(this);
+            if (BLL_GestorDeSesion.Instancia.EstaLogeado)
+            {
+                BLL_GestorDeSesion.Instancia.UsuarioActual.IdiomaCambiado -= UsuarioActual_IdiomaCambiado;
+            }
             CerrarSesion();
         }
 

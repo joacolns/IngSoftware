@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Servicio;
 
 namespace BE
 {
-    public class BE_Usuario
+    public class BE_Usuario : IObserver
     {
 		private int id_Usuario;
 
@@ -48,6 +49,26 @@ namespace BE
 		{
 			get { return digVerH; }
 			set { digVerH = value; }
+		}
+
+		public BE_Idioma Idioma { get; set; }
+
+		public event EventHandler IdiomaCambiado;
+
+		public static Func<BE_Idioma> ObtenerIdiomaActual;
+		public static Action<int, int> GuardarIdiomaUsuarioBD;
+
+		public void ActualizarLenguaje()
+		{
+			if (ObtenerIdiomaActual != null)
+			{
+				this.Idioma = ObtenerIdiomaActual();
+				if (this.Idioma != null && GuardarIdiomaUsuarioBD != null)
+				{
+					GuardarIdiomaUsuarioBD(this.id_Usuario, this.Idioma.ID_Idioma);
+				}
+			}
+			IdiomaCambiado?.Invoke(this, EventArgs.Empty);
 		}
 	}
 }

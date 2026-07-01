@@ -26,6 +26,7 @@ CREATE TABLE [dbo].[Usuarios](
     [nombre] [varchar](50) NOT NULL,
     [password] [varchar](250) NOT NULL,
     [DigVerH] [varchar](500) NOT NULL,
+    [id_Idioma] [int] NULL,
     CONSTRAINT [PK_Usuarios] PRIMARY KEY CLUSTERED ([id_Usuario] ASC)
 );
 GO
@@ -113,6 +114,9 @@ CREATE TABLE [dbo].[IntegridadDigVefV](
     [hashVertical] [varchar](500) NOT NULL,
     CONSTRAINT [PK_IntegridadDigVefV] PRIMARY KEY CLUSTERED ([id_Tabla] ASC)
 );
+GO
+
+ALTER TABLE [dbo].[Usuarios] ADD CONSTRAINT [FK_Usuarios_Idioma] FOREIGN KEY ([id_Idioma]) REFERENCES [dbo].[Idioma] ([id_Idioma]);
 GO
 
 -- ===================================================================
@@ -403,7 +407,20 @@ BEGIN
         [password] = @Password
     WHERE id_Usuario = @ID_Usuario;
 END
+GO
 
+IF OBJECT_ID('dbo.SP_ActualizarUsuarioIdioma', 'P') IS NOT NULL DROP PROCEDURE dbo.SP_ActualizarUsuarioIdioma;
+GO
+CREATE PROCEDURE [dbo].[SP_ActualizarUsuarioIdioma]
+    @ID_Usuario INT,
+    @ID_Idioma INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE Usuarios
+    SET id_Idioma = @ID_Idioma
+    WHERE id_Usuario = @ID_Usuario;
+END
 GO
 
 IF OBJECT_ID('dbo.SP_InsertarCambioUsuario', 'P') IS NOT NULL DROP PROCEDURE dbo.SP_InsertarCambioUsuario;
@@ -869,7 +886,8 @@ BEGIN
         id_Usuario, 
         nombre, 
         password,
-		DigVerH
+		DigVerH,
+        id_Idioma
     FROM 
         Usuarios
     WHERE 
@@ -994,7 +1012,7 @@ CREATE PROCEDURE [dbo].[SP_ListarUsuarios]
 AS
 BEGIN
     SET NOCOUNT ON;
-    SELECT id_Usuario, nombre, password, DigVerH FROM Usuarios;
+    SELECT id_Usuario, nombre, password, DigVerH, id_Idioma FROM Usuarios;
 END
 
 GO

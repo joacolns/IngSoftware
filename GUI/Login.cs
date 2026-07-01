@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace GUI
 {
-    public partial class Login : Form, Servicio.IObserver
+    public partial class Login : Form
     {
 
         public BLL.BLL_Usuario BLLusuario = new BLL.BLL_Usuario();
@@ -26,7 +26,6 @@ namespace GUI
         public Login()
         {
             InitializeComponent();
-            BLL_Multilenguaje.Instancia.Registrar(this);
             this.FormClosed += Login_FormClosed;
             CargarIdiomas();
             ActualizarLenguaje();
@@ -163,7 +162,6 @@ namespace GUI
 
         private void Login_FormClosed(object sender, FormClosedEventArgs e)
         {
-            BLL_Multilenguaje.Instancia.Desregistrar(this);
         }
 
         private void CargarIdiomas()
@@ -215,6 +213,7 @@ namespace GUI
                 if (selectedIdioma != null)
                 {
                     BLL_Multilenguaje.Instancia.IdiomaActual = selectedIdioma;
+                    ActualizarLenguaje();
                 }
             }
             catch (Exception ex)

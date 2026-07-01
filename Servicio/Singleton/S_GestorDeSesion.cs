@@ -29,11 +29,11 @@ namespace Servicio
             }
             //Atributos de la Sesión
 
-            public BE.BE_Usuario UsuarioActual { get; set; }
+            public object UsuarioActual { get; set; }
 
             public bool EstaLogeado { get { return UsuarioActual != null; } }
 
-            public void IniciarSesion(BE.BE_Usuario usuario)
+            public void IniciarSesion(object usuario)
             {
                 UsuarioActual = usuario;
             }

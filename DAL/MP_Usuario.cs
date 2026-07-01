@@ -38,6 +38,10 @@ namespace DAL
                     usuarioEncontrado.Password = fila["password"].ToString();
                     usuarioEncontrado.DigVerH = fila["DigVerH"] != DBNull.Value ? fila["DigVerH"].ToString() : null;
                     usuarioEncontrado.Logeado = 1;
+                    if (fila["id_Idioma"] != DBNull.Value)
+                    {
+                        usuarioEncontrado.Idioma = new BE_Idioma { ID_Idioma = Convert.ToInt32(fila["id_Idioma"]) };
+                    }
                 }
             }
             catch (Exception ex)
@@ -97,6 +101,10 @@ namespace DAL
                     u.Password = row["password"].ToString();
                     u.DigVerH = row["DigVerH"] != DBNull.Value ? row["DigVerH"].ToString() : null;
                     u.Logeado = 0;
+                    if (row["id_Idioma"] != DBNull.Value)
+                    {
+                        u.Idioma = new BE_Idioma { ID_Idioma = Convert.ToInt32(row["id_Idioma"]) };
+                    }
                     usuarios.Add(u);
                 }
             }
@@ -109,6 +117,28 @@ namespace DAL
                 acceso.Cerrar();
             }
             return usuarios;
+        }
+
+        public int ActualizarUsuarioIdioma(int idUsuario, int idIdioma)
+        {
+            try
+            {
+                acceso.Abrir();
+                List<SqlParameter> parametros = new List<SqlParameter>
+                {
+                    acceso.CrearParametro("@ID_Usuario", idUsuario),
+                    acceso.CrearParametro("@ID_Idioma", idIdioma)
+                };
+                return acceso.Escribir("SP_ActualizarUsuarioIdioma", parametros);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al actualizar el idioma del usuario: " + ex.Message);
+            }
+            finally
+            {
+                acceso.Cerrar();
+            }
         }
     }
 }

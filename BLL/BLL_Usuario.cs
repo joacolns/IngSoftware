@@ -25,6 +25,26 @@ namespace BLL
                     usuarioBD.Permisos = bllPermiso.ObtenerPermisosUsuario(usuarioBD);
 
                     BLL_GestorDeSesion.Instancia.IniciarSesion(usuarioBD);
+
+                    // Register user as observer
+                    BLL_Multilenguaje.Instancia.Registrar(usuarioBD);
+
+                    // Load user preferred language if set
+                    if (usuarioBD.Idioma != null && usuarioBD.Idioma.ID_Idioma > 0)
+                    {
+                        var list = BLL_Multilenguaje.Instancia.ObtenerIdiomas();
+                        var userLang = list.FirstOrDefault(i => i.ID_Idioma == usuarioBD.Idioma.ID_Idioma && i.Agregado);
+                        if (userLang != null)
+                        {
+                            BLL_Multilenguaje.Instancia.IdiomaActual = userLang;
+                        }
+                    }
+                    else
+                    {
+                        // Default to current language if none saved
+                        usuarioBD.Idioma = BLL_Multilenguaje.Instancia.IdiomaActual;
+                    }
+
                     return true;
                 }
             }
@@ -74,6 +94,11 @@ namespace BLL
 
         public void Logout()
         {
+            var user = BLL_GestorDeSesion.Instancia.UsuarioActual;
+            if (user != null)
+            {
+                BLL_Multilenguaje.Instancia.Desregistrar(user);
+            }
             BLL_GestorDeSesion.Instancia.CerrarSesion();
         }
 
@@ -81,6 +106,12 @@ namespace BLL
         {
             DAL.MP_Usuario mp_usuario = new DAL.MP_Usuario();
             return mp_usuario.ObtenerUsuarios();
+        }
+
+        public void ActualizarUsuarioIdioma(int idUsuario, int idIdioma)
+        {
+            DAL.MP_Usuario mp_usuario = new DAL.MP_Usuario();
+            mp_usuario.ActualizarUsuarioIdioma(idUsuario, idIdioma);
         }
     }
 }
