@@ -125,8 +125,8 @@ GO
 
 -- Data for Usuarios
 SET IDENTITY_INSERT [Usuarios] ON;
-INSERT INTO [Usuarios] ([id_Usuario], [nombre], [password], [DigVerH]) VALUES (1, 'admin', '3pQQAVt/op6AR9q4Aju4z8AjVMU1pmo9fg//hv+O97Cs9z7X', '75452c39b9c981fb8f4587cf74d170f315a1709e6eaccba6365bd643c95d1380');
-INSERT INTO [Usuarios] ([id_Usuario], [nombre], [password], [DigVerH]) VALUES (2, 'user', 'G/5pk0OyXlYg7BPNn227bwEniH4DD5nPx+3cq1/tKnvM8UcH', 'f076f1e80989c7f084fe1ea1529da68738e65b8bfd010ac8e2d81da1f48fe648');
+INSERT INTO [Usuarios] ([id_Usuario], [nombre], [password], [DigVerH]) VALUES (1, 'admin', '3pQQAVt/op6AR9q4Aju4z8AjVMU1pmo9fg//hv+O97Cs9z7X', '469413ea0f4291ef9f463c0bd5350824bd37752881e9bbd93a3efcd51b1ecaf8');
+INSERT INTO [Usuarios] ([id_Usuario], [nombre], [password], [DigVerH]) VALUES (2, 'user', 'G/5pk0OyXlYg7BPNn227bwEniH4DD5nPx+3cq1/tKnvM8UcH', '74ea2d8c3ccf635636e53ba0a9a427535aa4f106a647a5f73448373a3c78e018');
 SET IDENTITY_INSERT [Usuarios] OFF;
 GO
 
@@ -346,7 +346,7 @@ INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) V
 GO
 
 -- Data for IntegridadDigVefV
-INSERT INTO [IntegridadDigVefV] ([id_Tabla], [nombreTabla], [hashVertical]) VALUES (1, 'Usuarios', 'b99555ee1b8225110bc11bff12d7dc14414cab2ca2053b1c14cb7cc10fd0e080');
+INSERT INTO [IntegridadDigVefV] ([id_Tabla], [nombreTabla], [hashVertical]) VALUES (1, 'Usuarios', '633f542b46ddc6c18cfb11bcbc01dd3e4d6ee0e46bf5e396beb408b0c35ee5d0');
 GO
 
 -- ===================================================================
