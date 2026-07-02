@@ -12,16 +12,16 @@ namespace BLL
         private MP_DigitoVerificador mpDigVer = new MP_DigitoVerificador();
 
         /// Calcula el DVH de un registro de usuario concatenando sus campos
-        public string CalcularDVH(int idUsuario, string nombre, string password)
+        public string CalcularDVH(int idUsuario, string nombre, string password, int idIdioma)
         {
-            string cadena = idUsuario.ToString() + nombre + password;
+            string cadena = idUsuario.ToString() + nombre + password + idIdioma.ToString();
             return Servicio.S_Seguridad.GenerarHashSHA256(cadena);
         }
 
         /// Actualiza el DVH de un usuario específico
-        public void ActualizarDVH(int idUsuario, string nombre, string password)
+        public void ActualizarDVH(int idUsuario, string nombre, string password, int idIdioma)
         {
-            string dvh = CalcularDVH(idUsuario, nombre, password);
+            string dvh = CalcularDVH(idUsuario, nombre, password, idIdioma);
             mpDigVer.ActualizarDVH(idUsuario, dvh);
         }
 
@@ -36,8 +36,9 @@ namespace BLL
                 int id = Convert.ToInt32(row["id_Usuario"]);
                 string nombre = row["nombre"].ToString();
                 string password = row["password"].ToString();
+                int idIdioma = row["id_Idioma"] != DBNull.Value ? Convert.ToInt32(row["id_Idioma"]) : 0;
 
-                string dvh = CalcularDVH(id, nombre, password);
+                string dvh = CalcularDVH(id, nombre, password, idIdioma);
                 mpDigVer.ActualizarDVH(id, dvh);
             }
 
@@ -66,9 +67,9 @@ namespace BLL
 
         /// Verifica la integridad de un usuario específico (DVH)
 
-        public bool VerificarDVH(int idUsuario, string nombre, string password, string dvhAlmacenado)
+        public bool VerificarDVH(int idUsuario, string nombre, string password, int idIdioma, string dvhAlmacenado)
         {
-            string dvhCalculado = CalcularDVH(idUsuario, nombre, password);
+            string dvhCalculado = CalcularDVH(idUsuario, nombre, password, idIdioma);
             return dvhCalculado == dvhAlmacenado;
         }
 
@@ -91,8 +92,9 @@ namespace BLL
                 string nombre = row["nombre"].ToString();
                 string password = row["password"].ToString();
                 string dvhAlmacenado = row["DigVerH"] != DBNull.Value ? row["DigVerH"].ToString() : "";
+                int idIdioma = row["id_Idioma"] != DBNull.Value ? Convert.ToInt32(row["id_Idioma"]) : 0;
 
-                string dvhCalculado = CalcularDVH(id, nombre, password);
+                string dvhCalculado = CalcularDVH(id, nombre, password, idIdioma);
 
                 if (dvhCalculado != dvhAlmacenado)
                 {

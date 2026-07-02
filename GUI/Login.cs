@@ -22,10 +22,18 @@ namespace GUI
         public BE.BE_DigitoVerificador BEDigitoVerificador;
 
         int intentosFallidos = 0;
+        private bool _integridadValida = true;
+        private List<string> _erroresIntegridad = new List<string>();
 
-        public Login()
+        public Login() : this(true, new List<string>())
+        {
+        }
+
+        public Login(bool integridadValida, List<string> errores)
         {
             InitializeComponent();
+            this._integridadValida = integridadValida;
+            this._erroresIntegridad = errores;
             this.FormClosed += Login_FormClosed;
             CargarIdiomas();
             ActualizarLenguaje();
@@ -58,10 +66,24 @@ namespace GUI
 
         private void VerificarRol()
         {
+            // Re-verify integrity at login time to catch changes
+            System.Collections.Generic.List<string> errores;
+            _integridadValida = BLLDigitoVerificador.VerificarIntegridad(out errores);
+            _erroresIntegridad = errores;
+
             BLL_Permiso bllPermiso = new BLL_Permiso();
-            if (bllPermiso.TienePermiso(BEUsuario, "Gestionar Permisos"))
+            bool esAdmin = bllPermiso.TienePermiso(BEUsuario, "Gestionar Permisos");
+
+            if (!_integridadValida && !esAdmin)
             {
-                PanelAdmin panel_admin = new PanelAdmin();
+                MessageBox.Show("El sistema se encuentra temporalmente bloqueado debido a problemas de integridad. Solo un administrador puede ingresar para solucionar la falla.", "Bloqueo de Seguridad", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                BLLusuario.Logout();
+                return;
+            }
+
+            if (esAdmin)
+            {
+                PanelAdmin panel_admin = new PanelAdmin(_integridadValida, _erroresIntegridad);
                 panel_admin.Show();
                 this.Hide();
             }

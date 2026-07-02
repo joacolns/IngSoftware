@@ -19,14 +19,9 @@ namespace GUI
 
             BLL.BLL_DigitoVerificador bllDV = new BLL.BLL_DigitoVerificador();
             System.Collections.Generic.List<string> errores;
-            if (!bllDV.VerificarIntegridad(out errores))
-            {
-                MessageBox.Show("Error de integridad de datos. La aplicación se cerrará.\n" + string.Join("\n", errores), "Error Crítico", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Environment.Exit(1);
-                return;
-            }
+            bool integridadValida = bllDV.VerificarIntegridad(out errores);
 
-            Application.Run(new Login());
+            Application.Run(new Login(integridadValida, errores));
         }
     }
 }

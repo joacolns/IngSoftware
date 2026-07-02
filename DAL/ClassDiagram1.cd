@@ -45,12 +45,12 @@
   <Class Name="DAL.MP_Usuario">
     <Position X="0.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAQAAAAAAAAAAACAAAAIAAAAAAAAAAAAAAAIA=</HashCode>
+      <HashCode>AAAAAAAAQAAAAAAAAAAACAAAAIgAAAAAAAAAAAAAAIA=</HashCode>
       <FileName>MP_Usuario.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DAL.MP_UsuarioCambio">
-    <Position X="11" Y="0.75" Width="1.5" />
+    <Position X="11.25" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAQAAAQAAAAACAAAAAAAAAAIAAEAAAAAAAAAAAAAA=</HashCode>
       <FileName>MP_UsuarioCambio.cs</FileName>

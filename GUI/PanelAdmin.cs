@@ -21,9 +21,18 @@ namespace GUI
         public BE.BE_Usuario BEUsuario;
         private BLL.BLL_Permiso bllPermiso = new BLL.BLL_Permiso();
 
-        public PanelAdmin()
+        private bool _integridadValida = true;
+        private List<string> _erroresIntegridad = new List<string>();
+
+        public PanelAdmin() : this(true, new List<string>())
+        {
+        }
+
+        public PanelAdmin(bool integridadValida, List<string> errores)
         {
             InitializeComponent();
+            this._integridadValida = integridadValida;
+            this._erroresIntegridad = errores;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -72,15 +81,28 @@ namespace GUI
             CargarIdiomas();
             ActualizarLenguaje();
 
-            // Recalcular dígitos verificadores al iniciar
-            try
+            // Recalcular dígitos verificadores al iniciar solo si la integridad es correcta
+            if (_integridadValida)
             {
-                BLL.BLL_DigitoVerificador bllDigVer = new BLL.BLL_DigitoVerificador();
-                bllDigVer.RecalcularTodo();
+                try
+                {
+                    BLL.BLL_DigitoVerificador bllDigVer = new BLL.BLL_DigitoVerificador();
+                    bllDigVer.RecalcularTodo();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al recalcular dígitos verificadores: " + ex.Message);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Error al recalcular dígitos verificadores: " + ex.Message);
+                // Inform the admin and switch to rollback tab
+                MessageBox.Show("¡ATENCIÓN ADMINISTRADOR!\n\nSe han detectado fallas en la integridad de la base de datos (dígitos verificadores rotos):\n\n" + 
+                                string.Join("\n", _erroresIntegridad) + 
+                                "\n\nLa aplicación ha bloqueado el acceso a usuarios comunes. Por favor, realice un rollback de los cambios del usuario afectado desde esta pestaña para solucionar la falla.", 
+                                "Falla de Integridad Detectada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                tabControlAdmin.SelectedTab = tabPageControlCambios;
             }
         }
 
