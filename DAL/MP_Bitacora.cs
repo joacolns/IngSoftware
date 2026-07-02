@@ -1,4 +1,4 @@
-﻿using BE;
+using BE;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -60,7 +60,7 @@ namespace DAL
             }
         }
 
-        public int Limpiar(BE.BE_Bitacora entidad)
+        public int Limpiar()
         {
             int filasAfectadas = 0;
 

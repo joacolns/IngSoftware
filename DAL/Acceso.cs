@@ -1,17 +1,14 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Data;
 using System.Data.SqlClient;
-using Microsoft.SqlServer.Server;
 
 namespace DAL
 {
     public class Acceso
     {
         public SqlConnection conexion;
-        
+
         public void Abrir()
         {
             conexion = new SqlConnection();
@@ -22,19 +19,25 @@ namespace DAL
 
         public void Cerrar()
         {
-            conexion.Close();
-            conexion = null;
-            GC.Collect();
+            if (conexion != null)
+            {
+                if (conexion.State == ConnectionState.Open)
+                {
+                    conexion.Close();
+                }
+                conexion.Dispose();
+                conexion = null;
+            }
         }
 
-        public SqlCommand CrearComando (string nombre, List<SqlParameter> parametros = null)
+        public SqlCommand CrearComando(string nombre, List<SqlParameter> parametros = null)
         {
             SqlCommand cmd = new SqlCommand();
             cmd.CommandText = nombre;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = conexion;
 
-            if(parametros != null)
+            if (parametros != null)
             {
                 cmd.Parameters.AddRange(parametros.ToArray());
             }
@@ -44,33 +47,42 @@ namespace DAL
 
         public int Escribir(string nombre, List<SqlParameter> parametros = null)
         {
-            SqlCommand cmd = CrearComando(nombre, parametros);
-            int filas = 0;
-
-            try
+            using (SqlCommand cmd = CrearComando(nombre, parametros))
             {
-                filas = cmd.ExecuteNonQuery();
+                int filas = 0;
+                try
+                {
+                    filas = cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error en la BD: " + ex.Message, ex);
+                }
+                finally
+                {
+                    cmd.Parameters.Clear();
+                }
+                return filas;
             }
-            catch (Exception ex)
-            {
-                throw new Exception("Error en la BD: " + ex.Message);
-            }
-
-            cmd.Parameters.Clear();
-        
-            cmd = null;
-            return filas;
         }
 
         public DataTable Leer(string nombre, List<SqlParameter> parametros = null)
         {
-            SqlDataAdapter adaptador = new SqlDataAdapter();
-
             DataTable dt = new DataTable();
-
-            adaptador.SelectCommand = CrearComando(nombre, parametros);
-            adaptador.Fill(dt);
-
+            using (SqlCommand cmd = CrearComando(nombre, parametros))
+            {
+                using (SqlDataAdapter adaptador = new SqlDataAdapter(cmd))
+                {
+                    try
+                    {
+                        adaptador.Fill(dt);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("Error al leer de la BD: " + ex.Message, ex);
+                    }
+                }
+            }
             return dt;
         }
 
@@ -78,9 +90,8 @@ namespace DAL
         {
             SqlParameter parametro = new SqlParameter();
             parametro.ParameterName = nombre;
-            parametro.Value = valor;
+            parametro.Value = (object)valor ?? DBNull.Value;
             parametro.DbType = DbType.String;
-
             return parametro;
         }
 
@@ -90,7 +101,6 @@ namespace DAL
             parametro.ParameterName = nombre;
             parametro.Value = valor;
             parametro.DbType = DbType.Int32;
-
             return parametro;
         }
 
@@ -100,7 +110,6 @@ namespace DAL
             parametro.ParameterName = nombre;
             parametro.Value = valor;
             parametro.DbType = DbType.DateTime;
-
             return parametro;
         }
     }

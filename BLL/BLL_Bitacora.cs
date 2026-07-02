@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,12 +26,8 @@ namespace BLL
 
         public bool LimpiarBitacora()
         {
-
-            BE.BE_Bitacora nuevaBitacora = new BE.BE_Bitacora();
             DAL.MP_Bitacora mp_bitacora = new DAL.MP_Bitacora();
-
-            int filas = mp_bitacora.Limpiar(nuevaBitacora);
-
+            int filas = mp_bitacora.Limpiar();
             return filas > 0;
         }
 

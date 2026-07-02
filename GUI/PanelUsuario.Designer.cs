@@ -1,16 +1,16 @@
-﻿namespace GUI
+namespace GUI
 {
     partial class PanelUsuario
     {
         /// <summary>
-        /// Required designer variable.
+        /// Variable del diseñador necesaria.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        /// Clean up any resources being used.
+        /// Limpiar los recursos que se estén usando.
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// <param name="disposing">true si los recursos administrados se deben desechar; de lo contrario, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))

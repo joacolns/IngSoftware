@@ -66,7 +66,7 @@ namespace GUI
 
         private void VerificarRol()
         {
-            // Re-verify integrity at login time to catch changes
+            // Volver a verificar la integridad al iniciar sesión para detectar cambios
             System.Collections.Generic.List<string> errores;
             _integridadValida = BLLDigitoVerificador.VerificarIntegridad(out errores);
             _erroresIntegridad = errores;
@@ -120,25 +120,25 @@ namespace GUI
 
                 if (todos.Count == 0)
                 {
-                    // Create leaves
-                    BE_Componente h1 = new BE_Componente { Nombre = "Ver Bitacora", Tipo = "Hoja" };
-                    BE_Componente h2 = new BE_Componente { Nombre = "Limpiar Bitacora", Tipo = "Hoja" };
-                    BE_Componente h3 = new BE_Componente { Nombre = "Registrar Usuario", Tipo = "Hoja" };
-                    BE_Componente h4 = new BE_Componente { Nombre = "Gestionar Permisos", Tipo = "Hoja" };
+                    // Crear permisos simples (hojas)
+                    BE_Componente h1 = new BE_Permiso { Nombre = "Ver Bitacora" };
+                    BE_Componente h2 = new BE_Permiso { Nombre = "Limpiar Bitacora" };
+                    BE_Componente h3 = new BE_Permiso { Nombre = "Registrar Usuario" };
+                    BE_Componente h4 = new BE_Permiso { Nombre = "Gestionar Permisos" };
 
                     bllPermiso.GuardarComponente(h1);
                     bllPermiso.GuardarComponente(h2);
                     bllPermiso.GuardarComponente(h3);
                     bllPermiso.GuardarComponente(h4);
 
-                    // Create composites
-                    BE_Componente rAdmin = new BE_Componente { Nombre = "Rol Admin", Tipo = "Composite" };
-                    BE_Componente rUser = new BE_Componente { Nombre = "Rol Usuario", Tipo = "Composite" };
+                    // Crear roles compuestos
+                    BE_Componente rAdmin = new BE_Rol { Nombre = "Rol Admin" };
+                    BE_Componente rUser = new BE_Rol { Nombre = "Rol Usuario" };
 
                     bllPermiso.GuardarComponente(rAdmin);
                     bllPermiso.GuardarComponente(rUser);
 
-                    // Add children
+                    // Agregar hijos
                     rAdmin.Hijos.Add(h1);
                     rAdmin.Hijos.Add(h2);
                     rAdmin.Hijos.Add(h3);
@@ -146,12 +146,12 @@ namespace GUI
 
                     rUser.Hijos.Add(h1);
 
-                    // Save relationships
+                    // Guardar relaciones
                     bllPermiso.GuardarComponente(rAdmin);
                     bllPermiso.GuardarComponente(rUser);
                 }
 
-                // Seed Admin User if not exists
+                // Crear el usuario administrador semilla si no existe
                 var usuarios = BLLusuario.ObtenerUsuarios();
                 if (!usuarios.Any(u => u.Nombre.Equals("admin", StringComparison.OrdinalIgnoreCase)))
                 {

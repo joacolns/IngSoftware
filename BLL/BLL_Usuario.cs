@@ -26,10 +26,10 @@ namespace BLL
 
                     BLL_GestorDeSesion.Instancia.IniciarSesion(usuarioBD);
 
-                    // Register user as observer
+                    // Registrar usuario como observador
                     BLL_Multilenguaje.Instancia.Registrar(usuarioBD);
 
-                    // Load user preferred language if set
+                    // Cargar el idioma preferido del usuario si está configurado
                     if (usuarioBD.Idioma != null && usuarioBD.Idioma.ID_Idioma > 0)
                     {
                         var list = BLL_Multilenguaje.Instancia.ObtenerIdiomas();
@@ -41,7 +41,7 @@ namespace BLL
                     }
                     else
                     {
-                        // Default to current language if none saved
+                        // Usar el idioma actual por defecto si no tiene ninguno guardado
                         usuarioBD.Idioma = BLL_Multilenguaje.Instancia.IdiomaActual;
                     }
 

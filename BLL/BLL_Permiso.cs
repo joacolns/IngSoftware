@@ -34,37 +34,8 @@ namespace BLL
 
         public bool TienePermiso(BE_Usuario usuario, string nombrePermiso)
         {
-            if (usuario == null || usuario.Permisos == null) {
-
-                return false;
-            } 
-
-            foreach (var comp in usuario.Permisos)
-            {
-                if (EvaluarTienePermiso(comp, nombrePermiso))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private bool EvaluarTienePermiso(BE_Componente comp, string nombrePermiso)
-        {
-            if (comp.Nombre.Equals(nombrePermiso, StringComparison.OrdinalIgnoreCase))
-            {
-                return true;
-            }
-
-            foreach (var hijo in comp.Hijos)
-            {
-                if (EvaluarTienePermiso(hijo, nombrePermiso))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            if (usuario == null || usuario.Permisos == null) return false;
+            return usuario.Permisos.Any(comp => comp.TienePermiso(nombrePermiso));
         }
     }
 }

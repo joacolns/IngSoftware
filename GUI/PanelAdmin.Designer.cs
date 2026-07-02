@@ -3,14 +3,14 @@ namespace GUI
     partial class PanelAdmin
     {
         /// <summary>
-        /// Required designer variable.
+        /// Variable del diseñador necesaria.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        /// Clean up any resources being used.
+        /// Limpiar los recursos que se estén usando.
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// <param name="disposing">true si los recursos administrados se deben desechar; de lo contrario, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -28,6 +28,25 @@ namespace GUI
         /// </summary>
         private void InitializeComponent()
         {
+            this.labelNuevoRol = new System.Windows.Forms.Label();
+            this.textBoxNuevoRol = new System.Windows.Forms.TextBox();
+            this.buttonCrearRol = new System.Windows.Forms.Button();
+            this.labelSelectRol = new System.Windows.Forms.Label();
+            this.comboBoxRoles = new System.Windows.Forms.ComboBox();
+            this.listBoxPermisosRol = new System.Windows.Forms.ListBox();
+            this.comboBoxPermisosTodos = new System.Windows.Forms.ComboBox();
+            this.btnAsignarARol = new System.Windows.Forms.Button();
+            this.btnQuitarDeRol = new System.Windows.Forms.Button();
+            this.labelSelectUsuarioCambio = new System.Windows.Forms.Label();
+            this.comboBoxUsuarioCambio = new System.Windows.Forms.ComboBox();
+            this.labelFechaInicioCambio = new System.Windows.Forms.Label();
+            this.dateTimePickerInicioCambio = new System.Windows.Forms.DateTimePicker();
+            this.labelFechaFinCambio = new System.Windows.Forms.Label();
+            this.dateTimePickerFinCambio = new System.Windows.Forms.DateTimePicker();
+            this.labelTipoCambio = new System.Windows.Forms.Label();
+            this.comboBoxTipoCambio = new System.Windows.Forms.ComboBox();
+            this.btnFiltrarCambio = new System.Windows.Forms.Button();
+            this.btnLimpiarFiltrosCambio = new System.Windows.Forms.Button();
             this.tabControlAdmin = new System.Windows.Forms.TabControl();
             this.tabPageUsuarios = new System.Windows.Forms.TabPage();
             this.labelSelectUsuario = new System.Windows.Forms.Label();
@@ -86,6 +105,182 @@ namespace GUI
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTraducirControl)).BeginInit();
             this.SuspendLayout();
             // 
+            // labelNuevoRol
+            // 
+            this.labelNuevoRol.AutoSize = true;
+            this.labelNuevoRol.Location = new System.Drawing.Point(325, 200);
+            this.labelNuevoRol.Name = "labelNuevoRol";
+            this.labelNuevoRol.Size = new System.Drawing.Size(61, 13);
+            this.labelNuevoRol.TabIndex = 47;
+            this.labelNuevoRol.Text = "Nuevo Rol:";
+            // 
+            // textBoxNuevoRol
+            // 
+            this.textBoxNuevoRol.Location = new System.Drawing.Point(325, 220);
+            this.textBoxNuevoRol.Name = "textBoxNuevoRol";
+            this.textBoxNuevoRol.Size = new System.Drawing.Size(100, 20);
+            this.textBoxNuevoRol.TabIndex = 48;
+            // 
+            // buttonCrearRol
+            // 
+            this.buttonCrearRol.Location = new System.Drawing.Point(430, 218);
+            this.buttonCrearRol.Name = "buttonCrearRol";
+            this.buttonCrearRol.Size = new System.Drawing.Size(70, 23);
+            this.buttonCrearRol.TabIndex = 49;
+            this.buttonCrearRol.Text = "Crear";
+            this.buttonCrearRol.UseVisualStyleBackColor = true;
+            this.buttonCrearRol.Click += new System.EventHandler(this.buttonCrearRol_Click);
+            // 
+            // labelSelectRol
+            // 
+            this.labelSelectRol.AutoSize = true;
+            this.labelSelectRol.Location = new System.Drawing.Point(585, 200);
+            this.labelSelectRol.Name = "labelSelectRol";
+            this.labelSelectRol.Size = new System.Drawing.Size(56, 13);
+            this.labelSelectRol.TabIndex = 50;
+            this.labelSelectRol.Text = "Editar Rol:";
+            // 
+            // comboBoxRoles
+            // 
+            this.comboBoxRoles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxRoles.Location = new System.Drawing.Point(585, 220);
+            this.comboBoxRoles.Name = "comboBoxRoles";
+            this.comboBoxRoles.Size = new System.Drawing.Size(127, 21);
+            this.comboBoxRoles.TabIndex = 51;
+            this.comboBoxRoles.SelectedIndexChanged += new System.EventHandler(this.comboBoxRoles_SelectedIndexChanged);
+            // 
+            // listBoxPermisosRol
+            // 
+            this.listBoxPermisosRol.Location = new System.Drawing.Point(585, 250);
+            this.listBoxPermisosRol.Name = "listBoxPermisosRol";
+            this.listBoxPermisosRol.Size = new System.Drawing.Size(127, 69);
+            this.listBoxPermisosRol.TabIndex = 52;
+            // 
+            // comboBoxPermisosTodos
+            // 
+            this.comboBoxPermisosTodos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxPermisosTodos.Location = new System.Drawing.Point(450, 250);
+            this.comboBoxPermisosTodos.Name = "comboBoxPermisosTodos";
+            this.comboBoxPermisosTodos.Size = new System.Drawing.Size(125, 21);
+            this.comboBoxPermisosTodos.TabIndex = 53;
+            // 
+            // btnAsignarARol
+            // 
+            this.btnAsignarARol.Location = new System.Drawing.Point(510, 275);
+            this.btnAsignarARol.Name = "btnAsignarARol";
+            this.btnAsignarARol.Size = new System.Drawing.Size(65, 23);
+            this.btnAsignarARol.TabIndex = 54;
+            this.btnAsignarARol.Text = "Asig. Rol";
+            this.btnAsignarARol.UseVisualStyleBackColor = true;
+            this.btnAsignarARol.Click += new System.EventHandler(this.btnAsignarARol_Click);
+            // 
+            // btnQuitarDeRol
+            // 
+            this.btnQuitarDeRol.Location = new System.Drawing.Point(510, 305);
+            this.btnQuitarDeRol.Name = "btnQuitarDeRol";
+            this.btnQuitarDeRol.Size = new System.Drawing.Size(65, 23);
+            this.btnQuitarDeRol.TabIndex = 55;
+            this.btnQuitarDeRol.Text = "Quit. Rol";
+            this.btnQuitarDeRol.UseVisualStyleBackColor = true;
+            this.btnQuitarDeRol.Click += new System.EventHandler(this.btnQuitarDeRol_Click);
+            // 
+            // labelSelectUsuarioCambio
+            // 
+            this.labelSelectUsuarioCambio.AutoSize = true;
+            this.labelSelectUsuarioCambio.Location = new System.Drawing.Point(18, 48);
+            this.labelSelectUsuarioCambio.Name = "labelSelectUsuarioCambio";
+            this.labelSelectUsuarioCambio.Size = new System.Drawing.Size(46, 13);
+            this.labelSelectUsuarioCambio.TabIndex = 56;
+            this.labelSelectUsuarioCambio.Text = "Usuario:";
+            // 
+            // comboBoxUsuarioCambio
+            // 
+            this.comboBoxUsuarioCambio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxUsuarioCambio.Location = new System.Drawing.Point(75, 45);
+            this.comboBoxUsuarioCambio.Name = "comboBoxUsuarioCambio";
+            this.comboBoxUsuarioCambio.Size = new System.Drawing.Size(120, 21);
+            this.comboBoxUsuarioCambio.TabIndex = 57;
+            this.comboBoxUsuarioCambio.SelectedIndexChanged += new System.EventHandler(this.comboBoxUsuarioCambio_SelectedIndexChanged);
+            // 
+            // labelFechaInicioCambio
+            // 
+            this.labelFechaInicioCambio.AutoSize = true;
+            this.labelFechaInicioCambio.Location = new System.Drawing.Point(210, 48);
+            this.labelFechaInicioCambio.Name = "labelFechaInicioCambio";
+            this.labelFechaInicioCambio.Size = new System.Drawing.Size(41, 13);
+            this.labelFechaInicioCambio.TabIndex = 58;
+            this.labelFechaInicioCambio.Text = "Desde:";
+            // 
+            // dateTimePickerInicioCambio
+            // 
+            this.dateTimePickerInicioCambio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimePickerInicioCambio.Location = new System.Drawing.Point(260, 45);
+            this.dateTimePickerInicioCambio.Name = "dateTimePickerInicioCambio";
+            this.dateTimePickerInicioCambio.Size = new System.Drawing.Size(110, 20);
+            this.dateTimePickerInicioCambio.TabIndex = 59;
+            this.dateTimePickerInicioCambio.Value = new System.DateTime(2026, 7, 2, 0, 0, 0, 0);
+            // 
+            // labelFechaFinCambio
+            // 
+            this.labelFechaFinCambio.AutoSize = true;
+            this.labelFechaFinCambio.Location = new System.Drawing.Point(385, 48);
+            this.labelFechaFinCambio.Name = "labelFechaFinCambio";
+            this.labelFechaFinCambio.Size = new System.Drawing.Size(38, 13);
+            this.labelFechaFinCambio.TabIndex = 60;
+            this.labelFechaFinCambio.Text = "Hasta:";
+            // 
+            // dateTimePickerFinCambio
+            // 
+            this.dateTimePickerFinCambio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimePickerFinCambio.Location = new System.Drawing.Point(435, 45);
+            this.dateTimePickerFinCambio.Name = "dateTimePickerFinCambio";
+            this.dateTimePickerFinCambio.Size = new System.Drawing.Size(110, 20);
+            this.dateTimePickerFinCambio.TabIndex = 61;
+            this.dateTimePickerFinCambio.Value = new System.DateTime(2026, 7, 2, 0, 0, 0, 0);
+            // 
+            // labelTipoCambio
+            // 
+            this.labelTipoCambio.AutoSize = true;
+            this.labelTipoCambio.Location = new System.Drawing.Point(560, 48);
+            this.labelTipoCambio.Name = "labelTipoCambio";
+            this.labelTipoCambio.Size = new System.Drawing.Size(31, 13);
+            this.labelTipoCambio.TabIndex = 62;
+            this.labelTipoCambio.Text = "Tipo:";
+            // 
+            // comboBoxTipoCambio
+            // 
+            this.comboBoxTipoCambio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxTipoCambio.Items.AddRange(new object[] {
+            "Todos",
+            "Registro",
+            "Modificacion",
+            "Recomposicion"});
+            this.comboBoxTipoCambio.Location = new System.Drawing.Point(600, 45);
+            this.comboBoxTipoCambio.Name = "comboBoxTipoCambio";
+            this.comboBoxTipoCambio.Size = new System.Drawing.Size(110, 21);
+            this.comboBoxTipoCambio.TabIndex = 63;
+            this.comboBoxTipoCambio.SelectedIndexChanged += new System.EventHandler(this.comboBoxTipoCambio_SelectedIndexChanged);
+            // 
+            // btnFiltrarCambio
+            // 
+            this.btnFiltrarCambio.Location = new System.Drawing.Point(720, 43);
+            this.btnFiltrarCambio.Name = "btnFiltrarCambio";
+            this.btnFiltrarCambio.Size = new System.Drawing.Size(70, 25);
+            this.btnFiltrarCambio.TabIndex = 64;
+            this.btnFiltrarCambio.Text = "Filtrar";
+            this.btnFiltrarCambio.UseVisualStyleBackColor = true;
+            this.btnFiltrarCambio.Click += new System.EventHandler(this.btnFiltrarCambio_Click);
+            // 
+            // btnLimpiarFiltrosCambio
+            // 
+            this.btnLimpiarFiltrosCambio.Location = new System.Drawing.Point(800, 43);
+            this.btnLimpiarFiltrosCambio.Name = "btnLimpiarFiltrosCambio";
+            this.btnLimpiarFiltrosCambio.Size = new System.Drawing.Size(70, 25);
+            this.btnLimpiarFiltrosCambio.TabIndex = 65;
+            this.btnLimpiarFiltrosCambio.Text = "Limpiar";
+            this.btnLimpiarFiltrosCambio.UseVisualStyleBackColor = true;
+            this.btnLimpiarFiltrosCambio.Click += new System.EventHandler(this.btnLimpiarFiltrosCambio_Click);
+            // 
             // tabControlAdmin
             // 
             this.tabControlAdmin.Controls.Add(this.tabPageUsuarios);
@@ -116,6 +311,15 @@ namespace GUI
             this.tabPageUsuarios.Controls.Add(this.btnQuitar);
             this.tabPageUsuarios.Controls.Add(this.labelPermisosUsuario);
             this.tabPageUsuarios.Controls.Add(this.listBoxPermisosUsuario);
+            this.tabPageUsuarios.Controls.Add(this.labelNuevoRol);
+            this.tabPageUsuarios.Controls.Add(this.textBoxNuevoRol);
+            this.tabPageUsuarios.Controls.Add(this.buttonCrearRol);
+            this.tabPageUsuarios.Controls.Add(this.labelSelectRol);
+            this.tabPageUsuarios.Controls.Add(this.comboBoxRoles);
+            this.tabPageUsuarios.Controls.Add(this.listBoxPermisosRol);
+            this.tabPageUsuarios.Controls.Add(this.comboBoxPermisosTodos);
+            this.tabPageUsuarios.Controls.Add(this.btnAsignarARol);
+            this.tabPageUsuarios.Controls.Add(this.btnQuitarDeRol);
             this.tabPageUsuarios.Location = new System.Drawing.Point(4, 22);
             this.tabPageUsuarios.Margin = new System.Windows.Forms.Padding(2);
             this.tabPageUsuarios.Name = "tabPageUsuarios";
@@ -376,6 +580,16 @@ namespace GUI
             this.tabPageControlCambios.Controls.Add(this.labelControldecambios);
             this.tabPageControlCambios.Controls.Add(this.dataGridViewControldecambios);
             this.tabPageControlCambios.Controls.Add(this.buttonRecomponerEstadoAnterior);
+            this.tabPageControlCambios.Controls.Add(this.labelSelectUsuarioCambio);
+            this.tabPageControlCambios.Controls.Add(this.comboBoxUsuarioCambio);
+            this.tabPageControlCambios.Controls.Add(this.labelFechaInicioCambio);
+            this.tabPageControlCambios.Controls.Add(this.dateTimePickerInicioCambio);
+            this.tabPageControlCambios.Controls.Add(this.labelFechaFinCambio);
+            this.tabPageControlCambios.Controls.Add(this.dateTimePickerFinCambio);
+            this.tabPageControlCambios.Controls.Add(this.labelTipoCambio);
+            this.tabPageControlCambios.Controls.Add(this.comboBoxTipoCambio);
+            this.tabPageControlCambios.Controls.Add(this.btnFiltrarCambio);
+            this.tabPageControlCambios.Controls.Add(this.btnLimpiarFiltrosCambio);
             this.tabPageControlCambios.Location = new System.Drawing.Point(4, 22);
             this.tabPageControlCambios.Margin = new System.Windows.Forms.Padding(2);
             this.tabPageControlCambios.Name = "tabPageControlCambios";
@@ -387,7 +601,7 @@ namespace GUI
             // labelControldecambios
             // 
             this.labelControldecambios.AutoSize = true;
-            this.labelControldecambios.Location = new System.Drawing.Point(18, 29);
+            this.labelControldecambios.Location = new System.Drawing.Point(18, 10);
             this.labelControldecambios.Name = "labelControldecambios";
             this.labelControldecambios.Size = new System.Drawing.Size(97, 13);
             this.labelControldecambios.TabIndex = 31;
@@ -396,12 +610,12 @@ namespace GUI
             // dataGridViewControldecambios
             // 
             this.dataGridViewControldecambios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewControldecambios.Location = new System.Drawing.Point(21, 51);
+            this.dataGridViewControldecambios.Location = new System.Drawing.Point(21, 80);
             this.dataGridViewControldecambios.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridViewControldecambios.Name = "dataGridViewControldecambios";
             this.dataGridViewControldecambios.RowHeadersWidth = 82;
             this.dataGridViewControldecambios.RowTemplate.Height = 33;
-            this.dataGridViewControldecambios.Size = new System.Drawing.Size(850, 199);
+            this.dataGridViewControldecambios.Size = new System.Drawing.Size(850, 170);
             this.dataGridViewControldecambios.TabIndex = 30;
             // 
             // buttonRecomponerEstadoAnterior
@@ -437,7 +651,7 @@ namespace GUI
             // labelManejodeidiomas
             // 
             this.labelManejodeidiomas.AutoSize = true;
-            this.labelManejodeidiomas.Location = new System.Drawing.Point(18, 47);
+            this.labelManejodeidiomas.Location = new System.Drawing.Point(19, 15);
             this.labelManejodeidiomas.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelManejodeidiomas.Name = "labelManejodeidiomas";
             this.labelManejodeidiomas.Size = new System.Drawing.Size(95, 13);
@@ -456,10 +670,10 @@ namespace GUI
             // comboBoxIdioma
             // 
             this.comboBoxIdioma.FormattingEnabled = true;
-            this.comboBoxIdioma.Location = new System.Drawing.Point(61, 70);
+            this.comboBoxIdioma.Location = new System.Drawing.Point(98, 71);
             this.comboBoxIdioma.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxIdioma.Name = "comboBoxIdioma";
-            this.comboBoxIdioma.Size = new System.Drawing.Size(196, 21);
+            this.comboBoxIdioma.Size = new System.Drawing.Size(162, 21);
             this.comboBoxIdioma.TabIndex = 36;
             // 
             // buttonActivarIdioma
@@ -675,5 +889,24 @@ namespace GUI
         private System.Windows.Forms.TabPage tabPageIdiomas;
         private System.Windows.Forms.ComboBox comboBoxIdiomaMostrar;
         private System.Windows.Forms.Button buttonActualizarIdiomaMostrar;
+        private System.Windows.Forms.Label labelNuevoRol;
+        private System.Windows.Forms.TextBox textBoxNuevoRol;
+        private System.Windows.Forms.Button buttonCrearRol;
+        private System.Windows.Forms.Label labelSelectRol;
+        private System.Windows.Forms.ComboBox comboBoxRoles;
+        private System.Windows.Forms.Button btnAsignarARol;
+        private System.Windows.Forms.Button btnQuitarDeRol;
+        private System.Windows.Forms.ListBox listBoxPermisosRol;
+        private System.Windows.Forms.ComboBox comboBoxPermisosTodos;
+        private System.Windows.Forms.Label labelSelectUsuarioCambio;
+        private System.Windows.Forms.ComboBox comboBoxUsuarioCambio;
+        private System.Windows.Forms.Label labelFechaInicioCambio;
+        private System.Windows.Forms.DateTimePicker dateTimePickerInicioCambio;
+        private System.Windows.Forms.Label labelFechaFinCambio;
+        private System.Windows.Forms.DateTimePicker dateTimePickerFinCambio;
+        private System.Windows.Forms.Label labelTipoCambio;
+        private System.Windows.Forms.ComboBox comboBoxTipoCambio;
+        private System.Windows.Forms.Button btnFiltrarCambio;
+        private System.Windows.Forms.Button btnLimpiarFiltrosCambio;
     }
 }

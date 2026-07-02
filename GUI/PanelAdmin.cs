@@ -56,8 +56,8 @@ namespace GUI
 
             listBoxPermisosUsuario.DisplayMember = "Nombre";
             InicializarPermisosYAdministrador();
-            InicializarControlesRol();
-            InicializarControlesControlCambios();
+            CargarRoles();
+            CargarUsuariosCambios();
             CargarUsuarios();
             CargarArbolPermisos();
             ConfigurarPermisos();
@@ -275,7 +275,7 @@ namespace GUI
             }
         }
 
-        // --- Permission Management and Composite Rendering Helpers ---
+        // --- Helpers de gestión de permisos y renderizado del Composite ---
 
         private BE_Componente BuscarComponentePorNombre(List<BE_Componente> lista, string nombre)
         {
@@ -299,42 +299,42 @@ namespace GUI
                 BE_Componente h1 = BuscarComponentePorNombre(todos, "Ver Bitacora");
                 if (h1 == null)
                 {
-                    h1 = new BE_Componente { Nombre = "Ver Bitacora", Tipo = "Hoja" };
+                    h1 = new BE_Permiso { Nombre = "Ver Bitacora" };
                 }
                 if (h1.ID_Componente == 0) bllPermiso.GuardarComponente(h1);
 
                 BE_Componente h2 = BuscarComponentePorNombre(todos, "Limpiar Bitacora");
                 if (h2 == null)
                 {
-                    h2 = new BE_Componente { Nombre = "Limpiar Bitacora", Tipo = "Hoja" };
+                    h2 = new BE_Permiso { Nombre = "Limpiar Bitacora" };
                 }
                 if (h2.ID_Componente == 0) bllPermiso.GuardarComponente(h2);
 
                 BE_Componente h3 = BuscarComponentePorNombre(todos, "Registrar Usuario");
                 if (h3 == null)
                 {
-                    h3 = new BE_Componente { Nombre = "Registrar Usuario", Tipo = "Hoja" };
+                    h3 = new BE_Permiso { Nombre = "Registrar Usuario" };
                 }
                 if (h3.ID_Componente == 0) bllPermiso.GuardarComponente(h3);
 
                 BE_Componente h4 = BuscarComponentePorNombre(todos, "Gestionar Permisos");
                 if (h4 == null)
                 {
-                    h4 = new BE_Componente { Nombre = "Gestionar Permisos", Tipo = "Hoja" };
+                    h4 = new BE_Permiso { Nombre = "Gestionar Permisos" };
                 }
                 if (h4.ID_Componente == 0) bllPermiso.GuardarComponente(h4);
 
                 BE_Componente h5 = BuscarComponentePorNombre(todos, "Ver control de cambios");
                 if (h5 == null)
                 {
-                    h5 = new BE_Componente { Nombre = "Ver control de cambios", Tipo = "Hoja" };
+                    h5 = new BE_Permiso { Nombre = "Ver control de cambios" };
                 }
                 if (h5.ID_Componente == 0) bllPermiso.GuardarComponente(h5);
 
                 BE_Componente h6 = BuscarComponentePorNombre(todos, "Gestionar idiomas");
                 if (h6 == null)
                 {
-                    h6 = new BE_Componente { Nombre = "Gestionar idiomas", Tipo = "Hoja" };
+                    h6 = new BE_Permiso { Nombre = "Gestionar idiomas" };
                 }
                 if (h6.ID_Componente == 0) bllPermiso.GuardarComponente(h6);
 
@@ -342,14 +342,14 @@ namespace GUI
                 BE_Componente rAdmin = BuscarComponentePorNombre(todos, "Rol Admin");
                 if (rAdmin == null)
                 {
-                    rAdmin = new BE_Componente { Nombre = "Rol Admin", Tipo = "Composite" };
+                    rAdmin = new BE_Rol { Nombre = "Rol Admin" };
                 }
                 if (rAdmin.ID_Componente == 0) bllPermiso.GuardarComponente(rAdmin);
 
                 BE_Componente rUser = BuscarComponentePorNombre(todos, "Rol Usuario");
                 if (rUser == null)
                 {
-                    rUser = new BE_Componente { Nombre = "Rol Usuario", Tipo = "Composite" };
+                    rUser = new BE_Rol { Nombre = "Rol Usuario" };
                 }
                 if (rUser.ID_Componente == 0) bllPermiso.GuardarComponente(rUser);
 
@@ -484,7 +484,7 @@ namespace GUI
                     bllPermiso.GuardarComponente(rAdmin);
                 }
 
-                // Seed Admin User if not exists
+                // Crear el usuario administrador semilla si no existe
                 var usuarios = BLLusuario.ObtenerUsuarios();
                 bool existeAdmin = false;
                 foreach (var u in usuarios)
@@ -571,7 +571,7 @@ namespace GUI
                 treePermisos.Nodes.Clear();
                 var todos = bllPermiso.ObtenerTodos();
                 
-                // Find roots (components with no parents)
+                // Buscar raíces (componentes sin padres)
                 HashSet<int> hijosIds = new HashSet<int>();
                 foreach (var c in todos)
                 {
@@ -670,18 +670,16 @@ namespace GUI
                 var permiso = selectedNode.Tag as BE_Componente;
                 if (permiso == null) return;
 
-                // Check for duplicates in direct assignments
                 if (usuarioSelected.Permisos.Any(p => p.ID_Componente == permiso.ID_Componente))
                 {
                     MessageBox.Show("El usuario ya cuenta con este permiso asignado directamente.");
                     return;
                 }
 
-                // Assign
                 usuarioSelected.Permisos.Add(permiso);
                 bllPermiso.GuardarPermisosUsuario(usuarioSelected, usuarioSelected.Permisos);
 
-                // Log bitacora
+
                 var usuarioSesion = BLL_GestorDeSesion.Instancia.UsuarioActual;
                 if (usuarioSesion != null)
                 {
@@ -723,14 +721,14 @@ namespace GUI
                     return;
                 }
 
-                // Prevent removing admin permission from the admin itself (safety check)
+                // Evitar quitar el permiso de admin al propio usuario admin (verificación de seguridad)
                 if (usuarioSelected.Nombre.Equals("admin", StringComparison.OrdinalIgnoreCase) && permiso.Nombre.Equals("Rol Admin", StringComparison.OrdinalIgnoreCase))
                 {
                     MessageBox.Show("No se puede quitar el rol de administrador al usuario principal admin.");
                     return;
                 }
 
-                // Remove
+                // Quitar
                 var aEliminar = usuarioSelected.Permisos.FirstOrDefault(p => p.ID_Componente == permiso.ID_Componente);
                 if (aEliminar != null)
                 {
@@ -965,11 +963,11 @@ namespace GUI
 
                 comboBoxIdioma.SelectedIndexChanged += comboBoxIdioma_SelectedIndexChanged;
 
-                // Select current language en ambos
+                // Seleccionar el idioma actual en ambos
                 var actual = BLL_Multilenguaje.Instancia.IdiomaActual;
                 if (actual != null)
                 {
-                    foreach (var idm in listToArrayHack(idiomas))
+                    foreach (var idm in ConvertirListaAArray(idiomas))
                     {
                         if (idm.ID_Idioma == actual.ID_Idioma)
                         {
@@ -978,7 +976,7 @@ namespace GUI
                         }
                     }
 
-                    foreach (var idm in listToArrayHack(idiomasActivos))
+                    foreach (var idm in ConvertirListaAArray(idiomasActivos))
                     {
                         if (idm.ID_Idioma == actual.ID_Idioma)
                         {
@@ -1022,14 +1020,9 @@ namespace GUI
             }
         }
 
-        private BE_Idioma[] listToArrayHack(List<BE_Idioma> list)
+        private BE_Idioma[] ConvertirListaAArray(List<BE_Idioma> list)
         {
-            BE_Idioma[] arr = new BE_Idioma[list.Count];
-            for (int i = 0; i < list.Count; i++)
-            {
-                arr[i] = list[i];
-            }
-            return arr;
+            return list?.ToArray() ?? new BE_Idioma[0];
         }
 
         private void CargarTraducciones()
@@ -1118,7 +1111,7 @@ namespace GUI
 
                 BE_Idioma nuevo = new BE_Idioma();
                 nuevo.Nombre = nombre;
-                nuevo.Agregado = false; // Deactivated by default
+                nuevo.Agregado = false; // Desactivado por defecto
 
                 BLL_Multilenguaje.Instancia.GuardarIdioma(nuevo);
                 textBoxAgregarNombreIdioma.Text = "";
@@ -1225,62 +1218,24 @@ namespace GUI
                 
                 CargarUsuariosCambios();
             }
-        }
-        // --- Role Management Controls ---
-        private System.Windows.Forms.Label labelNuevoRol;
-        private System.Windows.Forms.TextBox textBoxNuevoRol;
-        private System.Windows.Forms.Button buttonCrearRol;
-        private System.Windows.Forms.Label labelSelectRol;
-        private System.Windows.Forms.ComboBox comboBoxRoles;
-        private System.Windows.Forms.Button btnAsignarARol;
-        private System.Windows.Forms.Button btnQuitarDeRol;
-        private System.Windows.Forms.ListBox listBoxPermisosRol;
-        private System.Windows.Forms.ComboBox comboBoxPermisosTodos;
 
-        // --- Control de Cambios Filter Controls ---
-        private System.Windows.Forms.Label labelSelectUsuarioCambio;
-        private System.Windows.Forms.ComboBox comboBoxUsuarioCambio;
-        private System.Windows.Forms.Label labelFechaInicioCambio;
-        private System.Windows.Forms.DateTimePicker dateTimePickerInicioCambio;
-        private System.Windows.Forms.Label labelFechaFinCambio;
-        private System.Windows.Forms.DateTimePicker dateTimePickerFinCambio;
-        private System.Windows.Forms.Label labelTipoCambio;
-        private System.Windows.Forms.ComboBox comboBoxTipoCambio;
-        private System.Windows.Forms.Button btnFiltrarCambio;
-        private System.Windows.Forms.Button btnLimpiarFiltrosCambio;
+            if (labelNuevoRol != null)
+            {
+                string tLblNuevoRol = BLL_Multilenguaje.Instancia.Traducir("labelNuevoRol", "PanelAdmin");
+                labelNuevoRol.Text = tLblNuevoRol.StartsWith("[Default:") ? "Nuevo Rol:" : tLblNuevoRol;
 
-        private void InicializarControlesRol()
-        {
-            labelNuevoRol = new System.Windows.Forms.Label { Text = "Nuevo Rol:", Location = new System.Drawing.Point(325, 200), AutoSize = true };
-            textBoxNuevoRol = new System.Windows.Forms.TextBox { Location = new System.Drawing.Point(325, 220), Size = new System.Drawing.Size(100, 20) };
-            buttonCrearRol = new System.Windows.Forms.Button { Text = "Crear", Location = new System.Drawing.Point(430, 218), Size = new System.Drawing.Size(70, 23) };
-            buttonCrearRol.Click += buttonCrearRol_Click;
+                string tBtnCrearRol = BLL_Multilenguaje.Instancia.Traducir("buttonCrearRol", "PanelAdmin");
+                buttonCrearRol.Text = tBtnCrearRol.StartsWith("[Default:") ? "Crear" : tBtnCrearRol;
 
-            labelSelectRol = new System.Windows.Forms.Label { Text = "Editar Rol:", Location = new System.Drawing.Point(585, 200), AutoSize = true };
-            comboBoxRoles = new System.Windows.Forms.ComboBox { DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList, Location = new System.Drawing.Point(585, 220), Size = new System.Drawing.Size(127, 21) };
-            comboBoxRoles.SelectedIndexChanged += comboBoxRoles_SelectedIndexChanged;
+                string tLblSelectRol = BLL_Multilenguaje.Instancia.Traducir("labelSelectRol", "PanelAdmin");
+                labelSelectRol.Text = tLblSelectRol.StartsWith("[Default:") ? "Editar Rol:" : tLblSelectRol;
 
-            listBoxPermisosRol = new System.Windows.Forms.ListBox { Location = new System.Drawing.Point(585, 250), Size = new System.Drawing.Size(127, 80), DisplayMember = "Nombre" };
+                string tBtnAsignarARol = BLL_Multilenguaje.Instancia.Traducir("btnAsignarARol", "PanelAdmin");
+                btnAsignarARol.Text = tBtnAsignarARol.StartsWith("[Default:") ? "Asig. Rol" : tBtnAsignarARol;
 
-            comboBoxPermisosTodos = new System.Windows.Forms.ComboBox { DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList, Location = new System.Drawing.Point(450, 250), Size = new System.Drawing.Size(125, 21) };
-
-            btnAsignarARol = new System.Windows.Forms.Button { Text = "Asig. Rol", Location = new System.Drawing.Point(510, 275), Size = new System.Drawing.Size(65, 23) };
-            btnAsignarARol.Click += btnAsignarARol_Click;
-
-            btnQuitarDeRol = new System.Windows.Forms.Button { Text = "Quit. Rol", Location = new System.Drawing.Point(510, 305), Size = new System.Drawing.Size(65, 23) };
-            btnQuitarDeRol.Click += btnQuitarDeRol_Click;
-
-            tabPageUsuarios.Controls.Add(labelNuevoRol);
-            tabPageUsuarios.Controls.Add(textBoxNuevoRol);
-            tabPageUsuarios.Controls.Add(buttonCrearRol);
-            tabPageUsuarios.Controls.Add(labelSelectRol);
-            tabPageUsuarios.Controls.Add(comboBoxRoles);
-            tabPageUsuarios.Controls.Add(listBoxPermisosRol);
-            tabPageUsuarios.Controls.Add(comboBoxPermisosTodos);
-            tabPageUsuarios.Controls.Add(btnAsignarARol);
-            tabPageUsuarios.Controls.Add(btnQuitarDeRol);
-
-            CargarRoles();
+                string tBtnQuitarDeRol = BLL_Multilenguaje.Instancia.Traducir("btnQuitarDeRol", "PanelAdmin");
+                btnQuitarDeRol.Text = tBtnQuitarDeRol.StartsWith("[Default:") ? "Quit. Rol" : tBtnQuitarDeRol;
+            }
         }
 
         private void CargarRoles()
@@ -1291,7 +1246,7 @@ namespace GUI
 
             foreach(var c in todos)
             {
-                if(c.Tipo == "Composite") roles.Add(c);
+                if (c is BE_Rol) roles.Add(c);
                 permisosComunes.Add(c);
             }
 
@@ -1348,7 +1303,7 @@ namespace GUI
             string nombreRol = textBoxNuevoRol.Text.Trim();
             if (string.IsNullOrEmpty(nombreRol)) return;
 
-            var comp = new BE_Componente { Nombre = nombreRol, Tipo = "Composite" };
+            var comp = new BE_Rol { Nombre = nombreRol };
             bllPermiso.GuardarComponente(comp);
             MessageBox.Show("Rol creado con éxito.");
             textBoxNuevoRol.Text = "";
@@ -1388,17 +1343,7 @@ namespace GUI
             }
 
             // Verificar circularidad: el rolActual no puede estar dentro del permiso (si es que el permiso es un Composite)
-            bool EsHijo(BE_Componente padre, int idBuscado)
-            {
-                if (padre.ID_Componente == idBuscado) return true;
-                foreach(var h in padre.Hijos)
-                {
-                    if (EsHijo(h, idBuscado)) return true;
-                }
-                return false;
-            }
-
-            if (EsHijo(permisoCompleto, rolActual.ID_Componente))
+            if (permisoCompleto.Contiene(rolActual.ID_Componente))
             {
                 MessageBox.Show("No se puede asignar porque generaría una referencia circular.");
                 return;
@@ -1446,54 +1391,9 @@ namespace GUI
             }
         }
 
-        private void InicializarControlesControlCambios()
+        private void comboBoxTipoCambio_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Shifting dataGridViewControldecambios down and adjusting height
-            dataGridViewControldecambios.Location = new System.Drawing.Point(21, 80);
-            dataGridViewControldecambios.Size = new System.Drawing.Size(850, 170);
-
-            // Shifting title label slightly up
-            labelControldecambios.Location = new System.Drawing.Point(18, 10);
-
-            // User Select
-            labelSelectUsuarioCambio = new System.Windows.Forms.Label { Text = "Usuario:", Location = new System.Drawing.Point(18, 48), AutoSize = true };
-            comboBoxUsuarioCambio = new System.Windows.Forms.ComboBox { DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList, Location = new System.Drawing.Point(75, 45), Size = new System.Drawing.Size(120, 21) };
-            comboBoxUsuarioCambio.SelectedIndexChanged += comboBoxUsuarioCambio_SelectedIndexChanged;
-
-            // Date Range
-            labelFechaInicioCambio = new System.Windows.Forms.Label { Text = "Desde:", Location = new System.Drawing.Point(210, 48), AutoSize = true };
-            dateTimePickerInicioCambio = new System.Windows.Forms.DateTimePicker { Format = System.Windows.Forms.DateTimePickerFormat.Short, Location = new System.Drawing.Point(260, 45), Size = new System.Drawing.Size(110, 20), Value = DateTime.Now.AddDays(-30) };
-
-            labelFechaFinCambio = new System.Windows.Forms.Label { Text = "Hasta:", Location = new System.Drawing.Point(385, 48), AutoSize = true };
-            dateTimePickerFinCambio = new System.Windows.Forms.DateTimePicker { Format = System.Windows.Forms.DateTimePickerFormat.Short, Location = new System.Drawing.Point(435, 45), Size = new System.Drawing.Size(110, 20), Value = DateTime.Now };
-
-            // Change Type
-            labelTipoCambio = new System.Windows.Forms.Label { Text = "Tipo:", Location = new System.Drawing.Point(560, 48), AutoSize = true };
-            comboBoxTipoCambio = new System.Windows.Forms.ComboBox { DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList, Location = new System.Drawing.Point(600, 45), Size = new System.Drawing.Size(110, 21) };
-            comboBoxTipoCambio.Items.AddRange(new string[] { "Todos", "Registro", "Modificacion", "Recomposicion" });
-            comboBoxTipoCambio.SelectedIndex = 0;
-            comboBoxTipoCambio.SelectedIndexChanged += (s, e) => FiltrarControlCambios();
-
-            // Buttons
-            btnFiltrarCambio = new System.Windows.Forms.Button { Text = "Filtrar", Location = new System.Drawing.Point(720, 43), Size = new System.Drawing.Size(70, 25) };
-            btnFiltrarCambio.Click += btnFiltrarCambio_Click;
-
-            btnLimpiarFiltrosCambio = new System.Windows.Forms.Button { Text = "Limpiar", Location = new System.Drawing.Point(800, 43), Size = new System.Drawing.Size(70, 25) };
-            btnLimpiarFiltrosCambio.Click += btnLimpiarFiltrosCambio_Click;
-
-            // Add controls to TabPage
-            tabPageControlCambios.Controls.Add(labelSelectUsuarioCambio);
-            tabPageControlCambios.Controls.Add(comboBoxUsuarioCambio);
-            tabPageControlCambios.Controls.Add(labelFechaInicioCambio);
-            tabPageControlCambios.Controls.Add(dateTimePickerInicioCambio);
-            tabPageControlCambios.Controls.Add(labelFechaFinCambio);
-            tabPageControlCambios.Controls.Add(dateTimePickerFinCambio);
-            tabPageControlCambios.Controls.Add(labelTipoCambio);
-            tabPageControlCambios.Controls.Add(comboBoxTipoCambio);
-            tabPageControlCambios.Controls.Add(btnFiltrarCambio);
-            tabPageControlCambios.Controls.Add(btnLimpiarFiltrosCambio);
-
-            CargarUsuariosCambios();
+            FiltrarControlCambios();
         }
 
         private void CargarUsuariosCambios()
@@ -1567,10 +1467,10 @@ namespace GUI
 
                     var consulta = listaCambios.AsEnumerable();
 
-                    // Filter by Date range
+                    // Filtrar por rango de fechas
                     consulta = consulta.Where(c => c.Fecha >= fechaInicio && c.Fecha <= fechaFin);
 
-                    // Filter by Tipo de Cambio
+                    // Filtrar por Tipo de Cambio
                     if (tipoSeleccionado != "Todos")
                     {
                         if (tipoSeleccionado == "Recomposicion")

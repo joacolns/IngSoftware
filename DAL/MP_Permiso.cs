@@ -39,7 +39,7 @@ namespace DAL
                 id = Convert.ToInt32(paramId.Value);
                 componente.ID_Componente = id;
 
-                if (componente.Tipo == "Composite")
+                if (componente is BE_Rol)
                 {
                     // Limpiar relaciones viejas
                     SqlCommand cmdClean = new SqlCommand("SP_LimpiarRelacionesComponente", acceso.conexion);
@@ -86,8 +86,15 @@ namespace DAL
                     string nombre = row["nombre"].ToString();
                     string tipo = row["tipo"].ToString();
 
-                    BE_Componente comp = new BE_Componente();
-                    comp.Tipo = tipo;
+                    BE_Componente comp;
+                    if (tipo.Equals("Composite", StringComparison.OrdinalIgnoreCase))
+                    {
+                        comp = new BE_Rol();
+                    }
+                    else
+                    {
+                        comp = new BE_Permiso();
+                    }
 
                     comp.ID_Componente = id;
                     comp.Nombre = nombre;
@@ -108,7 +115,7 @@ namespace DAL
                         BE_Componente padre = componentesDict[idPadre];
                         BE_Componente hijo = componentesDict[idHijo];
 
-                        if (padre.Tipo.Equals("Composite", StringComparison.OrdinalIgnoreCase))
+                        if (padre is BE_Rol)
                         {
                             bool existe = false;
                             foreach (var h in padre.Hijos)
