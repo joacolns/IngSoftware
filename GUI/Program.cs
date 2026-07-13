@@ -17,24 +17,7 @@ namespace GUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            BLL.BLL_DigitoVerificador bllDV = new BLL.BLL_DigitoVerificador();
-            System.Collections.Generic.List<string> errores;
-            bool integridadValida = bllDV.VerificarIntegridad(out errores);
-
-            if (!integridadValida)
-            {
-                try
-                {
-                    bllDV.RecalcularTodo();
-                    integridadValida = bllDV.VerificarIntegridad(out errores);
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine("Error al auto-recalcular dígitos verificadores: " + ex.Message);
-                }
-            }
-
-            Application.Run(new Login(integridadValida, errores));
+            Application.Run(new Login());
         }
     }
 }

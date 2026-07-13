@@ -25,15 +25,11 @@ namespace GUI
         private bool _integridadValida = true;
         private List<string> _erroresIntegridad = new List<string>();
 
-        public Login() : this(true, new List<string>())
-        {
-        }
-
-        public Login(bool integridadValida, List<string> errores)
+        public Login()
         {
             InitializeComponent();
-            this._integridadValida = integridadValida;
-            this._erroresIntegridad = errores;
+            BLL.BLL_DigitoVerificador bllDV = new BLL.BLL_DigitoVerificador();
+            this._integridadValida = bllDV.VerificarIntegridad(out this._erroresIntegridad);
             this.FormClosed += Login_FormClosed;
             CargarIdiomas();
             ActualizarLenguaje();
@@ -51,9 +47,23 @@ namespace GUI
             {
                 BEUsuario = BLL_GestorDeSesion.Instancia.UsuarioActual;
 
+                if (!_integridadValida)
+                {
+                    BLL.BLL_Permiso bllPermiso = new BLL.BLL_Permiso();
+                    bool esAdmin = bllPermiso.TienePermiso(BEUsuario, "Rol Admin");
+                    
+                    if (!esAdmin)
+                    {
+                        MessageBox.Show("Falla de integridad en la base de datos. El acceso a usuarios comunes ha sido bloqueado. Contacte al administrador.", "Error de Integridad", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
                 BLLBitacora.RegistrarBitacora(BEUsuario.ID_Usuario, BEUsuario.Nombre, "Login", "El usuario ha inicado sesion", DateTime.Now);
 
-                VerificarRol();
+                PanelAdmin panel_admin = new PanelAdmin(_integridadValida, _erroresIntegridad);
+                panel_admin.Show();
+                this.Hide();
             }
             else
             {
@@ -61,37 +71,6 @@ namespace GUI
                 GestionarBloqueo();
 
 
-            }
-        }
-
-        private void VerificarRol()
-        {
-            // Volver a verificar la integridad al iniciar sesión para detectar cambios
-            System.Collections.Generic.List<string> errores;
-            _integridadValida = BLLDigitoVerificador.VerificarIntegridad(out errores);
-            _erroresIntegridad = errores;
-
-            BLL_Permiso bllPermiso = new BLL_Permiso();
-            bool esAdmin = bllPermiso.TienePermiso(BEUsuario, "Gestionar Permisos");
-
-            if (!_integridadValida && !esAdmin)
-            {
-                MessageBox.Show("El sistema se encuentra temporalmente bloqueado debido a problemas de integridad. Solo un administrador puede ingresar para solucionar la falla.", "Bloqueo de Seguridad", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                BLLusuario.Logout();
-                return;
-            }
-
-            if (esAdmin)
-            {
-                PanelAdmin panel_admin = new PanelAdmin(_integridadValida, _erroresIntegridad);
-                panel_admin.Show();
-                this.Hide();
-            }
-            else
-            {
-                PanelUsuario panel_usuario = new PanelUsuario();
-                panel_usuario.Show();
-                this.Hide();
             }
         }
 
@@ -113,6 +92,7 @@ namespace GUI
 
         private void CrearAdminConPermisos()
         {
+            //Llamar solamente si no existe un admin en la bd
             try
             {
                 BLL_Permiso bllPermiso = new BLL_Permiso();

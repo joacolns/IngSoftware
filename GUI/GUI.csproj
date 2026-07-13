@@ -58,12 +58,6 @@
     <Compile Include="PanelAdmin.Designer.cs">
       <DependentUpon>PanelAdmin.cs</DependentUpon>
     </Compile>
-    <Compile Include="PanelUsuario.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PanelUsuario.Designer.cs">
-      <DependentUpon>PanelUsuario.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Login.resx">
@@ -71,9 +65,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PanelAdmin.resx">
       <DependentUpon>PanelAdmin.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PanelUsuario.resx">
-      <DependentUpon>PanelUsuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

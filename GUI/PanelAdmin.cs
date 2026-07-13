@@ -562,8 +562,6 @@ namespace GUI
             }
         }
 
-
-
         private void CargarArbolPermisos()
         {
             try
