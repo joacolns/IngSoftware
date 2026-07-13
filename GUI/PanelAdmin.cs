@@ -24,6 +24,12 @@ namespace GUI
         private bool _integridadValida = true;
         private List<string> _erroresIntegridad = new List<string>();
 
+        // Referencias a los formularios hijos abiertos
+        private FormUsuarios _formUsuarios;
+        private FormBitacora _formBitacora;
+        private FormControlCambios _formControlCambios;
+        private FormIdiomas _formIdiomas;
+
         public PanelAdmin() : this(true, new List<string>())
         {
         }
@@ -35,16 +41,6 @@ namespace GUI
             this._erroresIntegridad = errores;
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void labelUSER_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void Menu_Principal_Load_1(object sender, EventArgs e)
         {
             if (BLL.BLL_GestorDeSesion.Instancia.EstaLogeado)
@@ -52,33 +48,14 @@ namespace GUI
                 labelUSER.Text = BLL.BLL_GestorDeSesion.Instancia.UsuarioActual.Nombre;
             }
 
-            EnlazarBitacora();
-
-            listBoxPermisosUsuario.DisplayMember = "Nombre";
             InicializarPermisosYAdministrador();
-            CargarRoles();
-            CargarUsuariosCambios();
-            CargarUsuarios();
-            CargarArbolPermisos();
-            ConfigurarPermisos();
-
-            dataGridViewControldecambios.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewControldecambios.MultiSelect = false;
-            buttonRecomponerEstadoAnterior.Click += buttonRecomponerEstadoAnterior_Click;
 
             if (BLL_GestorDeSesion.Instancia.EstaLogeado)
             {
                 BLL_GestorDeSesion.Instancia.UsuarioActual.IdiomaCambiado += UsuarioActual_IdiomaCambiado;
             }
 
-            comboBoxIdioma.SelectedIndexChanged += comboBoxIdioma_SelectedIndexChanged;
-            buttonActivarIdioma.Click += buttonActivarIdioma_Click;
-            buttonDesactivarIdioma.Click += buttonDesactivarIdioma_Click;
-            buttonAgregarIdioma.Click += buttonAgregarIdioma_Click;
-            buttonAplicarCambiosIdioma.Click += buttonAplicarCambiosIdioma_Click;
-            buttonActualizarIdiomaMostrar.Click += buttonActualizarIdiomaMostrar_Click;
-
-            CargarIdiomas();
+            CargarIdiomasMostrar();
             ActualizarLenguaje();
 
             // Recalcular dígitos verificadores al iniciar solo si la integridad es correcta
@@ -96,76 +73,19 @@ namespace GUI
             }
             else
             {
-                // Inform the admin and switch to rollback tab
+                // Inform the admin and open change control window
                 MessageBox.Show("¡ATENCIÓN ADMINISTRADOR!\n\nSe han detectado fallas en la integridad de la base de datos (dígitos verificadores rotos):\n\n" + 
                                 string.Join("\n", _erroresIntegridad) + 
-                                "\n\nLa aplicación ha bloqueado el acceso a usuarios comunes. Por favor, realice un rollback de los cambios del usuario afectado desde esta pestaña para solucionar la falla.", 
+                                "\n\nLa aplicación ha bloqueado el acceso a usuarios comunes. Por favor, realice un rollback de los cambios del usuario afectado desde la ventana de Control de Cambios para solucionar la falla.", 
                                 "Falla de Integridad Detectada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                tabControlAdmin.SelectedTab = tabPageControlCambios;
+                AbrirFormControlCambios();
             }
         }
 
-        private void label1_Click_1(object sender, EventArgs e)
+        private void UsuarioActual_IdiomaCambiado(object sender, EventArgs e)
         {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            string nuevoNombre = txtNuevoUsuario.Text.Trim();
-            string nuevaClave = txtNuevaPassword.Text.Trim(); 
-            BLL.BLL_Usuario gestorUsuario = new BLL.BLL_Usuario();
-
-            if (string.IsNullOrEmpty(nuevoNombre) || string.IsNullOrEmpty(nuevaClave))
-            {
-                MessageBox.Show("El nombre y la contraseña no pueden estar vacíos.");
-                return;
-            }
-
-            bool registrado = gestorUsuario.RegistrarUsuario(nuevoNombre, nuevaClave);
-
-            var usuarioSesion = BLL_GestorDeSesion.Instancia.UsuarioActual;
-
-            if (registrado)
-            {
-                MessageBox.Show("Usuario creado y encriptado con éxito");
-                
-                if (usuarioSesion != null)
-                {
-                    BLLBitacora.RegistrarBitacora(usuarioSesion.ID_Usuario, usuarioSesion.Nombre, "Registro", "El administrador ha creado un nuevo usuario", DateTime.Now);
-                }
-                
-                CargarUsuarios();
-                txtNuevoUsuario.Text = "";
-                txtNuevaPassword.Text = "";
-            }
-            else
-            {
-                MessageBox.Show("Error al registrar");
-                
-                if (usuarioSesion != null)
-                {
-                    BLLBitacora.RegistrarBitacora(usuarioSesion.ID_Usuario, usuarioSesion.Nombre, "Registro", "El administrador ha intentado crear un nuevo usuario", DateTime.Now);
-                }
-                
-                EnlazarBitacora();
-            }
+            ActualizarLenguaje();
         }
 
         private void CerrarSesion()
@@ -181,40 +101,11 @@ namespace GUI
             
             gestorUsuario.Logout();
         }
-
-        private void UsuarioActual_IdiomaCambiado(object sender, EventArgs e)
-        {
-            ActualizarLenguaje();
-        }
         
         private void button2_Click(object sender, EventArgs e)
         {
             CerrarSesion();
             Application.Restart();
-        }
-
-        private void btnBitacora_Click(object sender, EventArgs e)
-        {
-            EnlazarBitacora();
-        }
-
-        private void EnlazarBitacora()
-        {
-            try
-            {
-                BLL.BLL_Bitacora gestorBitacora = new BLL.BLL_Bitacora();
-                dataGridViewBitacora.DataSource = "";
-                dataGridViewBitacora.DataSource = gestorBitacora.ObtenerBitacora();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void Menu_Principal_FormClosed(object sender, FormClosedEventArgs e)
-        {
-
         }
 
         private void PanelAdmin_FormClosing(object sender, FormClosingEventArgs e)
@@ -223,55 +114,197 @@ namespace GUI
             {
                 BLL_GestorDeSesion.Instancia.UsuarioActual.IdiomaCambiado -= UsuarioActual_IdiomaCambiado;
             }
+
+            // Cerrar todos los formularios hijos abiertos
+            if (_formUsuarios != null && !_formUsuarios.IsDisposed)
+                _formUsuarios.Close();
+            if (_formBitacora != null && !_formBitacora.IsDisposed)
+                _formBitacora.Close();
+            if (_formControlCambios != null && !_formControlCambios.IsDisposed)
+                _formControlCambios.Close();
+            if (_formIdiomas != null && !_formIdiomas.IsDisposed)
+                _formIdiomas.Close();
+
             CerrarSesion();
         }
 
-        private void btn_LimpiarBitacora_Click(object sender, EventArgs e)
+        private void Menu_Principal_FormClosed(object sender, FormClosedEventArgs e)
         {
-            BLLBitacora.LimpiarBitacora();
-            
-            var usuarioSesion = BLL_GestorDeSesion.Instancia.UsuarioActual;
 
-            if (usuarioSesion != null)
+        }
+
+        // --- Botones para abrir cada ventana ---
+
+        private void buttonAbrirUsuarios_Click(object sender, EventArgs e)
+        {
+            AbrirFormUsuarios();
+        }
+
+        private void buttonAbrirBitacora_Click(object sender, EventArgs e)
+        {
+            AbrirFormBitacora();
+        }
+
+        private void buttonAbrirControlCambios_Click(object sender, EventArgs e)
+        {
+            AbrirFormControlCambios();
+        }
+
+        private void buttonAbrirIdiomas_Click(object sender, EventArgs e)
+        {
+            AbrirFormIdiomas();
+        }
+
+        // --- Métodos para abrir/activar cada formulario ---
+
+        private void AbrirFormUsuarios()
+        {
+            if (_formUsuarios == null || _formUsuarios.IsDisposed)
             {
-                BLLBitacora.RegistrarBitacora(usuarioSesion.ID_Usuario, usuarioSesion.Nombre, "Bitacora", "El administrador ha limpiado la bitacora", DateTime.Now);
+                _formUsuarios = new FormUsuarios(BLLBitacora, BLLusuario, bllPermiso);
+                _formUsuarios.DatosModificados += FormHijo_DatosModificados;
+                _formUsuarios.Show();
             }
-            
-            EnlazarBitacora();
+            else
+            {
+                _formUsuarios.BringToFront();
+                _formUsuarios.Focus();
+            }
         }
 
-        private void buttonBuscar_Click(object sender, EventArgs e)
+        private void AbrirFormBitacora()
         {
-            FiltrarBitacora();
+            if (_formBitacora == null || _formBitacora.IsDisposed)
+            {
+                _formBitacora = new FormBitacora(BLLBitacora);
+                _formBitacora.DatosModificados += FormHijo_DatosModificados;
+                _formBitacora.Show();
+            }
+            else
+            {
+                _formBitacora.BringToFront();
+                _formBitacora.Focus();
+            }
         }
 
+        private void AbrirFormControlCambios()
+        {
+            if (_formControlCambios == null || _formControlCambios.IsDisposed)
+            {
+                _formControlCambios = new FormControlCambios(BLLBitacora, BLLusuario);
+                _formControlCambios.DatosModificados += FormHijo_DatosModificados;
+                _formControlCambios.Show();
+            }
+            else
+            {
+                _formControlCambios.BringToFront();
+                _formControlCambios.Focus();
+            }
+        }
 
-        private void FiltrarBitacora()
+        private void AbrirFormIdiomas()
+        {
+            if (_formIdiomas == null || _formIdiomas.IsDisposed)
+            {
+                _formIdiomas = new FormIdiomas();
+                _formIdiomas.DatosModificados += FormHijo_DatosModificados;
+                _formIdiomas.Show();
+            }
+            else
+            {
+                _formIdiomas.BringToFront();
+                _formIdiomas.Focus();
+            }
+        }
+
+        // --- Evento que recibe notificaciones de cambios de los formularios hijos ---
+        private void FormHijo_DatosModificados(object sender, EventArgs e)
+        {
+            // Cuando un formulario hijo hace cambios, refrescar los otros que estén abiertos
+            if (sender is FormUsuarios)
+            {
+                // Refrescar bitácora si está abierta
+                if (_formBitacora != null && !_formBitacora.IsDisposed)
+                    _formBitacora.EnlazarBitacora();
+            }
+            else if (sender is FormBitacora)
+            {
+                // La bitácora fue limpiada
+            }
+            else if (sender is FormControlCambios)
+            {
+                // Refrescar bitácora si está abierta
+                if (_formBitacora != null && !_formBitacora.IsDisposed)
+                    _formBitacora.EnlazarBitacora();
+            }
+            else if (sender is FormIdiomas)
+            {
+                // Los idiomas cambiaron - refrescar idiomas del panel y actualizar lenguaje
+                CargarIdiomasMostrar();
+                ActualizarLenguaje();
+            }
+        }
+
+        // --- Idioma de visualización (se mantiene en el PanelAdmin principal) ---
+
+        private void CargarIdiomasMostrar()
         {
             try
             {
-                DateTime fechaInicio = dateTimePickerFechaInicio.Value.Date;
-                DateTime fechaFin = dateTimePickerFechaFinal.Value.Date.AddDays(1).AddTicks(-1);
-                string filtroUsuario = textBoxUsuarioBuscar.Text.Trim().ToLower();
+                var idiomas = BLL_Multilenguaje.Instancia.ObtenerIdiomas();
 
-                DataTable dtCompleto = BLLBitacora.ObtenerBitacora();
-
-                if (dtCompleto != null)
+                // Filtrar por idiomas agregados (activos) para la visualización
+                List<BE_Idioma> idiomasActivos = new List<BE_Idioma>();
+                foreach (var idm in idiomas)
                 {
-                    // Consulta LINQ 
-                    var consultaFiltro = 
-                        from row in dtCompleto.AsEnumerable()
-                        let fecha = Convert.ToDateTime(row["FechaHora"])
-                        let usuario = row["Username"].ToString().ToLower()
-                        where fecha >= fechaInicio && fecha <= fechaFin && usuario.Contains(filtroUsuario)
-                        select row;
+                    if (idm.Agregado)
+                    {
+                        idiomasActivos.Add(idm);
+                    }
+                }
 
-                    dataGridViewBitacora.DataSource = consultaFiltro.Any() ? consultaFiltro.CopyToDataTable() : dtCompleto.Clone();
+                comboBoxIdiomaMostrar.DataSource = null;
+                comboBoxIdiomaMostrar.DataSource = idiomasActivos;
+                comboBoxIdiomaMostrar.DisplayMember = "Nombre";
+
+                // Seleccionar el idioma actual
+                var actual = BLL_Multilenguaje.Instancia.IdiomaActual;
+                if (actual != null)
+                {
+                    foreach (var idm in idiomasActivos)
+                    {
+                        if (idm.ID_Idioma == actual.ID_Idioma)
+                        {
+                            comboBoxIdiomaMostrar.SelectedItem = idm;
+                            break;
+                        }
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al filtrar la bitácora: " + ex.Message);
+                MessageBox.Show("Error al cargar idiomas de visualización: " + ex.Message);
+            }
+        }
+
+        private void buttonActualizarIdiomaMostrar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var selectedIdioma = comboBoxIdiomaMostrar.SelectedItem as BE_Idioma;
+                if (selectedIdioma != null)
+                {
+                    BLL_Multilenguaje.Instancia.IdiomaActual = selectedIdioma;
+                    MessageBox.Show("Idioma de visualización actualizado con éxito.");
+                }
+                else
+                {
+                    MessageBox.Show("Seleccione un idioma válido.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al actualizar el idioma de visualización: " + ex.Message);
             }
         }
 
@@ -535,978 +568,28 @@ namespace GUI
             }
         }
 
-
-        private void CargarUsuarios()
-        {
-            try
-            {
-                comboBoxUsuarios.SelectedIndexChanged -= comboBoxUsuarios_SelectedIndexChanged;
-                
-                var usuarios = BLLusuario.ObtenerUsuarios();
-                comboBoxUsuarios.DataSource = null;
-                comboBoxUsuarios.DataSource = usuarios;
-                comboBoxUsuarios.DisplayMember = "Nombre";
-
-                comboBoxUsuarios.SelectedIndexChanged += comboBoxUsuarios_SelectedIndexChanged;
-                
-                if (usuarios.Count > 0)
-                {
-                    comboBoxUsuarios.SelectedIndex = 0;
-                    CargarPermisosUsuario();
-                    CargarControlCambiosUsuario();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cargar usuarios: " + ex.Message);
-            }
-        }
-
-        private void CargarArbolPermisos()
-        {
-            try
-            {
-                treePermisos.Nodes.Clear();
-                var todos = bllPermiso.ObtenerTodos();
-                
-                // Buscar raíces (componentes sin padres)
-                HashSet<int> hijosIds = new HashSet<int>();
-                foreach (var c in todos)
-                {
-                    foreach (var h in c.Hijos)
-                    {
-                        hijosIds.Add(h.ID_Componente);
-                    }
-                }
-
-                List<BE_Componente> raices = new List<BE_Componente>();
-                foreach (var c in todos)
-                {
-                    if (!hijosIds.Contains(c.ID_Componente))
-                    {
-                        raices.Add(c);
-                    }
-                }
-
-                foreach (var raiz in raices)
-                {
-                    LlenarNodo(treePermisos.Nodes, raiz);
-                }
-
-                treePermisos.ExpandAll();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cargar árbol de permisos: " + ex.Message);
-            }
-        }
-
-        private void LlenarNodo(TreeNodeCollection nodos, BE_Componente comp)
-        {
-            TreeNode nuevoNodo = new TreeNode(comp.Nombre);
-            nuevoNodo.Tag = comp;
-            nodos.Add(nuevoNodo);
-
-            foreach (var hijo in comp.Hijos)
-            {
-                LlenarNodo(nuevoNodo.Nodes, hijo);
-            }
-        }
-
-        private void CargarPermisosUsuario()
-        {
-            try
-            {
-                listBoxPermisosUsuario.Items.Clear();
-                var usuarioSelected = comboBoxUsuarios.SelectedItem as BE_Usuario;
-                if (usuarioSelected != null)
-                {
-                    usuarioSelected.Permisos = bllPermiso.ObtenerPermisosUsuario(usuarioSelected);
-                    foreach (var p in usuarioSelected.Permisos)
-                    {
-                        listBoxPermisosUsuario.Items.Add(p);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cargar permisos del usuario: " + ex.Message);
-            }
-        }
-
-        private void comboBoxUsuarios_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            CargarPermisosUsuario();
-            CargarControlCambiosUsuario();
-
-            var usuarioSelected = comboBoxUsuarios.SelectedItem as BE_Usuario;
-            if (usuarioSelected != null)
-            {
-                txtNuevoUsuario.Text = usuarioSelected.Nombre;
-                txtNuevaPassword.Text = "";
-            }
-        }
-
-        private void btnAsignar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var usuarioSelected = comboBoxUsuarios.SelectedItem as BE_Usuario;
-                if (usuarioSelected == null)
-                {
-                    MessageBox.Show("Debe seleccionar un usuario.");
-                    return;
-                }
-
-                var selectedNode = treePermisos.SelectedNode;
-                if (selectedNode == null)
-                {
-                    MessageBox.Show("Debe seleccionar un permiso del árbol.");
-                    return;
-                }
-
-                var permiso = selectedNode.Tag as BE_Componente;
-                if (permiso == null) return;
-
-                if (usuarioSelected.Permisos.Any(p => p.ID_Componente == permiso.ID_Componente))
-                {
-                    MessageBox.Show("El usuario ya cuenta con este permiso asignado directamente.");
-                    return;
-                }
-
-                usuarioSelected.Permisos.Add(permiso);
-                bllPermiso.GuardarPermisosUsuario(usuarioSelected, usuarioSelected.Permisos);
-
-
-                var usuarioSesion = BLL_GestorDeSesion.Instancia.UsuarioActual;
-                if (usuarioSesion != null)
-                {
-                    BLLBitacora.RegistrarBitacora(usuarioSesion.ID_Usuario, usuarioSesion.Nombre, "Permisos", 
-                        $"El administrador asignó el permiso '{permiso.Nombre}' al usuario '{usuarioSelected.Nombre}'", DateTime.Now);
-                }
-
-                MessageBox.Show("Permiso asignado correctamente.");
-                CargarPermisosUsuario();
-                EnlazarBitacora();
-
-                if (usuarioSelected.ID_Usuario == BLL_GestorDeSesion.Instancia.UsuarioActual.ID_Usuario)
-                {
-                    BLL_GestorDeSesion.Instancia.UsuarioActual.Permisos = usuarioSelected.Permisos;
-                    ConfigurarPermisos();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al asignar permiso: " + ex.Message);
-            }
-        }
-
-        private void btnQuitar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var usuarioSelected = comboBoxUsuarios.SelectedItem as BE_Usuario;
-                if (usuarioSelected == null)
-                {
-                    MessageBox.Show("Debe seleccionar un usuario.");
-                    return;
-                }
-
-                var permiso = listBoxPermisosUsuario.SelectedItem as BE_Componente;
-                if (permiso == null)
-                {
-                    MessageBox.Show("Debe seleccionar un permiso de la lista de permisos directos.");
-                    return;
-                }
-
-                // Evitar quitar el permiso de admin al propio usuario admin (verificación de seguridad)
-                if (usuarioSelected.Nombre.Equals("admin", StringComparison.OrdinalIgnoreCase) && permiso.Nombre.Equals("Rol Admin", StringComparison.OrdinalIgnoreCase))
-                {
-                    MessageBox.Show("No se puede quitar el rol de administrador al usuario principal admin.");
-                    return;
-                }
-
-                // Quitar
-                var aEliminar = usuarioSelected.Permisos.FirstOrDefault(p => p.ID_Componente == permiso.ID_Componente);
-                if (aEliminar != null)
-                {
-                    usuarioSelected.Permisos.Remove(aEliminar);
-                    bllPermiso.GuardarPermisosUsuario(usuarioSelected, usuarioSelected.Permisos);
-
-                    // Log bitacora
-                    var usuarioSesion = BLL_GestorDeSesion.Instancia.UsuarioActual;
-                    if (usuarioSesion != null)
-                    {
-                        BLLBitacora.RegistrarBitacora(usuarioSesion.ID_Usuario, usuarioSesion.Nombre, "Permisos", 
-                            $"El administrador removió el permiso '{permiso.Nombre}' al usuario '{usuarioSelected.Nombre}'", DateTime.Now);
-                    }
-
-                    MessageBox.Show("Permiso removido correctamente.");
-                    CargarPermisosUsuario();
-                    EnlazarBitacora();
-
-                    if (usuarioSelected.ID_Usuario == BLL_GestorDeSesion.Instancia.UsuarioActual.ID_Usuario)
-                    {
-                        BLL_GestorDeSesion.Instancia.UsuarioActual.Permisos = usuarioSelected.Permisos;
-                        ConfigurarPermisos();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al quitar permiso: " + ex.Message);
-            }
-        }
-
-        private void ConfigurarPermisos()
-        {
-            var usuarioSesion = BLL_GestorDeSesion.Instancia.UsuarioActual;
-            if (usuarioSesion != null)
-            {
-                BLL_Permiso bllPermisoEval = new BLL_Permiso();
-
-                // 1. Limpiar Bitacora
-                btn_LimpiarBitacora.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Limpiar Bitacora");
-
-                // 2. Registrar Usuario
-                buttonRegistrarUsuario.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Registrar Usuario");
-                txtNuevoUsuario.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Registrar Usuario");
-                txtNuevaPassword.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Registrar Usuario");
-
-                // 3. Gestionar Permisos
-                comboBoxUsuarios.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Gestionar Permisos");
-                treePermisos.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Gestionar Permisos");
-                listBoxPermisosUsuario.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Gestionar Permisos");
-                btnAsignar.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Gestionar Permisos");
-                btnQuitar.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Gestionar Permisos");
-
-                if (textBoxNuevoRol != null)
-                {
-                    textBoxNuevoRol.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Gestionar Permisos");
-                    buttonCrearRol.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Gestionar Permisos");
-                    comboBoxRoles.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Gestionar Permisos");
-                    listBoxPermisosRol.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Gestionar Permisos");
-                    comboBoxPermisosTodos.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Gestionar Permisos");
-                    btnAsignarARol.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Gestionar Permisos");
-                    btnQuitarDeRol.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Gestionar Permisos");
-                }
-
-                // 4. Ver Bitacora
-                dataGridViewBitacora.Visible = bllPermisoEval.TienePermiso(usuarioSesion, "Ver Bitacora");
-                buttonBuscar.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Ver Bitacora");
-                textBoxUsuarioBuscar.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Ver Bitacora");
-                dateTimePickerFechaInicio.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Ver Bitacora");
-                dateTimePickerFechaFinal.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Ver Bitacora");
-
-                // 5. Ver control de cambios
-                tabPageControlCambios.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Ver control de cambios");
-
-                // 6. Gestionar idiomas
-                tabPageIdiomas.Enabled = bllPermisoEval.TienePermiso(usuarioSesion, "Gestionar idiomas");
-            }
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void CargarControlCambiosUsuario()
-        {
-            CargarUsuariosCambios();
-            FiltrarControlCambios();
-        }
-
-        private void buttonModificarUsuario_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var usuarioSelected = comboBoxUsuarios.SelectedItem as BE_Usuario;
-                if (usuarioSelected == null)
-                {
-                    MessageBox.Show("Seleccione un usuario para modificar.");
-                    return;
-                }
-
-                string nuevoNombre = txtNuevoUsuario.Text.Trim();
-                string nuevaClave = txtNuevaPassword.Text.Trim();
-
-                if (string.IsNullOrEmpty(nuevoNombre))
-                {
-                    MessageBox.Show("El nombre del usuario no puede estar vacío.");
-                    return;
-                }
-
-                // If password is not empty, hashear it. Otherwise keep the original.
-                string passwordHasheada = usuarioSelected.Password;
-                if (!string.IsNullOrEmpty(nuevaClave))
-                {
-                    passwordHasheada = BLL_Seguridad.HashearPassword(nuevaClave);
-                }
-
-                // Update in database using MP_UsuarioCambio
-                BLL_UsuarioCambio bllCambio = new BLL_UsuarioCambio();
-                int filas = bllCambio.ActualizarUsuario(usuarioSelected.ID_Usuario, nuevoNombre, passwordHasheada);
-
-                if (filas > 0)
-                {
-                    MessageBox.Show("Usuario modificado con éxito.");
-
-                    // Recalcular dígitos verificadores
-                    BLL_DigitoVerificador bllDigVer = new BLL_DigitoVerificador();
-                    bllDigVer.RecalcularTodo();
-
-                    // Log the change
-                    BE_Usuario usuarioModificado = new BE_Usuario();
-                    usuarioModificado.ID_Usuario = usuarioSelected.ID_Usuario;
-                    usuarioModificado.Nombre = nuevoNombre;
-                    usuarioModificado.Password = passwordHasheada;
-
-                    string modificadoPor = "admin";
-                    if (BLL_GestorDeSesion.Instancia.EstaLogeado)
-                    {
-                        modificadoPor = BLL_GestorDeSesion.Instancia.UsuarioActual.Nombre;
-                    }
-
-                    bllCambio.RegistrarCambio(usuarioModificado, "Modificacion", modificadoPor);
-
-                    if (BLL_GestorDeSesion.Instancia.EstaLogeado)
-                    {
-                        BLLBitacora.RegistrarBitacora(BLL_GestorDeSesion.Instancia.UsuarioActual.ID_Usuario, BLL_GestorDeSesion.Instancia.UsuarioActual.Nombre, "Modificar", $"Modificó al usuario '{nuevoNombre}'", DateTime.Now);
-                    }
-
-                    // Refresh
-                    CargarUsuarios();
-                    EnlazarBitacora();
-                }
-                else
-                {
-                    MessageBox.Show("No se pudo modificar el usuario.");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al modificar usuario: " + ex.Message);
-            }
-        }
-
-        private void buttonRecomponerEstadoAnterior_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (dataGridViewControldecambios.SelectedRows.Count == 0)
-                {
-                    MessageBox.Show("Seleccione una versión en la tabla de control de cambios para recomponer.");
-                    return;
-                }
-
-                var cambio = dataGridViewControldecambios.SelectedRows[0].DataBoundItem as BE_UsuarioCambio;
-                if (cambio == null)
-                {
-                    MessageBox.Show("No se pudo obtener el cambio seleccionado.");
-                    return;
-                }
-
-                var usuarioSesion = BLL_GestorDeSesion.Instancia.UsuarioActual;
-                string modificadoPor = usuarioSesion != null ? usuarioSesion.Nombre : "admin";
-
-                BLL_UsuarioCambio bllCambio = new BLL_UsuarioCambio();
-                bool exito = bllCambio.RecomponerEstadoAnterior(cambio, modificadoPor);
-
-                if (exito)
-                {
-                    MessageBox.Show("El estado del usuario ha sido recompuesto a la versión " + cambio.Version + " con éxito.");
-                    if (usuarioSesion != null)
-                    {
-                        BLLBitacora.RegistrarBitacora(usuarioSesion.ID_Usuario, usuarioSesion.Nombre, "Recomponer", $"Recompuso al usuario '{cambio.Nombre}' a versión {cambio.Version}", DateTime.Now);
-                    }
-                    CargarUsuarios();
-                    EnlazarBitacora();
-                }
-                else
-                {
-                    MessageBox.Show("No se pudo recomponer el estado del usuario.");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al recomponer el estado: " + ex.Message);
-            }
-        }
-
-        private void CargarIdiomas()
-        {
-            try
-            {
-                comboBoxIdioma.SelectedIndexChanged -= comboBoxIdioma_SelectedIndexChanged;
-                
-                var idiomas = BLL_Multilenguaje.Instancia.ObtenerIdiomas();
-                comboBoxIdioma.DataSource = null;
-                comboBoxIdioma.DataSource = idiomas;
-                comboBoxIdioma.DisplayMember = "Nombre";
-
-                // Filtrar por idiomas agregados (activos) para la visualización
-                List<BE_Idioma> idiomasActivos = new List<BE_Idioma>();
-                foreach (var idm in idiomas)
-                {
-                    if (idm.Agregado)
-                    {
-                        idiomasActivos.Add(idm);
-                    }
-                }
-
-                comboBoxIdiomaMostrar.DataSource = null;
-                comboBoxIdiomaMostrar.DataSource = idiomasActivos;
-                comboBoxIdiomaMostrar.DisplayMember = "Nombre";
-
-                comboBoxIdioma.SelectedIndexChanged += comboBoxIdioma_SelectedIndexChanged;
-
-                // Seleccionar el idioma actual en ambos
-                var actual = BLL_Multilenguaje.Instancia.IdiomaActual;
-                if (actual != null)
-                {
-                    foreach (var idm in ConvertirListaAArray(idiomas))
-                    {
-                        if (idm.ID_Idioma == actual.ID_Idioma)
-                        {
-                            comboBoxIdioma.SelectedItem = idm;
-                            break;
-                        }
-                    }
-
-                    foreach (var idm in ConvertirListaAArray(idiomasActivos))
-                    {
-                        if (idm.ID_Idioma == actual.ID_Idioma)
-                        {
-                            comboBoxIdiomaMostrar.SelectedItem = idm;
-                            break;
-                        }
-                    }
-                }
-                else if (idiomas.Count > 0)
-                {
-                    comboBoxIdioma.SelectedIndex = 0;
-                    BLL_Multilenguaje.Instancia.IdiomaActual = idiomas[0];
-                }
-                
-                CargarTraducciones();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cargar idiomas: " + ex.Message);
-            }
-        }
-
-        private void buttonActualizarIdiomaMostrar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var selectedIdioma = comboBoxIdiomaMostrar.SelectedItem as BE_Idioma;
-                if (selectedIdioma != null)
-                {
-                    BLL_Multilenguaje.Instancia.IdiomaActual = selectedIdioma;
-                    MessageBox.Show("Idioma de visualización actualizado con éxito.");
-                }
-                else
-                {
-                    MessageBox.Show("Seleccione un idioma válido.");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al actualizar el idioma de visualización: " + ex.Message);
-            }
-        }
-
-        private BE_Idioma[] ConvertirListaAArray(List<BE_Idioma> list)
-        {
-            return list?.ToArray() ?? new BE_Idioma[0];
-        }
-
-        private void CargarTraducciones()
-        {
-            try
-            {
-                var selectedIdioma = comboBoxIdioma.SelectedItem as BE_Idioma;
-                if (selectedIdioma != null)
-                {
-                    dataGridViewTraducirControl.DataSource = null;
-                    dataGridViewTraducirControl.DataSource = BLL_Multilenguaje.Instancia.ObtenerTablaTraducciones(selectedIdioma.ID_Idioma);
-
-                    if (dataGridViewTraducirControl.Columns.Count > 0)
-                    {
-                        dataGridViewTraducirControl.Columns["id_Control"].ReadOnly = true;
-                        dataGridViewTraducirControl.Columns["nombre_control"].ReadOnly = true;
-                        dataGridViewTraducirControl.Columns["form"].ReadOnly = true;
-                        dataGridViewTraducirControl.Columns["texto"].ReadOnly = false;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cargar traducciones: " + ex.Message);
-            }
-        }
-
-        private void comboBoxIdioma_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var selectedIdioma = comboBoxIdioma.SelectedItem as BE_Idioma;
-            if (selectedIdioma != null)
-            {
-                BLL_Multilenguaje.Instancia.IdiomaActual = selectedIdioma;
-                CargarTraducciones();
-            }
-        }
-
-        private void buttonActivarIdioma_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var selectedIdioma = comboBoxIdioma.SelectedItem as BE_Idioma;
-                if (selectedIdioma != null)
-                {
-                    selectedIdioma.Agregado = true;
-                    BLL_Multilenguaje.Instancia.GuardarIdioma(selectedIdioma);
-                    MessageBox.Show("Idioma activado con éxito.");
-                    CargarIdiomas();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al activar idioma: " + ex.Message);
-            }
-        }
-
-        private void buttonDesactivarIdioma_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var selectedIdioma = comboBoxIdioma.SelectedItem as BE_Idioma;
-                if (selectedIdioma != null)
-                {
-                    selectedIdioma.Agregado = false;
-                    BLL_Multilenguaje.Instancia.GuardarIdioma(selectedIdioma);
-                    MessageBox.Show("Idioma desactivado con éxito.");
-                    CargarIdiomas();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al desactivar idioma: " + ex.Message);
-            }
-        }
-
-        private void buttonAgregarIdioma_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                string nombre = textBoxAgregarNombreIdioma.Text.Trim();
-                if (string.IsNullOrEmpty(nombre))
-                {
-                    MessageBox.Show("El nombre del idioma no puede estar vacío.");
-                    return;
-                }
-
-                BE_Idioma nuevo = new BE_Idioma();
-                nuevo.Nombre = nombre;
-                nuevo.Agregado = false; // Desactivado por defecto
-
-                BLL_Multilenguaje.Instancia.GuardarIdioma(nuevo);
-                textBoxAgregarNombreIdioma.Text = "";
-                MessageBox.Show("Idioma agregado con éxito. Active el idioma y traduzca sus controles.");
-                CargarIdiomas();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al agregar idioma: " + ex.Message);
-            }
-        }
-
-        private void buttonAplicarCambiosIdioma_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var selectedIdioma = comboBoxIdioma.SelectedItem as BE_Idioma;
-                if (selectedIdioma == null) return;
-
-                DataTable dt = dataGridViewTraducirControl.DataSource as DataTable;
-                if (dt != null)
-                {
-                    foreach (DataRow row in dt.Rows)
-                    {
-                        int idControl = Convert.ToInt32(row["id_Control"]);
-                        string texto = row["texto"].ToString();
-                        BLL_Multilenguaje.Instancia.GuardarTraduccion(selectedIdioma.ID_Idioma, idControl, texto);
-                    }
-                    MessageBox.Show("Traducciones aplicadas con éxito.");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al aplicar cambios: " + ex.Message);
-            }
-        }
-
+        // --- Traducción ---
         public void ActualizarLenguaje()
         {
             labelBienvenido.Text = BLL_Multilenguaje.Instancia.Traducir("labelBienvenido", "PanelAdmin");
-            labelUsuario.Text = BLL_Multilenguaje.Instancia.Traducir("labelUsuario", "PanelAdmin");
-            labelContraseña.Text = BLL_Multilenguaje.Instancia.Traducir("labelContrasena", "PanelAdmin");
-            buttonRegistrarUsuario.Text = BLL_Multilenguaje.Instancia.Traducir("buttonRegistrarUsuario", "PanelAdmin");
             buttonCerrarSesion.Text = BLL_Multilenguaje.Instancia.Traducir("buttonCerrarSesion", "PanelAdmin");
-            labelBitacora.Text = BLL_Multilenguaje.Instancia.Traducir("labelBitacora", "PanelAdmin");
-            btn_LimpiarBitacora.Text = BLL_Multilenguaje.Instancia.Traducir("btn_LimpiarBitacora", "PanelAdmin");
-            buttonBuscar.Text = BLL_Multilenguaje.Instancia.Traducir("buttonBuscar", "PanelAdmin");
-            labelFechaInicio.Text = BLL_Multilenguaje.Instancia.Traducir("labelFechaInicio", "PanelAdmin");
-            labelFechaFinal.Text = BLL_Multilenguaje.Instancia.Traducir("labelFechaFinal", "PanelAdmin");
-            labelNombredeusuario.Text = BLL_Multilenguaje.Instancia.Traducir("labelNombredeusuario", "PanelAdmin");
-            labelSelectUsuario.Text = BLL_Multilenguaje.Instancia.Traducir("labelSelectUsuario", "PanelAdmin");
-            labelTreePermisos.Text = BLL_Multilenguaje.Instancia.Traducir("labelTreePermisos", "PanelAdmin");
-            btnAsignar.Text = BLL_Multilenguaje.Instancia.Traducir("btnAsignar", "PanelAdmin");
-            btnQuitar.Text = BLL_Multilenguaje.Instancia.Traducir("btnQuitar", "PanelAdmin");
-            labelPermisosUsuario.Text = BLL_Multilenguaje.Instancia.Traducir("labelPermisosUsuario", "PanelAdmin");
-            labelControldecambios.Text = BLL_Multilenguaje.Instancia.Traducir("labelControldecambios", "PanelAdmin");
-            buttonRecomponerEstadoAnterior.Text = BLL_Multilenguaje.Instancia.Traducir("buttonRecomponerEstadoAnterior", "PanelAdmin");
-            buttonModificarUsuario.Text = BLL_Multilenguaje.Instancia.Traducir("buttonModificarUsuario", "PanelAdmin");
-            labelManejodeidiomas.Text = BLL_Multilenguaje.Instancia.Traducir("labelManejodeidiomas", "PanelAdmin");
-            labelIdioma.Text = BLL_Multilenguaje.Instancia.Traducir("labelIdioma", "PanelAdmin");
-            buttonActivarIdioma.Text = BLL_Multilenguaje.Instancia.Traducir("buttonActivarIdioma", "PanelAdmin");
-            buttonDesactivarIdioma.Text = BLL_Multilenguaje.Instancia.Traducir("buttonDesactivarIdioma", "PanelAdmin");
-            labelNombredelidioma.Text = BLL_Multilenguaje.Instancia.Traducir("labelNombredelidioma", "PanelAdmin");
-            buttonAgregarIdioma.Text = BLL_Multilenguaje.Instancia.Traducir("buttonAgregarIdioma", "PanelAdmin");
-            buttonAplicarCambiosIdioma.Text = BLL_Multilenguaje.Instancia.Traducir("buttonAplicarCambiosIdioma", "PanelAdmin");
             this.Text = BLL_Multilenguaje.Instancia.Traducir("PanelAdmin", "PanelAdmin");
 
             string tBtnActualizar = BLL_Multilenguaje.Instancia.Traducir("buttonActualizarIdiomaMostrar", "PanelAdmin");
             buttonActualizarIdiomaMostrar.Text = tBtnActualizar.StartsWith("[Default:") ? "Actualizar" : tBtnActualizar;
 
-            // Traducir TabPages con fallback a español si no están en base de datos de traducciones
+            // Traducir botones de navegación
             string tUsuarios = BLL_Multilenguaje.Instancia.Traducir("tabPageUsuarios", "PanelAdmin");
-            tabPageUsuarios.Text = tUsuarios.StartsWith("[Default:") ? "Usuarios y Permisos" : tUsuarios;
+            buttonAbrirUsuarios.Text = tUsuarios.StartsWith("[Default:") ? "Usuarios y Permisos" : tUsuarios;
 
             string tBitacora = BLL_Multilenguaje.Instancia.Traducir("tabPageBitacora", "PanelAdmin");
-            tabPageBitacora.Text = tBitacora.StartsWith("[Default:") ? "Bitácora" : tBitacora;
+            buttonAbrirBitacora.Text = tBitacora.StartsWith("[Default:") ? "Bitácora" : tBitacora;
 
             string tControlCambios = BLL_Multilenguaje.Instancia.Traducir("tabPageControlCambios", "PanelAdmin");
-            tabPageControlCambios.Text = tControlCambios.StartsWith("[Default:") ? "Control de Cambios" : tControlCambios;
+            buttonAbrirControlCambios.Text = tControlCambios.StartsWith("[Default:") ? "Control de Cambios" : tControlCambios;
 
             string tIdiomas = BLL_Multilenguaje.Instancia.Traducir("tabPageIdiomas", "PanelAdmin");
-            tabPageIdiomas.Text = tIdiomas.StartsWith("[Default:") ? "Idiomas" : tIdiomas;
-
-            // Traducir nuevos controles de control de cambios
-            if (labelSelectUsuarioCambio != null)
-            {
-                string tLblUsuarioCambio = BLL_Multilenguaje.Instancia.Traducir("labelSelectUsuarioCambio", "PanelAdmin");
-                labelSelectUsuarioCambio.Text = tLblUsuarioCambio.StartsWith("[Default:") ? "Usuario:" : tLblUsuarioCambio;
-
-                string tLblFechaInicio = BLL_Multilenguaje.Instancia.Traducir("labelFechaInicioCambio", "PanelAdmin");
-                labelFechaInicioCambio.Text = tLblFechaInicio.StartsWith("[Default:") ? "Desde:" : tLblFechaInicio;
-
-                string tLblFechaFin = BLL_Multilenguaje.Instancia.Traducir("labelFechaFinCambio", "PanelAdmin");
-                labelFechaFinCambio.Text = tLblFechaFin.StartsWith("[Default:") ? "Hasta:" : tLblFechaFin;
-
-                string tLblTipoCambio = BLL_Multilenguaje.Instancia.Traducir("labelTipoCambio", "PanelAdmin");
-                labelTipoCambio.Text = tLblTipoCambio.StartsWith("[Default:") ? "Tipo:" : tLblTipoCambio;
-
-                string tBtnFiltrar = BLL_Multilenguaje.Instancia.Traducir("btnFiltrarCambio", "PanelAdmin");
-                btnFiltrarCambio.Text = tBtnFiltrar.StartsWith("[Default:") ? "Filtrar" : tBtnFiltrar;
-
-                string tBtnLimpiar = BLL_Multilenguaje.Instancia.Traducir("btnLimpiarFiltrosCambio", "PanelAdmin");
-                btnLimpiarFiltrosCambio.Text = tBtnLimpiar.StartsWith("[Default:") ? "Limpiar" : tBtnLimpiar;
-                
-                CargarUsuariosCambios();
-            }
-
-            if (labelNuevoRol != null)
-            {
-                string tLblNuevoRol = BLL_Multilenguaje.Instancia.Traducir("labelNuevoRol", "PanelAdmin");
-                labelNuevoRol.Text = tLblNuevoRol.StartsWith("[Default:") ? "Nuevo Rol:" : tLblNuevoRol;
-
-                string tBtnCrearRol = BLL_Multilenguaje.Instancia.Traducir("buttonCrearRol", "PanelAdmin");
-                buttonCrearRol.Text = tBtnCrearRol.StartsWith("[Default:") ? "Crear" : tBtnCrearRol;
-
-                string tLblSelectRol = BLL_Multilenguaje.Instancia.Traducir("labelSelectRol", "PanelAdmin");
-                labelSelectRol.Text = tLblSelectRol.StartsWith("[Default:") ? "Editar Rol:" : tLblSelectRol;
-
-                string tBtnAsignarARol = BLL_Multilenguaje.Instancia.Traducir("btnAsignarARol", "PanelAdmin");
-                btnAsignarARol.Text = tBtnAsignarARol.StartsWith("[Default:") ? "Asig. Rol" : tBtnAsignarARol;
-
-                string tBtnQuitarDeRol = BLL_Multilenguaje.Instancia.Traducir("btnQuitarDeRol", "PanelAdmin");
-                btnQuitarDeRol.Text = tBtnQuitarDeRol.StartsWith("[Default:") ? "Quit. Rol" : tBtnQuitarDeRol;
-            }
-        }
-
-        private void CargarRoles()
-        {
-            var todos = bllPermiso.ObtenerTodos();
-            var roles = new System.Collections.Generic.List<BE_Componente>();
-            var permisosComunes = new System.Collections.Generic.List<BE_Componente>();
-
-            foreach(var c in todos)
-            {
-                if (c is BE_Rol) roles.Add(c);
-                permisosComunes.Add(c);
-            }
-
-            comboBoxRoles.SelectedIndexChanged -= comboBoxRoles_SelectedIndexChanged;
-            comboBoxRoles.DataSource = null;
-            comboBoxRoles.DataSource = roles;
-            comboBoxRoles.DisplayMember = "Nombre";
-            comboBoxRoles.SelectedIndexChanged += comboBoxRoles_SelectedIndexChanged;
-
-            comboBoxPermisosTodos.DataSource = null;
-            comboBoxPermisosTodos.DataSource = permisosComunes;
-            comboBoxPermisosTodos.DisplayMember = "Nombre";
-
-            if (roles.Count > 0)
-            {
-                comboBoxRoles.SelectedIndex = 0;
-            }
-            CargarPermisosRol();
-        }
-
-        private void comboBoxRoles_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            CargarPermisosRol();
-        }
-
-        private void CargarPermisosRol()
-        {
-            listBoxPermisosRol.Items.Clear();
-            var rol = comboBoxRoles.SelectedItem as BE_Componente;
-            if (rol != null)
-            {
-                var todos = bllPermiso.ObtenerTodos();
-                BE_Componente rolActualizado = null;
-                foreach(var c in todos)
-                {
-                    if (c.ID_Componente == rol.ID_Componente)
-                    {
-                        rolActualizado = c;
-                        break;
-                    }
-                }
-                if (rolActualizado != null)
-                {
-                    foreach (var h in rolActualizado.Hijos)
-                    {
-                        listBoxPermisosRol.Items.Add(h);
-                    }
-                }
-            }
-        }
-
-        private void buttonCrearRol_Click(object sender, EventArgs e)
-        {
-            string nombreRol = textBoxNuevoRol.Text.Trim();
-            if (string.IsNullOrEmpty(nombreRol)) return;
-
-            var comp = new BE_Rol { Nombre = nombreRol };
-            bllPermiso.GuardarComponente(comp);
-            MessageBox.Show("Rol creado con éxito.");
-            textBoxNuevoRol.Text = "";
-            CargarArbolPermisos();
-            CargarRoles();
-        }
-
-        private void btnAsignarARol_Click(object sender, EventArgs e)
-        {
-            var rol = comboBoxRoles.SelectedItem as BE_Componente;
-            var permiso = comboBoxPermisosTodos.SelectedItem as BE_Componente;
-            if (rol == null || permiso == null) return;
-
-            if (permiso.ID_Componente == rol.ID_Componente)
-            {
-                MessageBox.Show("No puede asignarse un rol a sí mismo.");
-                return;
-            }
-
-            var todos = bllPermiso.ObtenerTodos();
-            BE_Componente rolActual = null;
-            BE_Componente permisoCompleto = null;
-            foreach(var c in todos) 
-            { 
-                if (c.ID_Componente == rol.ID_Componente) rolActual = c; 
-                if (c.ID_Componente == permiso.ID_Componente) permisoCompleto = c;
-            }
-            if (rolActual == null || permisoCompleto == null) return;
-
-            foreach(var h in rolActual.Hijos)
-            {
-                if (h.ID_Componente == permiso.ID_Componente)
-                {
-                    MessageBox.Show("El rol ya tiene este permiso.");
-                    return;
-                }
-            }
-
-            // Verificar circularidad: el rolActual no puede estar dentro del permiso (si es que el permiso es un Composite)
-            if (permisoCompleto.Contiene(rolActual.ID_Componente))
-            {
-                MessageBox.Show("No se puede asignar porque generaría una referencia circular.");
-                return;
-            }
-
-            rolActual.Hijos.Add(permiso);
-            bllPermiso.GuardarComponente(rolActual);
-            CargarArbolPermisos();
-            CargarPermisosRol();
-            
-            var u = BLL_GestorDeSesion.Instancia.UsuarioActual;
-            if (u != null) BLLBitacora.RegistrarBitacora(u.ID_Usuario, u.Nombre, "Roles", $"Asignó permiso '{permiso.Nombre}' al rol '{rolActual.Nombre}'", DateTime.Now);
-            EnlazarBitacora();
-            ConfigurarPermisos();
-        }
-
-        private void btnQuitarDeRol_Click(object sender, EventArgs e)
-        {
-            var rol = comboBoxRoles.SelectedItem as BE_Componente;
-            var permiso = listBoxPermisosRol.SelectedItem as BE_Componente;
-            if (rol == null || permiso == null) return;
-
-            var todos = bllPermiso.ObtenerTodos();
-            BE_Componente rolActual = null;
-            foreach(var c in todos) { if (c.ID_Componente == rol.ID_Componente) rolActual = c; }
-            if (rolActual == null) return;
-
-            BE_Componente aRemover = null;
-            foreach(var h in rolActual.Hijos)
-            {
-                if (h.ID_Componente == permiso.ID_Componente) aRemover = h;
-            }
-
-            if (aRemover != null)
-            {
-                rolActual.Hijos.Remove(aRemover);
-                bllPermiso.GuardarComponente(rolActual);
-                CargarArbolPermisos();
-                CargarPermisosRol();
-
-                var u = BLL_GestorDeSesion.Instancia.UsuarioActual;
-                if (u != null) BLLBitacora.RegistrarBitacora(u.ID_Usuario, u.Nombre, "Roles", $"Quitó permiso '{permiso.Nombre}' al rol '{rolActual.Nombre}'", DateTime.Now);
-                EnlazarBitacora();
-                ConfigurarPermisos();
-            }
-        }
-
-        private void comboBoxTipoCambio_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            FiltrarControlCambios();
-        }
-
-        private void CargarUsuariosCambios()
-        {
-            try
-            {
-                comboBoxUsuarioCambio.SelectedIndexChanged -= comboBoxUsuarioCambio_SelectedIndexChanged;
-
-                int idSeleccionado = 0;
-                if (comboBoxUsuarioCambio.SelectedItem is BE_Usuario prevSelected)
-                {
-                    idSeleccionado = prevSelected.ID_Usuario;
-                }
-
-                var usuarios = BLLusuario.ObtenerUsuarios();
-                List<BE_Usuario> listaUsuarios = new List<BE_Usuario>();
-
-                BE_Usuario todos = new BE_Usuario();
-                todos.ID_Usuario = 0;
-                string txtTodos = BLL_Multilenguaje.Instancia.Traducir("Todos", "PanelAdmin");
-                todos.Nombre = txtTodos.StartsWith("[Default:") ? "Todos" : txtTodos;
-
-                listaUsuarios.Add(todos);
-                listaUsuarios.AddRange(usuarios);
-
-                comboBoxUsuarioCambio.DataSource = null;
-                comboBoxUsuarioCambio.DataSource = listaUsuarios;
-                comboBoxUsuarioCambio.DisplayMember = "Nombre";
-
-                if (idSeleccionado > 0)
-                {
-                    var found = listaUsuarios.FirstOrDefault(u => u.ID_Usuario == idSeleccionado);
-                    if (found != null)
-                    {
-                        comboBoxUsuarioCambio.SelectedItem = found;
-                    }
-                    else
-                    {
-                        comboBoxUsuarioCambio.SelectedIndex = 0;
-                    }
-                }
-                else
-                {
-                    comboBoxUsuarioCambio.SelectedIndex = 0;
-                }
-
-                comboBoxUsuarioCambio.SelectedIndexChanged += comboBoxUsuarioCambio_SelectedIndexChanged;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cargar usuarios en control de cambios: " + ex.Message);
-            }
-        }
-
-        private void FiltrarControlCambios()
-        {
-            try
-            {
-                dataGridViewControldecambios.DataSource = null;
-                if (comboBoxUsuarioCambio.SelectedItem == null) return;
-
-                var usuarioSelected = comboBoxUsuarioCambio.SelectedItem as BE_Usuario;
-                if (usuarioSelected != null)
-                {
-                    BLL_UsuarioCambio bllCambio = new BLL_UsuarioCambio();
-                    var listaCambios = bllCambio.ObtenerCambiosUsuario(usuarioSelected.ID_Usuario);
-
-                    DateTime fechaInicio = dateTimePickerInicioCambio.Value.Date;
-                    DateTime fechaFin = dateTimePickerFinCambio.Value.Date.AddDays(1).AddTicks(-1);
-                    string tipoSeleccionado = comboBoxTipoCambio.SelectedItem?.ToString() ?? "Todos";
-
-                    var consulta = listaCambios.AsEnumerable();
-
-                    // Filtrar por rango de fechas
-                    consulta = consulta.Where(c => c.Fecha >= fechaInicio && c.Fecha <= fechaFin);
-
-                    // Filtrar por Tipo de Cambio
-                    if (tipoSeleccionado != "Todos")
-                    {
-                        if (tipoSeleccionado == "Recomposicion")
-                        {
-                            consulta = consulta.Where(c => c.Tipo_Cambio != null && c.Tipo_Cambio.Contains("Recomposicion"));
-                        }
-                        else
-                        {
-                            consulta = consulta.Where(c => c.Tipo_Cambio != null && c.Tipo_Cambio.Equals(tipoSeleccionado, StringComparison.OrdinalIgnoreCase));
-                        }
-                    }
-
-                    dataGridViewControldecambios.DataSource = consulta.ToList();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al filtrar el control de cambios: " + ex.Message);
-            }
-        }
-
-        private void comboBoxUsuarioCambio_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            FiltrarControlCambios();
-        }
-
-        private void btnFiltrarCambio_Click(object sender, EventArgs e)
-        {
-            FiltrarControlCambios();
-        }
-
-        private void btnLimpiarFiltrosCambio_Click(object sender, EventArgs e)
-        {
-            dateTimePickerInicioCambio.Value = DateTime.Now.AddDays(-30);
-            dateTimePickerFinCambio.Value = DateTime.Now;
-            comboBoxTipoCambio.SelectedIndex = 0;
-            comboBoxUsuarioCambio.SelectedIndex = 0;
-            FiltrarControlCambios();
+            buttonAbrirIdiomas.Text = tIdiomas.StartsWith("[Default:") ? "Idiomas" : tIdiomas;
         }
     }
 }

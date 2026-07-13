@@ -52,6 +52,30 @@
     <Compile Include="Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormUsuarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormUsuarios.Designer.cs">
+      <DependentUpon>FormUsuarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBitacora.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBitacora.Designer.cs">
+      <DependentUpon>FormBitacora.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormControlCambios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormControlCambios.Designer.cs">
+      <DependentUpon>FormControlCambios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormIdiomas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormIdiomas.Designer.cs">
+      <DependentUpon>FormIdiomas.cs</DependentUpon>
+    </Compile>
     <Compile Include="PanelAdmin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,6 +86,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormUsuarios.resx">
+      <DependentUpon>FormUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBitacora.resx">
+      <DependentUpon>FormBitacora.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormControlCambios.resx">
+      <DependentUpon>FormControlCambios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormIdiomas.resx">
+      <DependentUpon>FormIdiomas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PanelAdmin.resx">
       <DependentUpon>PanelAdmin.cs</DependentUpon>
