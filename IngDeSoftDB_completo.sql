@@ -123,10 +123,16 @@ GO
 -- SEED DATA
 -- ===================================================================
 
+-- Data for Idioma
+INSERT INTO [Idioma] ([id_Idioma], [Nombre], [Agregado]) VALUES (1, 'Espanol', 1);
+INSERT INTO [Idioma] ([id_Idioma], [Nombre], [Agregado]) VALUES (2, 'Ingles', 1);
+GO
+
 -- Data for Usuarios
 SET IDENTITY_INSERT [Usuarios] ON;
-INSERT INTO [Usuarios] ([id_Usuario], [nombre], [password], [DigVerH]) VALUES (1, 'admin', '3pQQAVt/op6AR9q4Aju4z8AjVMU1pmo9fg//hv+O97Cs9z7X', '469413ea0f4291ef9f463c0bd5350824bd37752881e9bbd93a3efcd51b1ecaf8');
-INSERT INTO [Usuarios] ([id_Usuario], [nombre], [password], [DigVerH]) VALUES (2, 'user', 'G/5pk0OyXlYg7BPNn227bwEniH4DD5nPx+3cq1/tKnvM8UcH', '74ea2d8c3ccf635636e53ba0a9a427535aa4f106a647a5f73448373a3c78e018');
+INSERT INTO [Usuarios] ([id_Usuario], [nombre], [password], [DigVerH], [id_Idioma]) VALUES (1, 'admin', '3pQQAVt/op6AR9q4Aju4z8AjVMU1pmo9fg//hv+O97Cs9z7X', '246d0ba2a540082c7e8c37d2eaa8704715f482a36df489469031ddcb8b951b51', 1);
+INSERT INTO [Usuarios] ([id_Usuario], [nombre], [password], [DigVerH], [id_Idioma]) VALUES (2, 'user', 'G/5pk0OyXlYg7BPNn227bwEniH4DD5nPx+3cq1/tKnvM8UcH', 'e2cbead399ea8f181ef3acb32feea595b6fda59873a0c1053d39be8a9bc10a46', 1);
+INSERT INTO [Usuarios] ([id_Usuario], [nombre], [password], [DigVerH], [id_Idioma]) VALUES (3, 'user2', '8+WH7YYEjN8571XtrHmhePR2dNfAnDZyacDzBXo56GvecXX8', '997c7d4efb3995258792ac4a3cb53995b2342a2cc9516931f855100760da9680', 1);
 SET IDENTITY_INSERT [Usuarios] OFF;
 GO
 
@@ -138,19 +144,26 @@ INSERT INTO [Componentes] ([id_Componente], [nombre], [tipo]) VALUES (3, 'Regist
 INSERT INTO [Componentes] ([id_Componente], [nombre], [tipo]) VALUES (4, 'Gestionar Permisos', 'Hoja');
 INSERT INTO [Componentes] ([id_Componente], [nombre], [tipo]) VALUES (5, 'Rol Admin', 'Composite');
 INSERT INTO [Componentes] ([id_Componente], [nombre], [tipo]) VALUES (6, 'Rol Usuario', 'Composite');
+INSERT INTO [Componentes] ([id_Componente], [nombre], [tipo]) VALUES (7, 'Ver control de cambios', 'Hoja');
+INSERT INTO [Componentes] ([id_Componente], [nombre], [tipo]) VALUES (8, 'Gestionar idiomas', 'Hoja');
+INSERT INTO [Componentes] ([id_Componente], [nombre], [tipo]) VALUES (9, 'prueba', 'Composite');
 SET IDENTITY_INSERT [Componentes] OFF;
 GO
 
 -- Data for Componente_Relacion
-INSERT INTO [Componente_Relacion] ([id_Padre], [id_Hijo]) VALUES (5, 1);
 INSERT INTO [Componente_Relacion] ([id_Padre], [id_Hijo]) VALUES (5, 2);
 INSERT INTO [Componente_Relacion] ([id_Padre], [id_Hijo]) VALUES (5, 3);
 INSERT INTO [Componente_Relacion] ([id_Padre], [id_Hijo]) VALUES (5, 4);
+INSERT INTO [Componente_Relacion] ([id_Padre], [id_Hijo]) VALUES (5, 6);
+INSERT INTO [Componente_Relacion] ([id_Padre], [id_Hijo]) VALUES (5, 7);
+INSERT INTO [Componente_Relacion] ([id_Padre], [id_Hijo]) VALUES (5, 8);
 INSERT INTO [Componente_Relacion] ([id_Padre], [id_Hijo]) VALUES (6, 1);
 GO
 
 -- Data for Usuario_Componente
 INSERT INTO [Usuario_Componente] ([id_Usuario], [id_Componente]) VALUES (1, 5);
+INSERT INTO [Usuario_Componente] ([id_Usuario], [id_Componente]) VALUES (2, 6);
+INSERT INTO [Usuario_Componente] ([id_Usuario], [id_Componente]) VALUES (3, 5);
 GO
 
 -- Data for Bitacora
@@ -186,6 +199,87 @@ INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [us
 INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (29, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-06-10 21:22:35.820');
 INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (30, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-06-10 21:22:42.653');
 INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (31, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-06-10 21:23:06.840');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (32, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-13 10:53:55.633');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (33, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-07-13 10:54:08.020');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (34, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-13 10:54:41.050');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (35, 1, 'Recomponer', 'Recompuso al usuario ''user'' a version 3', 'admin', '2026-07-13 10:55:14.960');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (36, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-07-13 10:55:16.243');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (37, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-13 10:55:25.840');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (38, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-07-13 10:55:41.430');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (39, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-13 11:27:24.323');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (40, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-13 11:50:29.347');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (41, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-07-13 11:50:31.093');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (42, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-13 11:50:45.583');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (43, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-13 12:21:27.053');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (44, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-07-13 12:27:55.193');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (45, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-13 12:28:27.327');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (46, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-13 12:34:19.013');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (47, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-07-13 12:34:36.737');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (48, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-13 12:34:47.517');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (49, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-07-13 12:34:54.717');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (50, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-13 12:35:14.537');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (51, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-13 12:36:25.540');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (52, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-15 16:16:32.083');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (53, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-07-15 16:16:37.163');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (54, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-15 16:20:20.863');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (55, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-07-15 16:20:25.067');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (56, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-15 16:22:16.010');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (57, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-07-15 16:22:22.363');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (58, 2, 'Login', 'El usuario ha inicado sesion', 'user', '2026-07-15 16:23:41.620');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (59, 2, 'Logout', 'El administrador ha cerrado sesion', 'user', '2026-07-15 16:23:46.923');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (60, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-15 16:23:58.943');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (61, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-15 16:24:32.203');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (62, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-07-15 16:24:37.297');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (63, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-15 16:25:11.823');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (64, 1, 'Recomponer', 'Recompuso al usuario ''user'' a version 3', 'admin', '2026-07-15 16:25:51.790');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (65, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-15 16:26:17.140');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (66, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-15 16:28:21.913');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (67, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-15 16:30:35.197');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (68, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-15 16:54:06.860');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (69, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-07-15 17:01:09.287');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (70, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-15 17:05:26.747');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (71, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-07-15 17:06:08.557');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (72, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-15 17:09:54.550');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (73, 1, 'Permisos', 'El administrador asigno el permiso ''Rol Usuario'' al usuario ''user''', 'admin', '2026-07-15 17:15:44.677');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (74, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-15 18:08:02.083');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (75, 1, 'Registro', 'El administrador ha creado un nuevo usuario', 'admin', '2026-07-15 18:08:10.753');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (76, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-07-15 18:08:24.463');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (77, 3, 'Login', 'El usuario ha inicado sesion', 'user2', '2026-07-15 18:08:33.923');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (78, 3, 'Logout', 'El administrador ha cerrado sesion', 'user2', '2026-07-15 18:08:36.920');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (79, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-15 18:08:40.643');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (80, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-07-15 18:08:41.887');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1052, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-15 22:31:29.293');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1053, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-15 22:31:51.973');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1054, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-07-15 22:31:53.957');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1055, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-15 22:32:41.037');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1056, 1, 'Recomponer', 'Recompuso al usuario ''user'' a version 3', 'admin', '2026-07-15 22:32:57.183');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1057, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-07-15 22:32:59.910');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1058, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-15 22:33:02.583');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1059, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-07-15 22:33:09.800');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1060, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-15 22:34:06.090');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1061, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-15 22:39:28.153');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1062, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-16 01:06:25.270');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1063, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-07-16 01:06:42.300');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1064, 3, 'Login', 'El usuario ha inicado sesion', 'user2', '2026-07-16 01:06:45.497');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1065, 3, 'Logout', 'El administrador ha cerrado sesion', 'user2', '2026-07-16 01:06:49.183');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1066, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-16 01:06:51.717');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1067, 1, 'Permisos', 'El administrador asigno el permiso ''Rol Usuario'' al usuario ''user2''', 'admin', '2026-07-16 01:06:57.857');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1068, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-07-16 01:07:00.610');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1069, 3, 'Login', 'El usuario ha inicado sesion', 'user2', '2026-07-16 01:07:03.143');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1070, 3, 'Logout', 'El administrador ha cerrado sesion', 'user2', '2026-07-16 01:07:06.997');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1071, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-16 01:07:09.827');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1072, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-07-16 01:07:56.807');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1073, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-16 01:08:22.840');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1074, 1, 'Roles', 'Asigno permiso ''Ver Bitacora'' al rol ''prueba''', 'admin', '2026-07-16 01:08:38.033');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1075, 1, 'Roles', 'Quito permiso ''Ver Bitacora'' al rol ''prueba''', 'admin', '2026-07-16 01:08:43.343');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1076, 1, 'Roles', 'Asigno permiso ''Ver Bitacora'' al rol ''Rol Admin''', 'admin', '2026-07-16 01:08:45.147');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1077, 1, 'Logout', 'El administrador ha cerrado sesion', 'admin', '2026-07-16 01:09:12.413');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1078, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-16 02:36:15.040');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1079, 1, 'Permisos', 'El administrador removio el permiso ''Rol Usuario'' al usuario ''user2''', 'admin', '2026-07-16 02:36:21.660');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1080, 1, 'Permisos', 'El administrador asigno el permiso ''Rol Admin'' al usuario ''user2''', 'admin', '2026-07-16 02:40:16.717');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1081, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-16 03:36:16.533');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1082, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-16 03:36:46.943');
+INSERT INTO [Bitacora] ([id_Bitacora], [id_Usuario], [actividad], [detalle], [username], [fechaHora]) VALUES (1083, 1, 'Login', 'El usuario ha inicado sesion', 'admin', '2026-07-16 03:38:26.153');
 SET IDENTITY_INSERT [Bitacora] OFF;
 GO
 
@@ -194,12 +288,11 @@ SET IDENTITY_INSERT [Usuario_Cambios] ON;
 INSERT INTO [Usuario_Cambios] ([id_Cambio], [id_Usuario], [version], [nombre], [password], [fecha], [modificado_por], [tipo_cambio]) VALUES (1, 2, 1, 'user', 'G/5pk0OyXlYg7BPNn227bwEniH4DD5nPx+3cq1/tKnvM8UcH', '2026-06-10 19:39:14.463', 'admin', 'Registro');
 INSERT INTO [Usuario_Cambios] ([id_Cambio], [id_Usuario], [version], [nombre], [password], [fecha], [modificado_por], [tipo_cambio]) VALUES (2, 2, 2, 'user', 'exY0Ldk2WMVdT4UOCswV4ckH1gtNT1lRIDCvrWJTiTYv2BBd', '2026-06-10 19:42:58.930', 'admin', 'Modificacion');
 INSERT INTO [Usuario_Cambios] ([id_Cambio], [id_Usuario], [version], [nombre], [password], [fecha], [modificado_por], [tipo_cambio]) VALUES (3, 2, 3, 'user', 'G/5pk0OyXlYg7BPNn227bwEniH4DD5nPx+3cq1/tKnvM8UcH', '2026-06-10 19:44:51.940', 'admin', 'Recomposicion (v1)');
+INSERT INTO [Usuario_Cambios] ([id_Cambio], [id_Usuario], [version], [nombre], [password], [fecha], [modificado_por], [tipo_cambio]) VALUES (4, 2, 4, 'user', 'G/5pk0OyXlYg7BPNn227bwEniH4DD5nPx+3cq1/tKnvM8UcH', '2026-07-13 10:55:14.320', 'admin', 'Recomposicion (v3)');
+INSERT INTO [Usuario_Cambios] ([id_Cambio], [id_Usuario], [version], [nombre], [password], [fecha], [modificado_por], [tipo_cambio]) VALUES (5, 2, 5, 'user', 'G/5pk0OyXlYg7BPNn227bwEniH4DD5nPx+3cq1/tKnvM8UcH', '2026-07-15 16:25:50.930', 'admin', 'Recomposicion (v3)');
+INSERT INTO [Usuario_Cambios] ([id_Cambio], [id_Usuario], [version], [nombre], [password], [fecha], [modificado_por], [tipo_cambio]) VALUES (6, 3, 1, 'user2', '8+WH7YYEjN8571XtrHmhePR2dNfAnDZyacDzBXo56GvecXX8', '2026-07-15 18:08:10.067', 'admin', 'Registro');
+INSERT INTO [Usuario_Cambios] ([id_Cambio], [id_Usuario], [version], [nombre], [password], [fecha], [modificado_por], [tipo_cambio]) VALUES (1005, 2, 6, 'user', 'G/5pk0OyXlYg7BPNn227bwEniH4DD5nPx+3cq1/tKnvM8UcH', '2026-07-15 22:32:56.450', 'admin', 'Recomposicion (v3)');
 SET IDENTITY_INSERT [Usuario_Cambios] OFF;
-GO
-
--- Data for Idioma
-INSERT INTO [Idioma] ([id_Idioma], [Nombre], [Agregado]) VALUES (1, 'Espanol', 1);
-INSERT INTO [Idioma] ([id_Idioma], [Nombre], [Agregado]) VALUES (2, 'Ingles', 1);
 GO
 
 -- Data for Control
@@ -346,7 +439,7 @@ INSERT INTO [Traduccion] ([id_Traduccion], [id_Idioma], [id_Control], [texto]) V
 GO
 
 -- Data for IntegridadDigVefV
-INSERT INTO [IntegridadDigVefV] ([id_Tabla], [nombreTabla], [hashVertical]) VALUES (1, 'Usuarios', '633f542b46ddc6c18cfb11bcbc01dd3e4d6ee0e46bf5e396beb408b0c35ee5d0');
+INSERT INTO [IntegridadDigVefV] ([id_Tabla], [nombreTabla], [hashVertical]) VALUES (1, 'Usuarios', '0af7411f16b767dcbe569d33e2b5d99a9c97e625dd043f283d56f9e60dd2d0eb');
 GO
 
 -- ===================================================================
@@ -450,14 +543,14 @@ GO
 	BEGIN
 		IF OBJECT_ID(N'dbo.sysdiagrams') IS NOT NULL
 			return 0;
-	
+
 		CREATE TABLE dbo.sysdiagrams
 		(
 			name sysname NOT NULL,
 			principal_id int NOT NULL,	-- we may change it to varbinary(85)
 			diagram_id int PRIMARY KEY IDENTITY,
 			version int,
-	
+
 			definition varbinary(max)
 			CONSTRAINT UK_principal_name UNIQUE
 			(
@@ -489,21 +582,21 @@ GO
 				[version],
 				[definition]
 			)
-			select	 
+			select
 				convert(sysname, dgnm.[uvalue]),
 				DATABASE_PRINCIPAL_ID(N'dbo'),			-- will change to the sid of sa
 				0,							-- zero for old format, dgdef.[version],
 				dgdef.[lvalue]
 			from dbo.[dtproperties] dgnm
-				inner join dbo.[dtproperties] dggd on dggd.[property] = 'DtgSchemaGUID' and dggd.[objectid] = dgnm.[objectid]	
+				inner join dbo.[dtproperties] dggd on dggd.[property] = 'DtgSchemaGUID' and dggd.[objectid] = dgnm.[objectid]
 				inner join dbo.[dtproperties] dgdef on dgdef.[property] = 'DtgSchemaDATA' and dgdef.[objectid] = dgnm.[objectid]
-				
-			where dgnm.[property] = 'DtgSchemaNAME' and dggd.[uvalue] like N'_EA3E6268-D998-11CE-9454-00AA00A3F36E_' 
+
+			where dgnm.[property] = 'DtgSchemaNAME' and dggd.[uvalue] like N'_EA3E6268-D998-11CE-9454-00AA00A3F36E_'
 			return 2;
 		end
 		return 1;
 	END
-	
+
 GO
 
 IF OBJECT_ID('dbo.sp_helpdiagrams', 'P') IS NOT NULL DROP PROCEDURE dbo.sp_helpdiagrams;
@@ -538,7 +631,7 @@ GO
 		ORDER BY
 			4, 5, 1
 	END
-	
+
 GO
 
 IF OBJECT_ID('dbo.sp_helpdiagramdefinition', 'P') IS NOT NULL DROP PROCEDURE dbo.sp_helpdiagramdefinition;
@@ -547,7 +640,7 @@ GO
 	CREATE PROCEDURE dbo.sp_helpdiagramdefinition
 	(
 		@diagramname 	sysname,
-		@owner_id	int	= null 		
+		@owner_id	int	= null
 	)
 	WITH EXECUTE AS N'dbo'
 	AS
@@ -558,20 +651,20 @@ GO
 		declare @IsDbo 		int
 		declare @DiagId		int
 		declare @UIDFound	int
-	
+
 		if(@diagramname is null)
 		begin
 			RAISERROR (N'E_INVALIDARG', 16, 1);
 			return -1
 		end
-	
+
 		execute as caller;
 		select @theId = DATABASE_PRINCIPAL_ID();
 		select @IsDbo = IS_MEMBER(N'db_owner');
 		if(@owner_id is null)
 			select @owner_id = @theId;
-		revert; 
-	
+		revert;
+
 		select @DiagId = diagram_id, @UIDFound = principal_id from dbo.sysdiagrams where principal_id = @owner_id and name = @diagramname;
 		if(@DiagId IS NULL or (@IsDbo = 0 and @UIDFound <> @theId ))
 		begin
@@ -579,10 +672,10 @@ GO
 			return -3
 		end
 
-		select version, definition FROM dbo.sysdiagrams where diagram_id = @DiagId ; 
+		select version, definition FROM dbo.sysdiagrams where diagram_id = @DiagId ;
 		return 0
 	END
-	
+
 GO
 
 IF OBJECT_ID('dbo.sp_creatediagram', 'P') IS NOT NULL DROP PROCEDURE dbo.sp_creatediagram;
@@ -591,7 +684,7 @@ GO
 	CREATE PROCEDURE dbo.sp_creatediagram
 	(
 		@diagramname 	sysname,
-		@owner_id		int	= null, 	
+		@owner_id		int	= null,
 		@version 		int,
 		@definition 	varbinary(max)
 	)
@@ -599,7 +692,7 @@ GO
 	AS
 	BEGIN
 		set nocount on
-	
+
 		declare @theId int
 		declare @retval int
 		declare @IsDbo	int
@@ -609,12 +702,12 @@ GO
 			RAISERROR (N'E_INVALIDARG', 16, 1);
 			return -1
 		end
-	
+
 		execute as caller;
-		select @theId = DATABASE_PRINCIPAL_ID(); 
+		select @theId = DATABASE_PRINCIPAL_ID();
 		select @IsDbo = IS_MEMBER(N'db_owner');
-		revert; 
-		
+		revert;
+
 		if @owner_id is null
 		begin
 			select @owner_id = @theId;
@@ -637,14 +730,14 @@ GO
 			RAISERROR ('The name is already used.', 16, 1);
 			return -2
 		end
-	
+
 		insert into dbo.sysdiagrams(name, principal_id , version, definition)
 				VALUES(@diagramname, @theId, @version, @definition) ;
-		
-		select @retval = @@IDENTITY 
+
+		select @retval = @@IDENTITY
 		return @retval
 	END
-	
+
 GO
 
 IF OBJECT_ID('dbo.sp_renamediagram', 'P') IS NOT NULL DROP PROCEDURE dbo.sp_renamediagram;
@@ -655,7 +748,7 @@ GO
 		@diagramname 		sysname,
 		@owner_id		int	= null,
 		@new_diagramname	sysname
-	
+
 	)
 	WITH EXECUTE AS 'dbo'
 	AS
@@ -663,7 +756,7 @@ GO
 		set nocount on
 		declare @theId 			int
 		declare @IsDbo 			int
-		
+
 		declare @UIDFound 		int
 		declare @DiagId			int
 		declare @DiagIdTarg		int
@@ -673,44 +766,44 @@ GO
 			RAISERROR ('Invalid value', 16, 1);
 			return -1
 		end
-	
+
 		EXECUTE AS CALLER;
 		select @theId = DATABASE_PRINCIPAL_ID();
-		select @IsDbo = IS_MEMBER(N'db_owner'); 
+		select @IsDbo = IS_MEMBER(N'db_owner');
 		if(@owner_id is null)
 			select @owner_id = @theId;
 		REVERT;
-	
+
 		select @u_name = USER_NAME(@owner_id)
-	
-		select @DiagId = diagram_id, @UIDFound = principal_id from dbo.sysdiagrams where principal_id = @owner_id and name = @diagramname 
+
+		select @DiagId = diagram_id, @UIDFound = principal_id from dbo.sysdiagrams where principal_id = @owner_id and name = @diagramname
 		if(@DiagId IS NULL or (@IsDbo = 0 and @UIDFound <> @theId))
 		begin
 			RAISERROR ('Diagram does not exist or you do not have permission.', 16, 1)
 			return -3
 		end
-	
+
 		-- if((@u_name is not null) and (@new_diagramname = @diagramname))	-- nothing will change
 		--	return 0;
-	
+
 		if(@u_name is null)
 			select @DiagIdTarg = diagram_id from dbo.sysdiagrams where principal_id = @theId and name = @new_diagramname
 		else
 			select @DiagIdTarg = diagram_id from dbo.sysdiagrams where principal_id = @owner_id and name = @new_diagramname
-	
+
 		if((@DiagIdTarg is not null) and  @DiagId <> @DiagIdTarg)
 		begin
 			RAISERROR ('The name is already used.', 16, 1);
 			return -2
-		end		
-	
+		end
+
 		if(@u_name is null)
 			update dbo.sysdiagrams set [name] = @new_diagramname, principal_id = @theId where diagram_id = @DiagId
 		else
 			update dbo.sysdiagrams set [name] = @new_diagramname where diagram_id = @DiagId
 		return 0
 	END
-	
+
 GO
 
 IF OBJECT_ID('dbo.sp_alterdiagram', 'P') IS NOT NULL DROP PROCEDURE dbo.sp_alterdiagram;
@@ -727,37 +820,37 @@ GO
 	AS
 	BEGIN
 		set nocount on
-	
+
 		declare @theId 			int
 		declare @retval 		int
 		declare @IsDbo 			int
-		
+
 		declare @UIDFound 		int
 		declare @DiagId			int
 		declare @ShouldChangeUID	int
-	
+
 		if(@diagramname is null)
 		begin
 			RAISERROR ('Invalid ARG', 16, 1)
 			return -1
 		end
-	
+
 		execute as caller;
-		select @theId = DATABASE_PRINCIPAL_ID();	 
-		select @IsDbo = IS_MEMBER(N'db_owner'); 
+		select @theId = DATABASE_PRINCIPAL_ID();
+		select @IsDbo = IS_MEMBER(N'db_owner');
 		if(@owner_id is null)
 			select @owner_id = @theId;
 		revert;
-	
+
 		select @ShouldChangeUID = 0
-		select @DiagId = diagram_id, @UIDFound = principal_id from dbo.sysdiagrams where principal_id = @owner_id and name = @diagramname 
-		
+		select @DiagId = diagram_id, @UIDFound = principal_id from dbo.sysdiagrams where principal_id = @owner_id and name = @diagramname
+
 		if(@DiagId IS NULL or (@IsDbo = 0 and @theId <> @UIDFound))
 		begin
 			RAISERROR ('Diagram does not exist or you do not have permission.', 16, 1);
 			return -3
 		end
-	
+
 		if(@IsDbo <> 0)
 		begin
 			if(@UIDFound is null or USER_NAME(@UIDFound) is null) -- invalid principal_id
@@ -766,7 +859,7 @@ GO
 			end
 		end
 
-		-- update dds data			
+		-- update dds data
 		update dbo.sysdiagrams set definition = @definition where diagram_id = @DiagId ;
 
 		-- change owner
@@ -779,7 +872,7 @@ GO
 
 		return 0
 	END
-	
+
 GO
 
 IF OBJECT_ID('dbo.sp_dropdiagram', 'P') IS NOT NULL DROP PROCEDURE dbo.sp_dropdiagram;
@@ -796,35 +889,35 @@ GO
 		set nocount on
 		declare @theId 			int
 		declare @IsDbo 			int
-		
+
 		declare @UIDFound 		int
 		declare @DiagId			int
-	
+
 		if(@diagramname is null)
 		begin
 			RAISERROR ('Invalid value', 16, 1);
 			return -1
 		end
-	
+
 		EXECUTE AS CALLER;
 		select @theId = DATABASE_PRINCIPAL_ID();
-		select @IsDbo = IS_MEMBER(N'db_owner'); 
+		select @IsDbo = IS_MEMBER(N'db_owner');
 		if(@owner_id is null)
 			select @owner_id = @theId;
-		REVERT; 
-		
-		select @DiagId = diagram_id, @UIDFound = principal_id from dbo.sysdiagrams where principal_id = @owner_id and name = @diagramname 
+		REVERT;
+
+		select @DiagId = diagram_id, @UIDFound = principal_id from dbo.sysdiagrams where principal_id = @owner_id and name = @diagramname
 		if(@DiagId IS NULL or (@IsDbo = 0 and @UIDFound <> @theId))
 		begin
 			RAISERROR ('Diagram does not exist or you do not have permission.', 16, 1)
 			return -3
 		end
-	
+
 		delete from dbo.sysdiagrams where diagram_id = @DiagId;
-	
+
 		return 0;
 	END
-	
+
 GO
 
 IF OBJECT_ID('dbo.SP_InsertarBitacora', 'P') IS NOT NULL DROP PROCEDURE dbo.SP_InsertarBitacora;
@@ -837,7 +930,7 @@ CREATE PROCEDURE [dbo].[SP_InsertarBitacora]
 	@FechaHora DATETIME
 AS
 BEGIN
-    INSERT INTO Bitacora (id_Usuario, username, actividad, detalle, fechaHora) 
+    INSERT INTO Bitacora (id_Usuario, username, actividad, detalle, fechaHora)
     VALUES (@ID_Usuario, @Username, @Actividad, @Detalle, @FechaHora);
 END
 
@@ -851,7 +944,7 @@ CREATE PROCEDURE [dbo].[SP_InsertarUsuario]
 	@DigVerH VARCHAR(500)
 AS
 BEGIN
-    INSERT INTO Usuarios (nombre, password, DigVerH) 
+    INSERT INTO Usuarios (nombre, password, DigVerH)
     VALUES (@Nombre, @Password, @DigVerH);
 END
 
@@ -860,7 +953,7 @@ GO
 IF OBJECT_ID('dbo.SP_LimpiarBitacora', 'P') IS NOT NULL DROP PROCEDURE dbo.SP_LimpiarBitacora;
 GO
 CREATE PROCEDURE [dbo].[SP_LimpiarBitacora]
-AS 
+AS
 DELETE FROM bitacora
 
 GO
@@ -881,16 +974,16 @@ CREATE PROCEDURE [dbo].[SP_LoginUsuario]
     @Nombre VARCHAR(50)
 AS
 BEGIN
-    SET NOCOUNT ON; 
-    SELECT 
-        id_Usuario, 
-        nombre, 
+    SET NOCOUNT ON;
+    SELECT
+        id_Usuario,
+        nombre,
         password,
 		DigVerH,
         id_Idioma
-    FROM 
+    FROM
         Usuarios
-    WHERE 
+    WHERE
         nombre = @Nombre;
 END
 
@@ -1085,4 +1178,3 @@ BEGIN
 END
 
 GO
-
