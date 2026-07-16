@@ -1,4 +1,5 @@
 using BE;
+using Servicio;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,16 +9,16 @@ using System.Text;
 
 namespace DAL
 {
-    public class MP_Permiso : Mapper<BE_Componente>
+    public class MP_Permiso : Mapper<S_Componente>
     {
         private Acceso acceso = new Acceso();
 
-        public override int Insertar(BE_Componente entidad)
+        public override int Insertar(S_Componente entidad)
         {
             return GuardarComponente(entidad);
         }
 
-        public int GuardarComponente(BE_Componente componente)
+        public int GuardarComponente(S_Componente componente)
         {
             int id = 0;
             try
@@ -39,7 +40,7 @@ namespace DAL
                 id = Convert.ToInt32(paramId.Value);
                 componente.ID_Componente = id;
 
-                if (componente is BE_Rol)
+                if (componente is S_Composite)
                 {
                     // Limpiar relaciones viejas
                     SqlCommand cmdClean = new SqlCommand("SP_LimpiarRelacionesComponente", acceso.conexion);
@@ -69,10 +70,10 @@ namespace DAL
             return id;
         }
 
-        public List<BE_Componente> ObtenerTodos()
+        public List<S_Componente> ObtenerTodos()
         {
-            List<BE_Componente> todos = new List<BE_Componente>();
-            Dictionary<int, BE_Componente> componentesDict = new Dictionary<int, BE_Componente>();
+            List<S_Componente> todos = new List<S_Componente>();
+            Dictionary<int, S_Componente> componentesDict = new Dictionary<int, S_Componente>();
             HashSet<int> hijosIds = new HashSet<int>();
 
             try
@@ -86,14 +87,14 @@ namespace DAL
                     string nombre = row["nombre"].ToString();
                     string tipo = row["tipo"].ToString();
 
-                    BE_Componente comp;
+                    S_Componente comp;
                     if (tipo.Equals("Composite", StringComparison.OrdinalIgnoreCase))
                     {
-                        comp = new BE_Rol();
+                        comp = new S_Composite();
                     }
                     else
                     {
-                        comp = new BE_Permiso();
+                        comp = new S_Hoja();
                     }
 
                     comp.ID_Componente = id;
@@ -112,10 +113,10 @@ namespace DAL
 
                     if (componentesDict.ContainsKey(idPadre) && componentesDict.ContainsKey(idHijo))
                     {
-                        BE_Componente padre = componentesDict[idPadre];
-                        BE_Componente hijo = componentesDict[idHijo];
+                        S_Componente padre = componentesDict[idPadre];
+                        S_Componente hijo = componentesDict[idHijo];
 
-                        if (padre is BE_Rol)
+                        if (padre is S_Composite)
                         {
                             bool existe = false;
                             foreach (var h in padre.Hijos)
@@ -147,9 +148,9 @@ namespace DAL
             return todos;
         }
 
-        public List<BE_Componente> ObtenerPermisosUsuario(int idUsuario, List<BE_Componente> todosComponentes)
+        public List<S_Componente> ObtenerPermisosUsuario(int idUsuario, List<S_Componente> todosComponentes)
         {
-            List<BE_Componente> permisosUsuario = new List<BE_Componente>();
+            List<S_Componente> permisosUsuario = new List<S_Componente>();
             try
             {
                 acceso.Abrir();
@@ -164,7 +165,7 @@ namespace DAL
                 {
                     int idComp = Convert.ToInt32(row["id_Componente"]);
 
-                    BE_Componente comp = null;
+                    S_Componente comp = null;
                     foreach (var c in todosComponentes)
                     {
                         if (c.ID_Componente == idComp)
@@ -191,7 +192,7 @@ namespace DAL
             return permisosUsuario;
         }
 
-        public void GuardarPermisosUsuario(int idUsuario, List<BE_Componente> permisos)
+        public void GuardarPermisosUsuario(int idUsuario, List<S_Componente> permisos)
         {
             try
             {

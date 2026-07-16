@@ -1,4 +1,5 @@
 using BE;
+using Servicio;
 using BLL;
 using System;
 using System.Collections.Generic;
@@ -73,13 +74,34 @@ namespace GUI
             }
             else
             {
-                // Inform the admin and open change control window
-                MessageBox.Show("¡ATENCIÓN ADMINISTRADOR!\n\nSe han detectado fallas en la integridad de la base de datos (dígitos verificadores rotos):\n\n" + 
-                                string.Join("\n", _erroresIntegridad) + 
-                                "\n\nLa aplicación ha bloqueado el acceso a usuarios comunes. Por favor, realice un rollback de los cambios del usuario afectado desde la ventana de Control de Cambios para solucionar la falla.", 
-                                "Falla de Integridad Detectada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                // Ofrecer al admin la opción de recalcular o investigar
+                DialogResult result = MessageBox.Show(
+                    "¡ATENCIÓN ADMINISTRADOR!\n\nSe han detectado fallas en la integridad de la base de datos (dígitos verificadores rotos):\n\n" + 
+                    string.Join("\n", _erroresIntegridad) + 
+                    "\n\n¿Desea recalcular los dígitos verificadores?\n\n" +
+                    "• Sí: Recalcular (si los cambios fueron realizados desde la aplicación)\n" +
+                    "• No: Investigar mediante Control de Cambios (si sospecha manipulación externa)", 
+                    "Falla de Integridad Detectada", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-                AbrirFormControlCambios();
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
+                        BLL.BLL_DigitoVerificador bllDigVer = new BLL.BLL_DigitoVerificador();
+                        bllDigVer.RecalcularTodo();
+                        _integridadValida = true;
+                        MessageBox.Show("Dígitos verificadores recalculados exitosamente. La integridad ha sido restaurada.", 
+                                        "Integridad Restaurada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error al recalcular dígitos verificadores: " + ex.Message);
+                    }
+                }
+                else
+                {
+                    AbrirFormControlCambios();
+                }
             }
         }
 
@@ -294,7 +316,7 @@ namespace GUI
                 var selectedIdioma = comboBoxIdiomaMostrar.SelectedItem as BE_Idioma;
                 if (selectedIdioma != null)
                 {
-                    BLL_Multilenguaje.Instancia.IdiomaActual = selectedIdioma;
+                    BLL_Multilenguaje.Instancia.IdiomaActual = selectedIdioma; //cada vez que se setea, llama a notificar()
                     MessageBox.Show("Idioma de visualización actualizado con éxito.");
                 }
                 else
@@ -310,7 +332,7 @@ namespace GUI
 
         // --- Helpers de gestión de permisos y renderizado del Composite ---
 
-        private BE_Componente BuscarComponentePorNombre(List<BE_Componente> lista, string nombre)
+        private S_Componente BuscarComponentePorNombre(List<S_Componente> lista, string nombre)
         {
             foreach (var item in lista)
             {
@@ -329,60 +351,60 @@ namespace GUI
                 var todos = bllPermiso.ObtenerTodos();
 
                 // Buscar o crear hojas
-                BE_Componente h1 = BuscarComponentePorNombre(todos, "Ver Bitacora");
+                S_Componente h1 = BuscarComponentePorNombre(todos, "Ver Bitacora");
                 if (h1 == null)
                 {
-                    h1 = new BE_Permiso { Nombre = "Ver Bitacora" };
+                    h1 = new S_Hoja { Nombre = "Ver Bitacora" };
                 }
                 if (h1.ID_Componente == 0) bllPermiso.GuardarComponente(h1);
 
-                BE_Componente h2 = BuscarComponentePorNombre(todos, "Limpiar Bitacora");
+                S_Componente h2 = BuscarComponentePorNombre(todos, "Limpiar Bitacora");
                 if (h2 == null)
                 {
-                    h2 = new BE_Permiso { Nombre = "Limpiar Bitacora" };
+                    h2 = new S_Hoja { Nombre = "Limpiar Bitacora" };
                 }
                 if (h2.ID_Componente == 0) bllPermiso.GuardarComponente(h2);
 
-                BE_Componente h3 = BuscarComponentePorNombre(todos, "Registrar Usuario");
+                S_Componente h3 = BuscarComponentePorNombre(todos, "Registrar Usuario");
                 if (h3 == null)
                 {
-                    h3 = new BE_Permiso { Nombre = "Registrar Usuario" };
+                    h3 = new S_Hoja { Nombre = "Registrar Usuario" };
                 }
                 if (h3.ID_Componente == 0) bllPermiso.GuardarComponente(h3);
 
-                BE_Componente h4 = BuscarComponentePorNombre(todos, "Gestionar Permisos");
+                S_Componente h4 = BuscarComponentePorNombre(todos, "Gestionar Permisos");
                 if (h4 == null)
                 {
-                    h4 = new BE_Permiso { Nombre = "Gestionar Permisos" };
+                    h4 = new S_Hoja { Nombre = "Gestionar Permisos" };
                 }
                 if (h4.ID_Componente == 0) bllPermiso.GuardarComponente(h4);
 
-                BE_Componente h5 = BuscarComponentePorNombre(todos, "Ver control de cambios");
+                S_Componente h5 = BuscarComponentePorNombre(todos, "Ver control de cambios");
                 if (h5 == null)
                 {
-                    h5 = new BE_Permiso { Nombre = "Ver control de cambios" };
+                    h5 = new S_Hoja { Nombre = "Ver control de cambios" };
                 }
                 if (h5.ID_Componente == 0) bllPermiso.GuardarComponente(h5);
 
-                BE_Componente h6 = BuscarComponentePorNombre(todos, "Gestionar idiomas");
+                S_Componente h6 = BuscarComponentePorNombre(todos, "Gestionar idiomas");
                 if (h6 == null)
                 {
-                    h6 = new BE_Permiso { Nombre = "Gestionar idiomas" };
+                    h6 = new S_Hoja { Nombre = "Gestionar idiomas" };
                 }
                 if (h6.ID_Componente == 0) bllPermiso.GuardarComponente(h6);
 
                 // Buscar o crear composites
-                BE_Componente rAdmin = BuscarComponentePorNombre(todos, "Rol Admin");
+                S_Componente rAdmin = BuscarComponentePorNombre(todos, "Rol Admin");
                 if (rAdmin == null)
                 {
-                    rAdmin = new BE_Rol { Nombre = "Rol Admin" };
+                    rAdmin = new S_Composite { Nombre = "Rol Admin" };
                 }
                 if (rAdmin.ID_Componente == 0) bllPermiso.GuardarComponente(rAdmin);
 
-                BE_Componente rUser = BuscarComponentePorNombre(todos, "Rol Usuario");
+                S_Componente rUser = BuscarComponentePorNombre(todos, "Rol Usuario");
                 if (rUser == null)
                 {
-                    rUser = new BE_Rol { Nombre = "Rol Usuario" };
+                    rUser = new S_Composite { Nombre = "Rol Usuario" };
                 }
                 if (rUser.ID_Componente == 0) bllPermiso.GuardarComponente(rUser);
 
@@ -407,7 +429,7 @@ namespace GUI
                 bool modificadoAdmin = false;
                 
                 // Si Rol Admin tenía asignado directamente Ver Bitacora (h1), quitarlo para que no esté repetido, ya que lo heredará por rUser
-                BE_Componente duplicado = null;
+                S_Componente duplicado = null;
                 foreach (var x in rAdmin.Hijos)
                 {
                     if (x.ID_Componente == h1.ID_Componente)
@@ -546,7 +568,7 @@ namespace GUI
                     if (adminUser != null)
                     {
                         var allPerms = bllPermiso.ObtenerTodos();
-                        BE_Componente rolAdmin = null;
+                        S_Componente rolAdmin = null;
                         foreach (var p in allPerms)
                         {
                             if (p.Nombre.Equals("Rol Admin", StringComparison.OrdinalIgnoreCase))
@@ -557,7 +579,7 @@ namespace GUI
                         }
                         if (rolAdmin != null)
                         {
-                            bllPermiso.GuardarPermisosUsuario(adminUser, new List<BE_Componente> { rolAdmin });
+                            bllPermiso.GuardarPermisosUsuario(adminUser, new List<S_Componente> { rolAdmin });
                         }
                     }
                 }

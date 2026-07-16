@@ -1,5 +1,6 @@
 using BLL;
 using BE;
+using Servicio;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -101,10 +102,10 @@ namespace GUI
                 if (todos.Count == 0)
                 {
                     // Crear permisos simples (hojas)
-                    BE_Componente h1 = new BE_Permiso { Nombre = "Ver Bitacora" };
-                    BE_Componente h2 = new BE_Permiso { Nombre = "Limpiar Bitacora" };
-                    BE_Componente h3 = new BE_Permiso { Nombre = "Registrar Usuario" };
-                    BE_Componente h4 = new BE_Permiso { Nombre = "Gestionar Permisos" };
+                    S_Componente h1 = new S_Hoja { Nombre = "Ver Bitacora" };
+                    S_Componente h2 = new S_Hoja { Nombre = "Limpiar Bitacora" };
+                    S_Componente h3 = new S_Hoja { Nombre = "Registrar Usuario" };
+                    S_Componente h4 = new S_Hoja { Nombre = "Gestionar Permisos" };
 
                     bllPermiso.GuardarComponente(h1);
                     bllPermiso.GuardarComponente(h2);
@@ -112,8 +113,8 @@ namespace GUI
                     bllPermiso.GuardarComponente(h4);
 
                     // Crear roles compuestos
-                    BE_Componente rAdmin = new BE_Rol { Nombre = "Rol Admin" };
-                    BE_Componente rUser = new BE_Rol { Nombre = "Rol Usuario" };
+                    S_Componente rAdmin = new S_Composite { Nombre = "Rol Admin" };
+                    S_Componente rUser = new S_Composite { Nombre = "Rol Usuario" };
 
                     bllPermiso.GuardarComponente(rAdmin);
                     bllPermiso.GuardarComponente(rUser);
@@ -146,7 +147,7 @@ namespace GUI
                         var rolAdmin = allPerms.FirstOrDefault(p => p.Nombre == "Rol Admin");
                         if (rolAdmin != null)
                         {
-                            bllPermiso.GuardarPermisosUsuario(adminUser, new List<BE_Componente> { rolAdmin });
+                            bllPermiso.GuardarPermisosUsuario(adminUser, new List<S_Componente> { rolAdmin });
                         }
                     }
                 }

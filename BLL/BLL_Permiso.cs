@@ -1,4 +1,5 @@
 using BE;
+using Servicio;
 using DAL;
 using System;
 using System.Collections.Generic;
@@ -11,23 +12,23 @@ namespace BLL
     {
         private MP_Permiso mpPermiso = new MP_Permiso();
 
-        public List<BE_Componente> ObtenerTodos()
+        public List<S_Componente> ObtenerTodos()
         {
             return mpPermiso.ObtenerTodos();
         }
 
-        public int GuardarComponente(BE_Componente componente)
+        public int GuardarComponente(S_Componente componente)
         {
             return mpPermiso.GuardarComponente(componente);
         }
 
-        public List<BE_Componente> ObtenerPermisosUsuario(BE_Usuario usuario)
+        public List<S_Componente> ObtenerPermisosUsuario(BE_Usuario usuario)
         {
-            List<BE_Componente> todos = mpPermiso.ObtenerTodos();
+            List<S_Componente> todos = mpPermiso.ObtenerTodos();
             return mpPermiso.ObtenerPermisosUsuario(usuario.ID_Usuario, todos);
         }
 
-        public void GuardarPermisosUsuario(BE_Usuario usuario, List<BE_Componente> permisos)
+        public void GuardarPermisosUsuario(BE_Usuario usuario, List<S_Componente> permisos)
         {
             mpPermiso.GuardarPermisosUsuario(usuario.ID_Usuario, permisos);
         }

@@ -1,45 +1,56 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace BE
+namespace Servicio
 {
+    /// <summary>
+    /// Composite del patron: un rol, que agrupa hojas y/o otros roles.
+    /// Sus operaciones delegan recursivamente en los hijos.
+    /// </summary>
     public class S_Composite : S_Componente
     {
-        private List<S_Componente> hijos = new List<S_Componente>();
+        private List<S_Componente> _hijos = new List<S_Componente>();
 
-        public override void Agregar(S_Componente permiso)
+        public override string Tipo => "Composite";
+
+        public override List<S_Componente> Hijos => _hijos;
+
+        public override void Agregar(S_Componente componente)
         {
-            if (permiso != null)
+            if (componente != null && !_hijos.Exists(h => h.ID_Componente == componente.ID_Componente))
             {
-                foreach (var h in hijos)
-                {
-                    if (h.ID_Componente == permiso.ID_Componente)
-                        return; // Si ya existe, salimos
-                }
-                hijos.Add(permiso);
+                _hijos.Add(componente);
             }
         }
 
-        public override void Quitar(S_Componente permiso)
+        public override void Quitar(S_Componente componente)
         {
-            if (permiso != null)
+            if (componente != null)
             {
-                foreach (var h in hijos)
+                S_Componente aEliminar = _hijos.Find(h => h.ID_Componente == componente.ID_Componente);
+                if (aEliminar != null)
                 {
-                    if (h.ID_Componente == permiso.ID_Componente)
-                    {
-                        hijos.Remove(h);
-                        return; // Se encontró y se eliminó, salimos del ciclo
-                    }
+                    _hijos.Remove(aEliminar);
                 }
             }
         }
 
-        public override List<S_Componente> ObtenerHijos()
+        public override bool TienePermiso(string nombrePermiso)
         {
-            return hijos;
+            if (Nombre.Equals(nombrePermiso, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+            return _hijos.Exists(h => h.TienePermiso(nombrePermiso));
+        }
+
+        public override bool Contiene(int idComponente)
+        {
+            if (ID_Componente == idComponente)
+            {
+                return true;
+            }
+            return _hijos.Exists(h => h.Contiene(idComponente));
         }
     }
 }

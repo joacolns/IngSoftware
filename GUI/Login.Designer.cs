@@ -39,47 +39,42 @@ namespace GUI
             // 
             // txtBox_usuario
             // 
-            this.txtBox_usuario.Location = new System.Drawing.Point(140, 183);
-            this.txtBox_usuario.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtBox_usuario.Location = new System.Drawing.Point(70, 127);
             this.txtBox_usuario.Name = "txtBox_usuario";
-            this.txtBox_usuario.Size = new System.Drawing.Size(308, 31);
+            this.txtBox_usuario.Size = new System.Drawing.Size(156, 20);
             this.txtBox_usuario.TabIndex = 0;
             // 
             // txtBox_password
             // 
-            this.txtBox_password.Location = new System.Drawing.Point(140, 296);
-            this.txtBox_password.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtBox_password.Location = new System.Drawing.Point(70, 186);
             this.txtBox_password.Name = "txtBox_password";
-            this.txtBox_password.Size = new System.Drawing.Size(308, 31);
+            this.txtBox_password.Size = new System.Drawing.Size(156, 20);
             this.txtBox_password.TabIndex = 1;
             this.txtBox_password.UseSystemPasswordChar = true;
             // 
             // labelUsuario
             // 
             this.labelUsuario.AutoSize = true;
-            this.labelUsuario.Location = new System.Drawing.Point(134, 152);
-            this.labelUsuario.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.labelUsuario.Location = new System.Drawing.Point(67, 111);
             this.labelUsuario.Name = "labelUsuario";
-            this.labelUsuario.Size = new System.Drawing.Size(86, 25);
+            this.labelUsuario.Size = new System.Drawing.Size(43, 13);
             this.labelUsuario.TabIndex = 2;
             this.labelUsuario.Text = "Usuario";
             // 
             // labelPassword
             // 
             this.labelPassword.AutoSize = true;
-            this.labelPassword.Location = new System.Drawing.Point(134, 265);
-            this.labelPassword.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.labelPassword.Location = new System.Drawing.Point(67, 170);
             this.labelPassword.Name = "labelPassword";
-            this.labelPassword.Size = new System.Drawing.Size(123, 25);
+            this.labelPassword.Size = new System.Drawing.Size(61, 13);
             this.labelPassword.TabIndex = 3;
             this.labelPassword.Text = "Contraseña";
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(140, 369);
-            this.btnLogin.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btnLogin.Location = new System.Drawing.Point(70, 224);
             this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new System.Drawing.Size(312, 98);
+            this.btnLogin.Size = new System.Drawing.Size(156, 51);
             this.btnLogin.TabIndex = 4;
             this.btnLogin.Text = "Iniciar Sesion";
             this.btnLogin.UseVisualStyleBackColor = true;
@@ -88,10 +83,9 @@ namespace GUI
             // labelIdiomaLogin
             // 
             this.labelIdiomaLogin.AutoSize = true;
-            this.labelIdiomaLogin.Location = new System.Drawing.Point(134, 38);
-            this.labelIdiomaLogin.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.labelIdiomaLogin.Location = new System.Drawing.Point(67, 23);
             this.labelIdiomaLogin.Name = "labelIdiomaLogin";
-            this.labelIdiomaLogin.Size = new System.Drawing.Size(76, 25);
+            this.labelIdiomaLogin.Size = new System.Drawing.Size(38, 13);
             this.labelIdiomaLogin.TabIndex = 5;
             this.labelIdiomaLogin.Text = "Idioma";
             // 
@@ -99,17 +93,16 @@ namespace GUI
             // 
             this.comboBoxIdiomaLogin.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxIdiomaLogin.FormattingEnabled = true;
-            this.comboBoxIdiomaLogin.Location = new System.Drawing.Point(140, 69);
-            this.comboBoxIdiomaLogin.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.comboBoxIdiomaLogin.Location = new System.Drawing.Point(70, 39);
             this.comboBoxIdiomaLogin.Name = "comboBoxIdiomaLogin";
-            this.comboBoxIdiomaLogin.Size = new System.Drawing.Size(308, 33);
+            this.comboBoxIdiomaLogin.Size = new System.Drawing.Size(156, 21);
             this.comboBoxIdiomaLogin.TabIndex = 6;
             // 
             // Login
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(618, 671);
+            this.ClientSize = new System.Drawing.Size(309, 349);
             this.Controls.Add(this.labelIdiomaLogin);
             this.Controls.Add(this.comboBoxIdiomaLogin);
             this.Controls.Add(this.btnLogin);
@@ -117,7 +110,6 @@ namespace GUI
             this.Controls.Add(this.labelUsuario);
             this.Controls.Add(this.txtBox_password);
             this.Controls.Add(this.txtBox_usuario);
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "Login";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);

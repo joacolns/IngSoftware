@@ -28,6 +28,9 @@ namespace BLL
             BE_Usuario.GuardarIdiomaUsuarioBD = (userId, langId) => {
                 DAL.MP_Usuario mp = new DAL.MP_Usuario();
                 mp.ActualizarUsuarioIdioma(userId, langId);
+                // Recalcular DVH/DVV porque idIdioma forma parte del cálculo del dígito verificador
+                BLL_DigitoVerificador bllDV = new BLL_DigitoVerificador();
+                bllDV.RecalcularTodo();
             };
 
             // Cargar idioma por defecto (Espanol) si existe en la base de datos
@@ -99,7 +102,7 @@ namespace BLL
 
         public void Notificar()
         {
-            foreach (var obs in _observers)
+            foreach (var obs in _observers) // le paso beusuario
             {
                 obs.ActualizarLenguaje();
             }

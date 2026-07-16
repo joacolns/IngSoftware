@@ -1,30 +1,35 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace BE
+namespace Servicio
 {
+    /// <summary>
+    /// Component del patron Composite.
+    /// Define la interfaz comun para hojas (S_Hoja) y compuestos (S_Composite),
+    /// de modo que el cliente pueda tratarlos de forma uniforme.
+    /// </summary>
     public abstract class S_Componente
     {
-		private int id_Componente;
+        public int ID_Componente { get; set; }
+        public string Nombre { get; set; }
 
-		public int ID_Componente
-		{
-			get { return id_Componente; }
-			set { id_Componente = value; }
-		}
+        /// Discriminador que se persiste en la columna "tipo": "Hoja" o "Composite".
+        public abstract string Tipo { get; }
 
-		private string nombre;
+        public abstract List<S_Componente> Hijos { get; }
 
-		public string Nombre
-		{
-			get { return nombre; }
-			set { nombre = value; }
-		}
+        public abstract void Agregar(S_Componente componente);
+        public abstract void Quitar(S_Componente componente);
 
-        public abstract void Agregar(S_Componente permiso);
-        public abstract void Quitar(S_Componente permiso);
-        public abstract List<S_Componente> ObtenerHijos();
+        /// Resuelve el permiso recorriendo el arbol hacia abajo.
+        public abstract bool TienePermiso(string nombrePermiso);
+
+        /// Indica si el componente dado ya cuelga de este (evita ciclos al anidar).
+        public abstract bool Contiene(int idComponente);
+
+        public override string ToString()
+        {
+            return Nombre;
+        }
     }
 }

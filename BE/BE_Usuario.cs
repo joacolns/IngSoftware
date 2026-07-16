@@ -41,7 +41,7 @@ namespace BE
 			set { logeado = value; }
 		}
 
-		public List<BE_Componente> Permisos { get; set; } = new List<BE_Componente>();
+		public List<S_Componente> Permisos { get; set; } = new List<S_Componente>();
 
 		private string digVerH;
 

@@ -56,6 +56,10 @@
       <Project>{c1708bbf-3555-4f62-bc6d-9fab49ad9598}</Project>
       <Name>BE</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Servicio\Servicio.csproj">
+      <Project>{581EE051-A15F-44DA-9FB1-BA815D28A84F}</Project>
+      <Name>Servicio</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

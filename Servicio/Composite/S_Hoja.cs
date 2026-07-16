@@ -1,25 +1,35 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace BE
+namespace Servicio
 {
+    /// <summary>
+    /// Leaf del patron Composite: un permiso simple, sin hijos.
+    /// </summary>
     public class S_Hoja : S_Componente
     {
-        public override void Agregar(S_Componente permiso)
+        public override string Tipo => "Hoja";
+
+        public override List<S_Componente> Hijos => new List<S_Componente>();
+
+        public override void Agregar(S_Componente componente)
         {
-            throw new InvalidOperationException("No se pueden agregar permisos a una hoja.");
+            throw new InvalidOperationException("No se pueden agregar hijos a un permiso simple.");
         }
 
-        public override void Quitar(S_Componente permiso)
+        public override void Quitar(S_Componente componente)
         {
-            throw new InvalidOperationException("No se pueden quitar permisos de una hoja.");
+            throw new InvalidOperationException("No se pueden quitar hijos de un permiso simple.");
         }
 
-        public override List<S_Componente> ObtenerHijos()
+        public override bool TienePermiso(string nombrePermiso)
         {
-            return new List<S_Componente>();
+            return Nombre.Equals(nombrePermiso, StringComparison.OrdinalIgnoreCase);
+        }
+
+        public override bool Contiene(int idComponente)
+        {
+            return ID_Componente == idComponente;
         }
     }
 }

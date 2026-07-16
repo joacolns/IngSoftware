@@ -1,4 +1,5 @@
 using BE;
+using Servicio;
 using BLL;
 using System;
 using System.Collections.Generic;
@@ -224,7 +225,7 @@ namespace GUI
                     }
                 }
 
-                List<BE_Componente> raices = new List<BE_Componente>();
+                List<S_Componente> raices = new List<S_Componente>();
                 foreach (var c in todos)
                 {
                     if (!hijosIds.Contains(c.ID_Componente))
@@ -246,7 +247,7 @@ namespace GUI
             }
         }
 
-        private void LlenarNodo(TreeNodeCollection nodos, BE_Componente comp)
+        private void LlenarNodo(TreeNodeCollection nodos, S_Componente comp)
         {
             TreeNode nuevoNodo = new TreeNode(comp.Nombre);
             nuevoNodo.Tag = comp;
@@ -311,10 +312,10 @@ namespace GUI
                     return;
                 }
 
-                var permiso = selectedNode.Tag as BE_Componente;
+                var permiso = selectedNode.Tag as S_Componente;
                 if (permiso == null) return;
 
-                if (usuarioSelected.Permisos.Any(p => p.ID_Componente == permiso.ID_Componente))
+                if (usuarioSelected.Permisos.Any(p => p.ID_Componente == permiso.ID_Componente)) //verifica si ya tiene el permiso
                 {
                     MessageBox.Show("El usuario ya cuenta con este permiso asignado directamente.");
                     return;
@@ -359,7 +360,7 @@ namespace GUI
                     return;
                 }
 
-                var permiso = listBoxPermisosUsuario.SelectedItem as BE_Componente;
+                var permiso = listBoxPermisosUsuario.SelectedItem as S_Componente;
                 if (permiso == null)
                 {
                     MessageBox.Show("Debe seleccionar un permiso de la lista de permisos directos.");
@@ -409,12 +410,12 @@ namespace GUI
         private void CargarRoles()
         {
             var todos = bllPermiso.ObtenerTodos();
-            var roles = new System.Collections.Generic.List<BE_Componente>();
-            var permisosComunes = new System.Collections.Generic.List<BE_Componente>();
+            var roles = new System.Collections.Generic.List<S_Componente>();
+            var permisosComunes = new System.Collections.Generic.List<S_Componente>();
 
             foreach (var c in todos)
             {
-                if (c is BE_Rol) roles.Add(c);
+                if (c is S_Composite) roles.Add(c);
                 permisosComunes.Add(c);
             }
 
@@ -443,11 +444,11 @@ namespace GUI
         private void CargarPermisosRol()
         {
             listBoxPermisosRol.Items.Clear();
-            var rol = comboBoxRoles.SelectedItem as BE_Componente;
+            var rol = comboBoxRoles.SelectedItem as S_Componente;
             if (rol != null)
             {
                 var todos = bllPermiso.ObtenerTodos();
-                BE_Componente rolActualizado = null;
+                S_Componente rolActualizado = null;
                 foreach (var c in todos)
                 {
                     if (c.ID_Componente == rol.ID_Componente)
@@ -471,7 +472,7 @@ namespace GUI
             string nombreRol = textBoxNuevoRol.Text.Trim();
             if (string.IsNullOrEmpty(nombreRol)) return;
 
-            var comp = new BE_Rol { Nombre = nombreRol };
+            var comp = new S_Composite { Nombre = nombreRol };
             bllPermiso.GuardarComponente(comp);
             MessageBox.Show("Rol creado con éxito.");
             textBoxNuevoRol.Text = "";
@@ -482,8 +483,8 @@ namespace GUI
 
         private void btnAsignarARol_Click(object sender, EventArgs e)
         {
-            var rol = comboBoxRoles.SelectedItem as BE_Componente;
-            var permiso = comboBoxPermisosTodos.SelectedItem as BE_Componente;
+            var rol = comboBoxRoles.SelectedItem as S_Componente;
+            var permiso = comboBoxPermisosTodos.SelectedItem as S_Componente;
             if (rol == null || permiso == null) return;
 
             if (permiso.ID_Componente == rol.ID_Componente)
@@ -493,8 +494,8 @@ namespace GUI
             }
 
             var todos = bllPermiso.ObtenerTodos();
-            BE_Componente rolActual = null;
-            BE_Componente permisoCompleto = null;
+            S_Componente rolActual = null;
+            S_Componente permisoCompleto = null;
             foreach (var c in todos)
             {
                 if (c.ID_Componente == rol.ID_Componente) rolActual = c;
@@ -531,16 +532,16 @@ namespace GUI
 
         private void btnQuitarDeRol_Click(object sender, EventArgs e)
         {
-            var rol = comboBoxRoles.SelectedItem as BE_Componente;
-            var permiso = listBoxPermisosRol.SelectedItem as BE_Componente;
+            var rol = comboBoxRoles.SelectedItem as S_Componente;
+            var permiso = listBoxPermisosRol.SelectedItem as S_Componente;
             if (rol == null || permiso == null) return;
 
             var todos = bllPermiso.ObtenerTodos();
-            BE_Componente rolActual = null;
+            S_Componente rolActual = null;
             foreach (var c in todos) { if (c.ID_Componente == rol.ID_Componente) rolActual = c; }
             if (rolActual == null) return;
 
-            BE_Componente aRemover = null;
+            S_Componente aRemover = null;
             foreach (var h in rolActual.Hijos)
             {
                 if (h.ID_Componente == permiso.ID_Componente) aRemover = h;

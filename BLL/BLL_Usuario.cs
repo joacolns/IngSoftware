@@ -30,7 +30,7 @@ namespace BLL
                     BLL_Multilenguaje.Instancia.Registrar(usuarioBD);
 
                     // Cargar el idioma preferido del usuario si está configurado
-                    if (usuarioBD.Idioma != null && usuarioBD.Idioma.ID_Idioma > 0)
+                    if (usuarioBD.Idioma != null && usuarioBD.Idioma.ID_Idioma > 0) //> 0 - si no es español
                     {
                         var list = BLL_Multilenguaje.Instancia.ObtenerIdiomas();
                         var userLang = list.FirstOrDefault(i => i.ID_Idioma == usuarioBD.Idioma.ID_Idioma && i.Agregado);
@@ -71,14 +71,32 @@ namespace BLL
 
             if (filas > 0)
             {
-                // Recalcular todos los DVH y DVV para mantener integridad
-                BLL_DigitoVerificador bllDigVer = new BLL_DigitoVerificador();
-                bllDigVer.RecalcularTodo();
-
-                // Registrar en control de cambios
+                // Buscar el usuario recién creado
                 BE.BE_Usuario usuarioCreado = mp_usuario.BuscarUsuarioPorNombre(nombre);
                 if (usuarioCreado != null)
                 {
+                    // Asignar idioma Español por defecto
+                    var idiomas = BLL_Multilenguaje.Instancia.ObtenerIdiomas();
+                    BE.BE_Idioma espanol = null;
+                    foreach (var i in idiomas)
+                    {
+                        if (i.Nombre.Equals("Espanol", StringComparison.OrdinalIgnoreCase))
+                        {
+                            espanol = i;
+                            break;
+                        }
+                    }
+                    if (espanol != null)
+                    {
+                        mp_usuario.ActualizarUsuarioIdioma(usuarioCreado.ID_Usuario, espanol.ID_Idioma);
+                    }
+
+                    // Recalcular todos los DVH y DVV para mantener integridad
+                    // (se hace DESPUÉS de asignar el idioma para que el hash incluya el idIdioma correcto)
+                    BLL_DigitoVerificador bllDigVer = new BLL_DigitoVerificador();
+                    bllDigVer.RecalcularTodo();
+
+                    // Registrar en control de cambios
                     BLL_UsuarioCambio bllCambio = new BLL_UsuarioCambio();
                     string modificadoPor = "admin";
                     if (BLL_GestorDeSesion.Instancia.EstaLogeado)
